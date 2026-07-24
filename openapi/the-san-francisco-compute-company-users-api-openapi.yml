@@ -1,0 +1,358 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Users API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Users
+  description: Read-only access to users within the caller's organization.
+paths:
+  /preview/v2/users:
+    get:
+      tags:
+      - Users
+      summary: List users
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List users that are members of the caller''s organization.'
+      operationId: list_users_handler
+      parameters:
+      - name: id
+        in: query
+        description: Filter by user ID or resource path (repeatable).
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourcePathOrId_UserId'
+        style: form
+        explode: true
+      - name: email
+        in: query
+        description: Filter to the user with this email address. Matched case-insensitively against the member's non-deleted identities.
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Set to the response's `cursor` to fetch the next page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/UsersCursor'
+      - name: ending_before
+        in: query
+        description: Set to the response's `cursor` to fetch the previous page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/UsersCursor'
+      responses:
+        '200':
+          description: A paginated list of users.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUsersResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/users/{id}:
+    get:
+      tags:
+      - Users
+      summary: Get user
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Returns user details by ID or resource path.'
+      operationId: get_user_handler
+      parameters:
+      - name: id
+        in: path
+        description: User ID or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:user:my-user' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - my-resource-name
+          pattern: ([a-zA-Z0-9][a-zA-Z0-9._-]{0,254})|(sfc:user:[a-zA-Z0-9._-]+)
+      responses:
+        '200':
+          description: User details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    userResourcePath_UserId:
+      type: string
+      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
+      examples:
+      - sfc:user:<name>
+      pattern: sfc:user:[a-zA-Z0-9._-]+
+    UsersCursor:
+      type: string
+      examples:
+      - usrc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^usrc_[A-Za-z0-9_-]+$
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UserId:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ResourcePathOrId_UserId:
+      type: string
+      description: A resource path like 'sfc:user:my-user' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - my-resource-name
+      pattern: ([a-zA-Z0-9][a-zA-Z0-9._-]{0,254})|(sfc:user:[a-zA-Z0-9._-]+)
+    ListUsersResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+        has_more:
+          type: boolean
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UsersCursor'
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    UserResponse:
+      type: object
+      required:
+      - object
+      - id
+      - resource_path
+      - created_at
+      properties:
+        object:
+          type: string
+          const: user
+          default: user
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/UserId'
+        resource_path:
+          $ref: '#/components/schemas/userResourcePath_UserId'
+        created_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        email:
+          type:
+          - string
+          - 'null'
+          description: The member's primary email, or `null` if they have no recorded email identity.
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The member's first name, or `null` if not recorded.
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The member's last name, or `null` if not recorded.
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

@@ -1,0 +1,950 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Images API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Images
+  description: Custom machine images for instances.
+paths:
+  /preview/v2/images:
+    post:
+      tags:
+      - Images
+      summary: Create image
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Create an image and start a multipart upload.'
+      operationId: create_image
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartUploadRequest'
+        required: true
+      responses:
+        '201':
+          description: Image created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageUploadResponse'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '409':
+          description: Image already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Images
+      summary: List images
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List images in the specified workspace. Pass `sfc:workspace:sfcompute:public` as the workspace to list sfc-provided public images instead.'
+      operationId: list_images
+      parameters:
+      - name: workspace
+        in: query
+        description: Scope the returned list to a single workspace (ID, resource path, or name). Pass `sfc:workspace:sfcompute:public` to list sfc-provided public images. Without it, the returned list spans every workspace the caller has requisite permissions on (public images are not included — request them via the public workspace).
+        required: false
+        schema:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+      - name: id
+        in: query
+        description: Filter by image ID (repeatable).
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageId'
+        style: form
+        explode: true
+      - name: limit
+        in: query
+        description: Maximum number of results to return (1-200, default 50).
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Cursor for forward pagination (from a previous response's `cursor` field).
+        required: false
+        schema:
+          $ref: '#/components/schemas/ImagesCursor'
+      - name: ending_before
+        in: query
+        description: Cursor for backward pagination.
+        required: false
+        schema:
+          $ref: '#/components/schemas/ImagesCursor'
+      responses:
+        '200':
+          description: Paginated list of images
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListImagesResponse'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/images/{id}:
+    delete:
+      tags:
+      - Images
+      summary: Delete image
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Delete an image.'
+      operationId: delete_image
+      parameters:
+      - name: id
+        in: path
+        description: Image ID, name, or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - image_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '200':
+          description: Image deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteImageResponse'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden, or image cannot be deleted via this endpoint (e.g. default images)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Image is referenced by an instance template or in use by an active instance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Images
+      summary: Get image
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Retrieve an image by ID. Returns both user-owned and public images.'
+      operationId: fetch_image
+      parameters:
+      - name: id
+        in: path
+        description: Image ID or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - image_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '200':
+          description: Image details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageListEntry'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/images/{id}/complete:
+    post:
+      tags:
+      - Images
+      summary: Complete image upload
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Finalize a multipart image upload.'
+      operationId: complete_image_upload
+      parameters:
+      - name: id
+        in: path
+        description: Image ID, name, or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - image_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompleteUploadRequest'
+        required: true
+      responses:
+        '200':
+          description: Upload completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageUploadResponse'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/images/{id}/download:
+    get:
+      tags:
+      - Images
+      summary: Download image
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Get a presigned URL to download an image.'
+      operationId: download_image
+      parameters:
+      - name: id
+        in: path
+        description: Image ID, name, or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - image_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '200':
+          description: Download URL generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageDownloadResponse'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Image upload not completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/images/{id}/parts:
+    post:
+      tags:
+      - Images
+      summary: Get upload part URL
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Get a presigned URL to upload one part of a multipart image upload.'
+      operationId: create_image_upload_part_url
+      parameters:
+      - name: id
+        in: path
+        description: Image ID, name, or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - image_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadPartRequest'
+        required: true
+      responses:
+        '200':
+          description: Upload URL generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadPartResponse'
+        '400':
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/images/{id}/reinstate:
+    post:
+      tags:
+      - Images
+      summary: Reinstate image
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Reinstate a revoked image, making it available for new instances again'
+      operationId: reinstate_image
+      parameters:
+      - name: id
+        in: path
+        description: Image ID, name, or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - image_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '200':
+          description: Image reinstated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageListEntry'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden, or public images cannot be reinstated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Only revoked images can be reinstated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/images/{id}/revoke:
+    post:
+      tags:
+      - Images
+      summary: Revoke image
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Revoke a private image. Revoked images can''t back new instances; existing instances continue running.'
+      operationId: revoke_image
+      parameters:
+      - name: id
+        in: path
+        description: Image ID, name, or resource path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - image_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '200':
+          description: Image revoked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageListEntry'
+        '401':
+          description: Unauthorized request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden, or public images cannot be revoked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '409':
+          description: Image isn't in completed status
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    ListImagesResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ImagesCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageListEntry'
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    CompleteUploadRequest:
+      type: object
+      description: Complete a multipart image upload.
+      required:
+      - sha256
+      properties:
+        sha256:
+          type: string
+          description: Not verified on upload; used during instance boot to verify integrity.
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-f0-9]{64}$
+    StartUploadRequest:
+      type: object
+      description: Start a multipart image upload. Max image size is 128 GiB.
+      required:
+      - workspace
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+          description: Workspace to create this image in.
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    ImageListEntry:
+      allOf:
+      - $ref: '#/components/schemas/ImageScope'
+      - type: object
+        required:
+        - object
+        - upload_status
+        - created_at
+        properties:
+          object:
+            type: string
+            const: image
+            default: image
+            readOnly: true
+          upload_status:
+            $ref: '#/components/schemas/ImageUploadStatus'
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
+          provider:
+            type:
+            - string
+            - 'null'
+          sha256:
+            type:
+            - string
+            - 'null'
+            maxLength: 64
+            minLength: 64
+            pattern: ^[a-f0-9]{64}$
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
+    ConflictError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: conflict
+              default: conflict
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ImageScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      - is_public
+      properties:
+        id:
+          $ref: '#/components/schemas/ImageId'
+        resource_path:
+          $ref: '#/components/schemas/imageResourcePath_ImageId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+          description: The workspace that owns this image.
+        name:
+          $ref: '#/components/schemas/Name'
+        is_public:
+          type: boolean
+          description: Whether this is an sfc-provided public image.
+    BadRequestError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: invalid_request_error
+              default: invalid_request_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ImagesCursor:
+      type: string
+      examples:
+      - imagec_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^imagec_[A-Za-z0-9_-]+$
+    ImageId:
+      oneOf:
+      - type: string
+        examples:
+        - image_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: image_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: vmi_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UploadPartRequest:
+      type: object
+      required:
+      - part_id
+      properties:
+        part_id:
+          type: integer
+          format: int32
+          description: Caller-assigned part number, starting at 1.
+          minimum: 1
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    DeleteImageResponse:
+      type: object
+      required:
+      - object
+      - deleted
+      - name
+      properties:
+        object:
+          type: string
+          const: image
+          default: image
+          readOnly: true
+        deleted:
+          type: boolean
+        name:
+          $ref: '#/components/schemas/Name'
+    ImageUploadResponse:
+      allOf:
+      - $ref: '#/components/schemas/ImageScope'
+      - type: object
+        required:
+        - object
+        - upload_status
+        - created_at
+        properties:
+          object:
+            type: string
+            const: image
+            default: image
+            readOnly: true
+          upload_status:
+            $ref: '#/components/schemas/ImageUploadStatus'
+          sha256:
+            type:
+            - string
+            - 'null'
+            maxLength: 64
+            minLength: 64
+            pattern: ^[a-f0-9]{64}$
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
+    imageResourcePath_ImageId:
+      type: string
+      description: 'A resource path for a image resource. Format: sfc:image:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:image:<account_id>:<workspace>:<name>
+      pattern: sfc:image:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    ImageUploadStatus:
+      type: string
+      enum:
+      - started
+      - uploading
+      - completed
+      - failed
+      - revoked
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    ImageDownloadResponse:
+      type: object
+      required:
+      - url
+      - expires_at
+      - sha256
+      - size
+      properties:
+        url:
+          type: string
+          description: Presigned download URL.
+        expires_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        sha256:
+          type: string
+          description: For integrity verification.
+          example: e3b0c44298fc1c149af...
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-f0-9]{64}$
+        size:
+          type: integer
+          format: u-int64
+          description: Image size in bytes.
+          minimum: 0
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    UploadPartResponse:
+      type: object
+      required:
+      - url
+      - expires_at
+      properties:
+        url:
+          type: string
+          description: Presigned URL to upload the part.
+        expires_at:
+          $ref: '#/components/schemas/UnixEpoch'
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

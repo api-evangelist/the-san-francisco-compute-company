@@ -1,0 +1,705 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Instance SKUs API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Instance SKUs
+paths:
+  /preview/v2/instance_skus:
+    get:
+      tags:
+      - Instance SKUs
+      summary: List instance SKUs
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List the instance SKUs available on the market with their properties.'
+      operationId: list_instance_skus
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of results to return (1-200, default 50).
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Cursor for forward pagination (from a previous response's `cursor` field).
+        required: false
+        schema:
+          $ref: '#/components/schemas/InstanceSkusCursor'
+      - name: ending_before
+        in: query
+        description: Cursor for backward pagination.
+        required: false
+        schema:
+          $ref: '#/components/schemas/InstanceSkusCursor'
+      responses:
+        '200':
+          description: Paginated list of instance SKUs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInstanceSkusResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - bearer_auth: []
+  /preview/v2/instance_skus/availability:
+    get:
+      tags:
+      - Instance SKUs
+      summary: List instance-SKU availability
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        The purchasable-capacity schedule of every instance SKU. Each enshrined property is accepted as an equality filter.'
+      operationId: list_instance_sku_availability
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of results to return (1-200, default 50).
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Cursor for forward pagination (from a previous response's `cursor` field).
+        required: false
+        schema:
+          $ref: '#/components/schemas/InstanceSkusCursor'
+      - name: ending_before
+        in: query
+        description: Cursor for backward pagination.
+        required: false
+        schema:
+          $ref: '#/components/schemas/InstanceSkusCursor'
+      - name: id
+        in: query
+        description: Filter to a single SKU by id.
+        required: false
+        schema:
+          $ref: '#/components/schemas/InstanceSkuId'
+      - name: region
+        in: query
+        description: Filter by region, e.g. `europe-north1`.
+        required: false
+        schema:
+          type: string
+      - name: availability_zone
+        in: query
+        description: Filter by availability zone, e.g. `a`.
+        required: false
+        schema:
+          type: string
+      - name: accelerator
+        in: query
+        description: Filter by accelerator, e.g. `h100`.
+        required: false
+        schema:
+          type: string
+      - name: form_factor
+        in: query
+        description: Filter by accelerator form factor, e.g. `sxm`.
+        required: false
+        schema:
+          type: string
+      - name: rdma_type
+        in: query
+        description: Filter by RDMA type (`infiniband` or `roce`).
+        required: false
+        schema:
+          type: string
+      - name: num_accelerators
+        in: query
+        description: Filter by accelerators per node, e.g. `8`.
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          minimum: 0
+      - name: num_vcpus
+        in: query
+        description: Filter by vCPUs per node, e.g. `56`.
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          minimum: 0
+      - name: memory
+        in: query
+        description: Filter by total system memory in bytes.
+        required: false
+        schema:
+          type: integer
+          format: u-int64
+          minimum: 0
+      - name: local_storage
+        in: query
+        description: Filter by total local storage in bytes.
+        required: false
+        schema:
+          type: integer
+          format: u-int64
+          minimum: 0
+      - name: supports_public_ipv4
+        in: query
+        description: Filter by public-IPv4 capability.
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Paginated per-SKU availability.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInstanceSkuAvailabilityResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - bearer_auth: []
+  /preview/v2/instance_skus/{id}:
+    get:
+      tags:
+      - Instance SKUs
+      summary: Get instance SKU
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Retrieve an instance SKU by ID, including its properties.'
+      operationId: get_instance_sku
+      parameters:
+      - name: id
+        in: path
+        description: Instance SKU ID
+        required: true
+        schema:
+          $ref: '#/components/schemas/InstanceSkuId'
+      responses:
+        '200':
+          description: Instance SKU details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstanceSku'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Instance SKU not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - bearer_auth: []
+  /preview/v2/instance_skus/{id}/availability:
+    get:
+      tags:
+      - Instance SKUs
+      summary: Get instance-SKU availability
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        The purchasable-capacity schedule of one instance SKU.'
+      operationId: get_instance_sku_availability
+      parameters:
+      - name: id
+        in: path
+        description: Instance SKU ID
+        required: true
+        schema:
+          $ref: '#/components/schemas/InstanceSkuId'
+      responses:
+        '200':
+          description: The SKU's availability.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstanceSkuAvailability'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Instance SKU not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - bearer_auth: []
+components:
+  schemas:
+    InstanceSkusCursor:
+      type: string
+      examples:
+      - iskuc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^iskuc_[A-Za-z0-9_-]+$
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    InstanceSkuAvailability:
+      type: object
+      description: One instance SKU's purchasable-capacity schedule.
+      required:
+      - object
+      - instance_sku
+      - schedule
+      properties:
+        object:
+          type: string
+          const: instance_sku_availability
+          default: instance_sku_availability
+          readOnly: true
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuSummary'
+        schedule:
+          $ref: '#/components/schemas/Schedule'
+          description: Node counts available for purchase over time. Empty when the SKU has no published availability.
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    Schedule:
+      type: array
+      items:
+        $ref: '#/components/schemas/ScheduleEntry'
+      description: 'Node count over time, as a list of `[start_at, end_at)` time ranges.
+
+
+        Example: 5 nodes from t=0 to t=3600 is `[{"start_at": 0, "end_at": 3600, "node_count": 5}]`.
+
+
+        `start_at` and `end_at` must be 60-second aligned, `node_count` must be non-negative. On non-final entries, `end_at` may be omitted (inferred from the next entry''s `start_at`); gaps fill with `node_count: 0`.'
+    ScheduleEntry:
+      type: object
+      description: A `[start_at, end_at)` time range with a fixed `node_count`. `end_at` is `null` only on the final entry, marking an unbounded tail.
+      required:
+      - start_at
+      - node_count
+      properties:
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        end_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        node_count:
+          type: integer
+          format: int32
+    InstanceSkuSummary:
+      type: object
+      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+    ListInstanceSkuAvailabilityResponse:
+      type: object
+      description: Paginated per-SKU availability returned by `GET /v2/instance_skus/availability`.
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/InstanceSkusCursor'
+            description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceSkuAvailability'
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ListInstanceSkusResponse:
+      type: object
+      description: Paginated list of instance SKUs returned by `GET /v2/instance_skus`.
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/InstanceSkusCursor'
+            description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceSku'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    InstanceSku:
+      type: object
+      description: Instance SKU details. See [the instance SKUs guide](https://docs.sfcompute.com/preview/instance-skus).
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+          description: A short, unique, human-recognizable name for this SKU, e.g. `richmond`. For display only - reference the SKU by `id`.
+        region:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: string
+                description: The geographic region where the hardware is located, e.g. `europe-north1`.
+              display_value:
+                type: string
+        availability_zone:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: string
+                description: An independent failure domain within a region, e.g. `a`.
+              display_value:
+                type: string
+        accelerator:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: string
+                description: The AI accelerator chip model, e.g. `h100`.
+              display_value:
+                type: string
+        form_factor:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: string
+                description: The accelerator's physical form factor and host interface, e.g. `sxm`.
+              display_value:
+                type: string
+        rdma_type:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: string
+                description: The RDMA technology available on the node.
+                enum:
+                - infiniband
+                - roce
+              display_value:
+                type: string
+        num_accelerators:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: integer
+                format: u-int32
+                description: The number of accelerator chips per node.
+                minimum: 0
+              display_value:
+                type: string
+        num_vcpus:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: integer
+                format: u-int32
+                description: The number of vCPUs per node, including hyperthreads.
+                minimum: 0
+              display_value:
+                type: string
+        memory:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: integer
+                format: u-int64
+                description: The total system memory per node, in bytes.
+                minimum: 0
+              display_value:
+                type: string
+        local_storage:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: integer
+                format: u-int64
+                description: The total local storage available to the VM, in bytes.
+                minimum: 0
+              display_value:
+                type: string
+        supports_public_ipv4:
+          oneOf:
+          - type: 'null'
+          - type: object
+            required:
+            - value
+            - display_value
+            properties:
+              value:
+                type: boolean
+                description: Whether the node provides a public IPv4 address.
+              display_value:
+                type: string
+        audience_hint:
+          type:
+          - string
+          - 'null'
+          description: Set when this SKU is not generally available; absent means public. The value is a display string explaining the restriction (e.g. an early-access or internal designation). Treat it as free text, not a stable enum.
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

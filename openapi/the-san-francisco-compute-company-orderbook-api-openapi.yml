@@ -1,0 +1,682 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Orderbook API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Orderbook
+  description: 'Read-only orderbook visibility: bid/ask spread, depth, open and filled orders, and historical fills, keyed on hardware requirements + delivery window.'
+paths:
+  /preview/v2/orderbook/depth:
+    get:
+      tags:
+      - Orderbook
+      summary: Get market depth
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Depth of book for the given requirements and delivery window, aggregated by instance SKU and price level. Individual orders and participants are not exposed.'
+      operationId: get_orderbook_depth
+      parameters:
+      - name: requirements
+        in: query
+        description: URL-safe `field[:op]:value` triples joined by `;`.
+        required: false
+        schema:
+          type: string
+        example: accelerator:H100
+      - name: start_at
+        in: query
+        description: Start of the delivery window.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1746057600
+      - name: end_at
+        in: query
+        description: End of the delivery window.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1746662400
+      - name: depth
+        in: query
+        description: Maximum levels returned per side. Clamped to [1, 100]. Default 20.
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 20
+          maximum: 100
+          minimum: 1
+      responses:
+        '200':
+          description: Market depth.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderbookDepthResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/orderbook/fills:
+    get:
+      tags:
+      - Orderbook
+      summary: List market fills
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        All contracts that filled on hardware meeting the requirements for the given delivery window, sorted newest first. One row per fill (contract), including the instance SKU. Participant identity is never exposed.'
+      operationId: list_orderbook_fills
+      parameters:
+      - name: requirements
+        in: query
+        description: URL-safe `field[:op]:value` triples joined by `;`.
+        required: false
+        schema:
+          type: string
+        example: accelerator:H100
+      - name: start_at
+        in: query
+        description: Start of the delivery window.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1746057600
+      - name: end_at
+        in: query
+        description: End of the delivery window.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1746662400
+      - name: since_at
+        in: query
+        description: Lower bound on the contract's `created_at` (when the fill was recorded). Unix epoch seconds. Defaults to `now - 7d`. Must be no more than 30 days before `now`; older values return 422.
+        required: false
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1745452800
+      - name: limit
+        in: query
+        description: Maximum results to return. Clamped to [1, 200]. Default 50.
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Set to the response's `cursor` to fetch the next (older) page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrderbookFillsCursor'
+      responses:
+        '200':
+          description: Paginated list of fills.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrderbookFillsResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/orderbook/quote:
+    get:
+      tags:
+      - Orderbook
+      summary: Get market quote
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Top-of-book quote (best bid + best ask) for the given requirements and delivery window. Returned price levels include the matching instance SKU.'
+      operationId: get_orderbook_quote
+      parameters:
+      - name: requirements
+        in: query
+        description: URL-safe `field[:op]:value` triples joined by `;`.
+        required: false
+        schema:
+          type: string
+        example: accelerator:H100
+      - name: start_at
+        in: query
+        description: Start of the delivery window.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1746057600
+      - name: end_at
+        in: query
+        description: End of the delivery window.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1746662400
+      responses:
+        '200':
+          description: Market quote.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderbookQuoteResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/orderbook/windows:
+    get:
+      tags:
+      - Orderbook
+      summary: List market windows
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List every instance SKU and delivery window with resting orders matching the requirements, within the given time range. Each row is a summary; use /quote or /depth for detail on a specific SKU window.'
+      operationId: list_orderbook_windows
+      parameters:
+      - name: requirements
+        in: query
+        description: URL-safe `field[:op]:value` triples joined by `;`.
+        required: false
+        schema:
+          type: string
+        example: accelerator:H100
+      - name: range_start_at
+        in: query
+        description: Start of the delivery-window range to browse. Unix epoch seconds, minute-aligned.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1746057600
+      - name: range_end_at
+        in: query
+        description: End of the delivery-window range to browse. Unix epoch seconds, minute-aligned, must be > `range_start_at`.
+        required: true
+        schema:
+          $ref: '#/components/schemas/UnixEpoch'
+        example: 1748649600
+      - name: limit
+        in: query
+        description: Maximum results to return. Clamped to [1, 200]. Default 50.
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Set to the response's `cursor` to fetch the next page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/OrderbookWindowsCursor'
+      responses:
+        '200':
+          description: Active windows in the range.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrderbookWindowsResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    OrderbookFillsCursor:
+      type: string
+      examples:
+      - mfilc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^mfilc_[A-Za-z0-9_-]+$
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    OrderbookWindowsCursor:
+      type: string
+      examples:
+      - mwin_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^mwin_[A-Za-z0-9_-]+$
+    Schedule:
+      type: array
+      items:
+        $ref: '#/components/schemas/ScheduleEntry'
+      description: 'Node count over time, as a list of `[start_at, end_at)` time ranges.
+
+
+        Example: 5 nodes from t=0 to t=3600 is `[{"start_at": 0, "end_at": 3600, "node_count": 5}]`.
+
+
+        `start_at` and `end_at` must be 60-second aligned, `node_count` must be non-negative. On non-final entries, `end_at` may be omitted (inferred from the next entry''s `start_at`); gaps fill with `node_count: 0`.'
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    OrderbookFill:
+      type: object
+      description: 'A single trade: instance SKU, execution rate, delivered nodes over time, and the time it was recorded.'
+      required:
+      - instance_sku
+      - dollars_per_node_hour
+      - allocation_schedule_delta
+      - filled_at
+      properties:
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+          description: Instance SKU that filled.
+        dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+          description: Execution rate in dollars per node-hour.
+        allocation_schedule_delta:
+          $ref: '#/components/schemas/Schedule'
+          description: Nodes delivered by this fill over time. Flat for a rectangular fill; piecewise when the delivered shape varies.
+        filled_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: When the fill was recorded.
+    OrderbookQuoteResponse:
+      type: object
+      description: 'Top-of-book snapshot: the highest resting buy (`best_bid`) and lowest resting sell (`best_ask`) for the requested window. Either side may be absent if no orders are resting on it.'
+      required:
+      - requirements
+      - start_at
+      - end_at
+      - requested_at
+      properties:
+        requirements:
+          $ref: '#/components/schemas/Requirements'
+          description: The hardware requirements the book was filtered by.
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Start of the delivery window the book covers.
+        end_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: End of the delivery window the book covers.
+        requested_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Server time when the book was sampled.
+        best_bid:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PriceLevel'
+            description: Highest resting buy. Omitted if no bids are resting. If multiple SKUs tie at the best bid price, this is the lowest instance SKU at that price; use `/depth` to inspect every SKU at the price level.
+        best_ask:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PriceLevel'
+            description: Lowest resting sell. Omitted if no asks are resting. If multiple SKUs tie at the best ask price, this is the lowest instance SKU at that price; use `/depth` to inspect every SKU at the price level.
+    OrderbookWindow:
+      type: object
+      description: 'Summary row: one instance SKU and delivery window with at least one resting order matching the requested filter.'
+      required:
+      - instance_sku
+      - start_at
+      - end_at
+      - duration_hours
+      - total_bid_order_count
+      - total_ask_order_count
+      properties:
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        end_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        duration_hours:
+          type: integer
+          format: int64
+          description: Duration of the window in whole hours.
+          example: 168
+        total_bid_order_count:
+          type: integer
+          format: int64
+          description: Number of resting bid orders at this window.
+          example: 3
+        total_ask_order_count:
+          type: integer
+          format: int64
+          description: Number of resting ask orders at this window.
+          example: 5
+        best_bid:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PriceLevel'
+            description: Top-of-book bid. Omitted when no resting bids.
+        best_ask:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PriceLevel'
+            description: Top-of-book ask. Omitted when no resting asks.
+    ScheduleEntry:
+      type: object
+      description: A `[start_at, end_at)` time range with a fixed `node_count`. `end_at` is `null` only on the final entry, marking an unbounded tail.
+      required:
+      - start_at
+      - node_count
+      properties:
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        end_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        node_count:
+          type: integer
+          format: int32
+    PriceLevel:
+      type: object
+      description: One price level in the order book — orders sharing the same instance SKU and per-node-hour rate are summed into a single entry.
+      required:
+      - instance_sku
+      - dollars_per_node_hour
+      - allocation_schedule_delta
+      properties:
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+          description: Instance SKU whose orders contributed to this price level.
+        dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+          description: Per-node-hour rate for orders at this level.
+        allocation_schedule_delta:
+          $ref: '#/components/schemas/Schedule'
+          description: Resting (unfilled) nodes at this rate over time. Flat for a fully-unfilled rectangular order; piecewise when orders are partially filled.
+    Requirements:
+      type: object
+      description: 'Key/value filters on instance SKU properties.
+
+
+        Valid keys and values are published at `GET /v2/instance_sku_property_catalog`.
+
+
+        Empty map = no constraints.'
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/Name'
+      propertyNames:
+        type: string
+        examples:
+        - my-resource-name
+        maxLength: 255
+        minLength: 1
+        pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+      example:
+        accelerator:
+        - H100
+    ListOrderbookFillsResponse:
+      type: object
+      description: Paginated list of historical fills, newest first.
+      required:
+      - object
+      - requirements
+      - start_at
+      - end_at
+      - requested_at
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        requirements:
+          $ref: '#/components/schemas/Requirements'
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        end_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        requested_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Server time when the fills were sampled.
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/OrderbookFillsCursor'
+            description: Pass as `starting_after` to fetch the next page.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderbookFill'
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    OrderbookDepthResponse:
+      type: object
+      description: Depth of book for one delivery window. Bids descending (highest first), asks ascending (lowest first). Either array may be empty when no orders rest on that side.
+      required:
+      - requirements
+      - start_at
+      - end_at
+      - requested_at
+      - bids
+      - asks
+      properties:
+        requirements:
+          $ref: '#/components/schemas/Requirements'
+          description: The hardware requirements the book was filtered by.
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Start of the delivery window the book covers.
+        end_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: End of the delivery window the book covers.
+        requested_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Server time when the book was sampled.
+        bids:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLevel'
+          description: Bids sorted descending by rate (best bid first).
+        asks:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLevel'
+          description: Asks sorted ascending by rate (best ask first).
+    ListOrderbookWindowsResponse:
+      type: object
+      description: Paginated list of active SKU windows, sorted by `(start_at, end_at, instance_sku)` ascending.
+      required:
+      - object
+      - requirements
+      - range_start_at
+      - range_end_at
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        requirements:
+          $ref: '#/components/schemas/Requirements'
+        range_start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        range_end_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/OrderbookWindowsCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderbookWindow'
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    DollarsPerNodeHour:
+      type: string
+      description: Price rate in dollars per node-hour.
+      examples:
+      - '2.500000'
+      pattern: ^\d+\.\d+$
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

@@ -1,0 +1,283 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Instance SKU Catalog API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Instance SKU Catalog
+  description: Browse available instance SKU property definitions.
+paths:
+  /preview/v2/instance_sku_property_catalog:
+    get:
+      tags:
+      - Instance SKU Catalog
+      summary: List instance SKU property catalog
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List every property key and its allowed values. Use the keys and values here when filling in `requirements` on orders and procurements.'
+      operationId: list_instance_sku_property_catalog
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of results to return (1-200, default 50).
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Cursor for forward pagination (from a previous response's `cursor` field).
+        required: false
+        schema:
+          type: string
+      - name: ending_before
+        in: query
+        description: Cursor for backward pagination.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Paginated property catalog.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListInstanceSkuPropertyCatalogResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      security:
+      - bearer_auth: []
+components:
+  schemas:
+    InstanceSkuEnumerationValue:
+      type: object
+      description: One allowed value for an enumeration-typed property key.
+      required:
+      - name
+      - display_name
+      - description
+      - stable_at
+      properties:
+        name:
+          $ref: '#/components/schemas/Name'
+        display_name:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+        documentation_link:
+          type:
+          - string
+          - 'null'
+        stable_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        deprecated_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        deprecation_info:
+          type:
+          - string
+          - 'null'
+          description: Migration guidance shown when the value is deprecated.
+    ListInstanceSkuPropertyCatalogResponse:
+      type: object
+      description: Paginated list of property-catalog entries returned by `GET /v2/instance_sku_property_catalog`.
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceSkuPropertyDefinition'
+    InstanceSkuPropertyDefinition:
+      oneOf:
+      - type: object
+        required:
+        - key
+        - values
+        - type
+        properties:
+          key:
+            $ref: '#/components/schemas/InstanceSkuPropertyKey'
+          values:
+            type: array
+            items:
+              $ref: '#/components/schemas/InstanceSkuEnumerationValue'
+          type:
+            type: string
+            const: enumeration
+            default: enumeration
+            readOnly: true
+      description: A catalog entry describing a property key together with its allowed enumeration values.
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    InstanceSkuPropertyKey:
+      type: object
+      description: A property key describing something about an instance SKU (e.g. `accelerator`).
+      required:
+      - name
+      - display_name
+      - description
+      - stable_at
+      properties:
+        name:
+          $ref: '#/components/schemas/Name'
+        display_name:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+        documentation_link:
+          type:
+          - string
+          - 'null'
+          description: Link to a spec sheet or further documentation.
+        stable_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        deprecated_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        deprecation_info:
+          type:
+          - string
+          - 'null'
+          description: Migration guidance shown when the key is deprecated.
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

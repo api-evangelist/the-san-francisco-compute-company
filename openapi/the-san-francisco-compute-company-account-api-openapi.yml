@@ -1,0 +1,209 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Account
+  description: The authenticated account and logged-in user.
+paths:
+  /preview/v2/me:
+    get:
+      tags:
+      - Account
+      summary: Get the authenticated account and logged-in user
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Returns the authenticated account along with details about the logged-in user that issued the calling token.
+
+
+        The `user` field is `null` when authenticated with a service token.'
+      operationId: getMe
+      responses:
+        '200':
+          description: Account and logged-in user information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Account not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UserId:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    userResourcePath_UserId:
+      type: string
+      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
+      examples:
+      - sfc:user:<name>
+      pattern: sfc:user:[a-zA-Z0-9._-]+
+    UserResponse:
+      type: object
+      required:
+      - object
+      - id
+      - resource_path
+      - created_at
+      properties:
+        object:
+          type: string
+          const: user
+          default: user
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/UserId'
+        resource_path:
+          $ref: '#/components/schemas/userResourcePath_UserId'
+        created_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        email:
+          type:
+          - string
+          - 'null'
+          description: The member's primary email, or `null` if they have no recorded email identity.
+        first_name:
+          type:
+          - string
+          - 'null'
+          description: The member's first name, or `null` if not recorded.
+        last_name:
+          type:
+          - string
+          - 'null'
+          description: The member's last name, or `null` if not recorded.
+    MeResponse:
+      type: object
+      description: 'Response body for `GET /v2/me`: the authenticated account plus, when the caller is a human user, details about the logged-in user that issued the calling token.'
+      required:
+      - object
+      - account_id
+      - created_at
+      properties:
+        object:
+          type: string
+          const: account
+          default: account
+          readOnly: true
+        account_id:
+          type: string
+          description: The account identifier.
+          example: acme-corp
+        created_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: When the account was created, as a Unix epoch timestamp in seconds.
+        entity_type:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/EntityType'
+            description: Whether the account is for personal use or a business, or `null` if it hasn't been set yet.
+        user:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UserResponse'
+            description: The logged-in user that issued the calling token. `null` when authenticated with a service token, which acts on behalf of the account rather than an individual user.
+    EntityType:
+      type: string
+      description: Whether the account is for personal use or a business. Captured once at onboarding and fixed thereafter (write-once).
+      enum:
+      - personal
+      - business
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

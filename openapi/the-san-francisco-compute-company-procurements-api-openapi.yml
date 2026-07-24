@@ -1,0 +1,794 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Procurements API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Procurements
+  description: Market automations that maintain capacity by placing buy/sell orders.
+paths:
+  /preview/v2/procurements:
+    post:
+      tags:
+      - Procurements
+      summary: Create procurement
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Create a market automation that maintains capacity by placing buy/sell orders.'
+      operationId: create_procurement
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProcurementRequest'
+        required: true
+      responses:
+        '201':
+          description: Procurement created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcurementResponse'
+        '400':
+          description: Validation error (e.g. duplicate name).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '409':
+          description: Pool and instance SKU already have a procurement or spot deployment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Procurements
+      summary: List procurements
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List all procurements.'
+      operationId: list_procurements
+      parameters:
+      - name: workspace
+        in: query
+        description: Scope the returned list to a single workspace (ID, resource path, or name). Without it, the returned list spans every workspace the caller has requisite permissions on.
+        required: false
+        schema:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+      - name: pool
+        in: query
+        description: Filter by pool.
+        required: false
+        schema:
+          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 50
+          minimum: 1
+      - name: starting_after
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProcurementsCursor'
+      - name: ending_before
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/ProcurementsCursor'
+      responses:
+        '200':
+          description: Paginated list of procurements.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProcurementsResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/procurements/{id}:
+    delete:
+      tags:
+      - Procurements
+      summary: Delete procurement
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Delete a procurement. Standing orders are cancelled automatically.'
+      operationId: delete_procurement
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:procurement:acme:prod:my-procurement' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - proc_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (proc_[0-9a-zA-Z_-]{1,21})|(sfc:procurement:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '204':
+          description: Procurement deleted.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Procurement not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Procurements
+      summary: Get procurement
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Retrieve a procurement by ID or name.'
+      operationId: get_procurement
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:procurement:acme:prod:my-procurement' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - proc_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (proc_[0-9a-zA-Z_-]{1,21})|(sfc:procurement:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '200':
+          description: Procurement details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcurementResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Procurement not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    patch:
+      tags:
+      - Procurements
+      summary: Update procurement
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Update a procurement''s configuration.'
+      operationId: patch_procurement
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:procurement:acme:prod:my-procurement' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - proc_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (proc_[0-9a-zA-Z_-]{1,21})|(sfc:procurement:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchProcurementRequest'
+        required: true
+      responses:
+        '200':
+          description: Procurement updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProcurementResponse'
+        '400':
+          description: Validation error (e.g. duplicate name).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Procurement not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ProcurementScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/ProcurementId'
+        resource_path:
+          $ref: '#/components/schemas/procurementResourcePath_ProcurementId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    AutomationStatus:
+      type: string
+      enum:
+      - info
+      - warning
+      - error
+    ProcurementsCursor:
+      type: string
+      examples:
+      - procc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^procc_[A-Za-z0-9_-]+$
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
+    ConflictError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: conflict
+              default: conflict
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ResourcePathOrId_PoolId:
+      type: string
+      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    BadRequestError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: invalid_request_error
+              default: invalid_request_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ProcurementId:
+      type: string
+      examples:
+      - proc_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: proc_[0-9a-zA-Z_-]{1,21}
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ProcurementResponse:
+      allOf:
+      - $ref: '#/components/schemas/ProcurementScope'
+      - type: object
+        required:
+        - object
+        - target
+        - capacity
+        - pool
+        - instance_sku
+        - min_sell_price_dollars_per_node_hour
+        - max_buy_price_dollars_per_node_hour
+        - managed_window_minutes
+        - enabled
+        - status
+        - created_at
+        - updated_at
+        properties:
+          object:
+            type: string
+            const: procurement
+            default: procurement
+            readOnly: true
+          target:
+            $ref: '#/components/schemas/ProcurementTarget'
+          capacity:
+            $ref: '#/components/schemas/CapacitySummary'
+            description: Deprecated — use `pool`.
+          pool:
+            $ref: '#/components/schemas/PoolSummary'
+          instance_sku:
+            $ref: '#/components/schemas/InstanceSkuSummary'
+            description: Instance SKU this procurement's orders are pinned to. Carries the SKU's human-readable name when one is registered.
+          min_sell_price_dollars_per_node_hour:
+            $ref: '#/components/schemas/DollarsPerNodeHour'
+            description: Minimum price to sell compute for ($/node-hour). Must contain decimal point. Will be rounded to nearest multiple of $0.000060.
+          max_buy_price_dollars_per_node_hour:
+            $ref: '#/components/schemas/DollarsPerNodeHour'
+            description: Maximum price to buy compute ($/node-hour). Must contain decimal point. Will be rounded to nearest multiple of $0.000060.
+          managed_window_minutes:
+            type: integer
+            format: int32
+            description: How far ahead (in minutes) the procurement buys and sells compute. Higher values secure compute further in advance but commit to longer windows that may need to be sold when scaling down, potentially at a loss. Lower values reduce waste but risk compute being unavailable. The window contains this many complete minutes, beginning with the next minute. Buying power must cover each order's full duration.
+            maximum: 129600
+            minimum: 1
+          enabled:
+            type: boolean
+            description: Enable/disable the procurement. Disabling cancels all standing orders.
+          status:
+            $ref: '#/components/schemas/ReconciliationStatus'
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
+          updated_at:
+            $ref: '#/components/schemas/UnixEpoch'
+    procurementResourcePath_ProcurementId:
+      type: string
+      description: 'A resource path for a procurement resource. Format: sfc:procurement:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:procurement:<account_id>:<workspace>:<name>
+      pattern: sfc:procurement:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    PoolId:
+      type: string
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: pool_[0-9a-zA-Z_-]{1,21}
+    ReconciliationStatus:
+      type: object
+      required:
+      - state
+      - message
+      properties:
+        state:
+          $ref: '#/components/schemas/AutomationStatus'
+        message:
+          type: string
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    PoolSummary:
+      type: object
+      description: A pool referenced by id and name.
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/PoolId'
+        name:
+          $ref: '#/components/schemas/Name'
+    NodeCountTag:
+      type: string
+      const: node_count
+      default: node_count
+      readOnly: true
+    CapacityId:
+      oneOf:
+      - type: string
+        examples:
+        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: cap_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: pool_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    ProcurementTarget:
+      oneOf:
+      - $ref: '#/components/schemas/NodeCountTag'
+      - type: integer
+        format: u-int64
+        minimum: 0
+    CapacitySummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/CapacityId'
+        name:
+          $ref: '#/components/schemas/Name'
+    InstanceSkuSummary:
+      type: object
+      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+    DollarsPerNodeHour:
+      type: string
+      description: Price rate in dollars per node-hour.
+      examples:
+      - '2.500000'
+      pattern: ^\d+\.\d+$
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    CreateProcurementRequest:
+      type: object
+      required:
+      - target
+      - pool
+      - instance_sku
+      - min_sell_price_dollars_per_node_hour
+      - max_buy_price_dollars_per_node_hour
+      - managed_window_minutes
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        target:
+          $ref: '#/components/schemas/ProcurementTarget'
+        pool:
+          type: string
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+          description: Instance SKU the procurement's orders will fill on. Rejected at submission if the SKU id is not registered.
+        min_sell_price_dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+          description: Minimum price to sell compute for ($/node-hour). Must contain decimal point. Will be rounded to nearest multiple of $0.000060.
+        max_buy_price_dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+          description: Maximum price to buy compute ($/node-hour). Must contain decimal point. Will be rounded to nearest multiple of $0.000060.
+        managed_window_minutes:
+          type: integer
+          format: int32
+          description: How far ahead (in minutes) the procurement buys and sells compute. Higher values secure compute further in advance but commit to longer windows that may need to be sold when scaling down, potentially at a loss. Lower values reduce waste but risk compute being unavailable. The window contains this many complete minutes, beginning with the next minute. Buying power must cover each order's full duration.
+          maximum: 129600
+          minimum: 1
+        enabled:
+          type: boolean
+          description: Enable/disable the procurement.
+          default: true
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    ListProcurementsResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ProcurementsCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProcurementResponse'
+    PatchProcurementRequest:
+      type: object
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        instance_sku:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/InstanceSkuId'
+            description: Replace the procurement's instance SKU. Omit to leave unchanged.
+        min_sell_price_dollars_per_node_hour:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/DollarsPerNodeHour'
+            description: Minimum price to sell compute for ($/node-hour). Must contain decimal point. Will be rounded to nearest multiple of $0.000060.
+        max_buy_price_dollars_per_node_hour:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/DollarsPerNodeHour'
+            description: Maximum price to buy compute ($/node-hour). Must contain decimal point. Will be rounded to nearest multiple of $0.000060.
+        managed_window_minutes:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          description: How far ahead (in minutes) the procurement buys and sells compute. Higher values secure compute further in advance but commit to longer windows that may need to be sold when scaling down, potentially at a loss. Lower values reduce waste but risk compute being unavailable. The window contains this many complete minutes, beginning with the next minute. Buying power must cover each order's full duration.
+          maximum: 129600
+          minimum: 1
+        enabled:
+          type:
+          - boolean
+          - 'null'
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

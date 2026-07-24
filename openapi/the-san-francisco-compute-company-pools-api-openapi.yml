@@ -1,0 +1,1090 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Pools API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Pools
+  description: A bucket of owned compute balance over time.
+paths:
+  /preview/v2/pool_transfers:
+    post:
+      tags:
+      - Pools
+      summary: Create pool transfer
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Transfer some or all of one pool into another'
+      operationId: create_pool_transfer
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        description: Unique key for idempotent transfer creation.
+        required: false
+        schema:
+          type:
+          - string
+          - 'null'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2.CreatePoolTransferRequest'
+        required: true
+      responses:
+        '202':
+          description: Pool transfer accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2.PoolTransferResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+        '503':
+          description: Service temporarily unavailable. Try again later.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailableError'
+    get:
+      tags:
+      - Pools
+      summary: List pool transfers
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List pool transfers for the caller''s organization.'
+      operationId: list_pool_transfers
+      parameters:
+      - name: pool
+        in: query
+        description: Filter by source or destination pool (repeatable). Returns transfers where the source or destination pool is any of the supplied pools.
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+        style: form
+        explode: true
+      - name: status
+        in: query
+        description: Filter by transfer status.
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2.PoolTransferStatus'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Set to the response's `cursor` to fetch the next page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/PoolTransfersCursor'
+      - name: ending_before
+        in: query
+        description: Set to the response's `cursor` to fetch the previous page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/PoolTransfersCursor'
+      responses:
+        '200':
+          description: Paginated list of pool transfers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2.ListPoolTransfersResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/pool_transfers/{id}:
+    get:
+      tags:
+      - Pools
+      summary: Get pool transfer
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Retrieve a pool transfer by ID.'
+      operationId: fetch_pool_transfer
+      parameters:
+      - name: id
+        in: path
+        description: Pool transfer ID
+        required: true
+        schema:
+          $ref: '#/components/schemas/PoolTransferId'
+        example: pxfr_abc123
+      responses:
+        '200':
+          description: Pool transfer details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2.PoolTransferResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Pool transfer not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/pools:
+    post:
+      tags:
+      - Pools
+      summary: Create pool
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Create a pool to hold compute.'
+      operationId: create_pool
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2.CreatePoolRequest'
+        required: true
+      responses:
+        '201':
+          description: Pool created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoolResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Pools
+      summary: List pools
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List all pools.'
+      operationId: list_pools
+      parameters:
+      - name: workspace
+        in: query
+        description: Scope the returned list to a single workspace (ID, resource path, or name). Without it, the returned list spans every workspace the caller has requisite permissions on.
+        required: false
+        schema:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+      - name: id
+        in: query
+        description: Filter by pool ID, resource path, or name (repeatable).
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+        style: form
+        explode: true
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 200
+          minimum: 1
+      - name: starting_after
+        in: query
+        description: Set to the response's `cursor` to fetch the next page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/PoolsCursor'
+      - name: ending_before
+        in: query
+        description: Set to the response's `cursor` to fetch the previous page.
+        required: false
+        schema:
+          $ref: '#/components/schemas/PoolsCursor'
+      - name: schedule_history_minutes
+        in: query
+        description: How many minutes of past schedule to include.
+        required: false
+        schema:
+          type: integer
+          format: u-int64
+          default: 0
+          maximum: 1440
+          minimum: 0
+      - name: tag
+        in: query
+        description: 'Filter by tag key-value pair (repeatable). Format: `key=value` (the `=` between key and value must be percent-encoded in the URL).'
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        style: form
+        explode: true
+      - name: tag_key
+        in: query
+        description: Filter by tag key existence (repeatable). Returns resources that have a tag with this key, regardless of the value.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        style: form
+        explode: true
+      responses:
+        '200':
+          description: Paginated list of pools.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPoolsResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/pools/{id}:
+    delete:
+      tags:
+      - Pools
+      summary: Delete pool
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Delete a pool. The pool must have no active orders, future allocations, active nodes, deployments, or procurements. Remove all dependencies before deleting.'
+      operationId: delete_pool
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      responses:
+        '204':
+          description: Pool deleted.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Pool not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Pool has active dependencies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Pools
+      summary: Get pool
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Retrieve a pool by ID, resource path, or name, including its compute schedule.'
+      operationId: fetch_pool
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      - name: schedule_history_minutes
+        in: query
+        description: How many minutes of past schedule to include.
+        required: false
+        schema:
+          type: integer
+          format: u-int64
+          default: 0
+          maximum: 1440
+          minimum: 0
+      responses:
+        '200':
+          description: Pool details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoolResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Pool not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    patch:
+      tags:
+      - Pools
+      summary: Update pool
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Update a pool. Omitted fields are left unchanged.'
+      operationId: update_pool
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+          examples:
+          - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+          pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2.PatchPoolRequest'
+        required: true
+      responses:
+        '200':
+          description: Pool updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoolResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Pool not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    DeploymentId:
+      type: string
+      examples:
+      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: depl_[0-9a-zA-Z_-]{1,21}
+    Schedule:
+      type: array
+      items:
+        $ref: '#/components/schemas/ScheduleEntry'
+      description: 'Node count over time, as a list of `[start_at, end_at)` time ranges.
+
+
+        Example: 5 nodes from t=0 to t=3600 is `[{"start_at": 0, "end_at": 3600, "node_count": 5}]`.
+
+
+        `start_at` and `end_at` must be 60-second aligned, `node_count` must be non-negative. On non-final entries, `end_at` may be omitted (inferred from the next entry''s `start_at`); gaps fill with `node_count: 0`.'
+    v2.CreatePoolRequest:
+      type: object
+      description: Create a pool to hold compute.
+      required:
+      - workspace
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+            description: Unique name for this pool.
+        workspace:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+          description: Workspace to create this pool in.
+        tags:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Tags'
+            description: Optional metadata tags for this pool.
+    PoolsCursor:
+      type: string
+      examples:
+      - poolc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^poolc_[A-Za-z0-9_-]+$
+    v2.CreatePoolTransferRequest:
+      type: object
+      description: Transfer some or all of one pool into another.
+      required:
+      - from_pool
+      - to_pool
+      - allocation_schedule_delta
+      - instance_sku
+      properties:
+        from_pool:
+          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+          description: Source pool (must belong to the authenticated caller).
+        to_pool:
+          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+          description: Destination pool (must belong to the authenticated caller).
+        allocation_schedule_delta:
+          $ref: '#/components/schemas/Schedule'
+          description: 'The transfer''s allocation schedule as constant-quantity rectangles. If the final entry does not have `end_at: null`, a zero-quantity unbounded tail is appended automatically.'
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+          description: Instance SKU the transfer applies to.
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    PoolTransferId:
+      oneOf:
+      - type: string
+        examples:
+        - pxfr_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: pxfr_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: cxfr_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    v2.PoolKind:
+      type: string
+      description: 'Pool kind determines what operations are allowed on a pool.
+
+
+        - `Market`: User-created pools. - `Originating`: Provider pools for selling compute. Cannot add compute   (buy orders/procurements). - `ReadOnly`: System-managed pools used for legacy compute, bare metal   contracts, and other. Cannot be modified through the API.'
+      enum:
+      - market
+      - originating
+      - read_only
+    PoolTransfersCursor:
+      type: string
+      examples:
+      - ptfrc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^ptfrc_[A-Za-z0-9_-]+$
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
+    ResourcePathOrId_PoolId:
+      type: string
+      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    ScheduleEntry:
+      type: object
+      description: A `[start_at, end_at)` time range with a fixed `node_count`. `end_at` is `null` only on the final entry, marking an unbounded tail.
+      required:
+      - start_at
+      - node_count
+      properties:
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        end_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        node_count:
+          type: integer
+          format: int32
+    ProcurementId:
+      type: string
+      examples:
+      - proc_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: proc_[0-9a-zA-Z_-]{1,21}
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ServiceUnavailableError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: service_unavailable
+              default: service_unavailable
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    PoolId:
+      type: string
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: pool_[0-9a-zA-Z_-]{1,21}
+    v2.ListPoolTransfersResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PoolTransfersCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2.PoolTransferResponse'
+    ListPoolsResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/PoolsCursor'
+            description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PoolResponse'
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    PoolResponse:
+      allOf:
+      - $ref: '#/components/schemas/PoolScope'
+      - type: object
+        required:
+        - object
+        - allocation_schedule
+        - created_at
+        properties:
+          object:
+            type: string
+            description: Discriminator for `/pools` responses.
+            const: pool
+            default: pool
+            readOnly: true
+          allocation_schedule:
+            $ref: '#/components/schemas/AllocationSchedule'
+            description: Allocation schedule of this pool. Add to the schedule by placing buy orders into this pool.
+          procurements:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProcurementSummary'
+            description: Active procurements targeting this pool.
+          deployments:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentSummary'
+            description: Active deployments targeting this pool.
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
+          tags:
+            oneOf:
+            - type: 'null'
+            - $ref: '#/components/schemas/Tags'
+              description: Metadata tags attached to this pool.
+      description: A pool — a container of owned compute allocation over time.
+    ProcurementSummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/ProcurementId'
+        name:
+          $ref: '#/components/schemas/Name'
+    v2.PoolTransferStatus:
+      type: string
+      description: Lifecycle status of a pool transfer.
+      enum:
+      - pending
+      - executed
+      - rejected
+    Tags:
+      type: object
+      additionalProperties:
+        type: string
+        examples:
+        - prod
+        maxLength: 256
+        pattern: ^[^,=]{0,256}$
+      propertyNames:
+        type: string
+        examples:
+        - env
+        maxLength: 128
+        minLength: 1
+        pattern: ^[^_,= ][^,= ]{0,127}$
+      examples:
+      - env: prod
+        team: infra
+      maxProperties: 50
+    v2.PoolTransferResponse:
+      type: object
+      description: A transfer of compute from one pool (`from_pool`) to another (`to_pool`).
+      required:
+      - object
+      - id
+      - status
+      - created_at
+      - from_pool
+      - to_pool
+      - instance_sku
+      - allocation_schedule_delta
+      properties:
+        object:
+          type: string
+          description: Discriminator for `/pool_transfers` responses.
+          const: pool_transfer
+          default: pool_transfer
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/PoolTransferId'
+        status:
+          $ref: '#/components/schemas/v2.PoolTransferStatus'
+        created_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        from_pool:
+          $ref: '#/components/schemas/PoolId'
+        to_pool:
+          $ref: '#/components/schemas/PoolId'
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuSummary'
+          description: Instance SKU the transfer applied to. Carries the SKU's human-readable name when one is registered.
+        rejected_reason:
+          type:
+          - string
+          - 'null'
+          description: Reason a pool transfer was rejected.
+        allocation_schedule_delta:
+          $ref: '#/components/schemas/Schedule'
+          description: 'The transfer''s allocation schedule, expanded into constant-quantity rectangles. The final rectangle has `end_at: null` (the unbounded tail); gaps are represented as explicit zero-quantity rectangles.'
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    v2.PatchPoolRequest:
+      type: object
+      description: Update a pool. Omitted fields are left unchanged.
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        tags:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Tags'
+            description: 'Metadata tags. Full replacement semantics: replaces all existing tags. Omit to leave tags unchanged. Set to `null` to clear all tags.'
+    InstanceSkuSummary:
+      type: object
+      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    DeploymentSummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/DeploymentId'
+        name:
+          $ref: '#/components/schemas/Name'
+    AllocationSchedule:
+      type: object
+      required:
+      - total
+      - by_instance_sku
+      properties:
+        total:
+          $ref: '#/components/schemas/Schedule'
+          description: Combined allocation schedule across all instance SKUs. Only includes current and future schedule.
+        by_instance_sku:
+          type: object
+          description: Allocation schedule keyed by instance SKU. Only includes current and future schedule.
+          additionalProperties:
+            $ref: '#/components/schemas/Schedule'
+          propertyNames:
+            oneOf:
+            - type: string
+              examples:
+              - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+              pattern: isku_[0-9a-zA-Z_-]{1,21}
+            - type: string
+              description: Legacy alias prefix; accepted on read, never emitted on write.
+              pattern: clus_[0-9a-zA-Z_-]{1,21}
+            description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    PoolScope:
+      type: object
+      description: 'A pool''s scope: its identifiers (`pool_` / `sfc:pool:` forms), owner, workspace, and kind, as the `/pools` endpoints present it.'
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      - kind
+      properties:
+        id:
+          $ref: '#/components/schemas/PoolId'
+        resource_path:
+          $ref: '#/components/schemas/poolResourcePath_PoolId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
+        kind:
+          $ref: '#/components/schemas/v2.PoolKind'
+    poolResourcePath_PoolId:
+      type: string
+      description: 'A resource path for a pool resource. Format: sfc:pool:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:pool:<account_id>:<workspace>:<name>
+      pattern: sfc:pool:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

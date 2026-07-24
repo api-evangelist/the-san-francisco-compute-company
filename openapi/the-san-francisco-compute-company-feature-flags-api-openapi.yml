@@ -1,0 +1,151 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Feature Flags API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Feature Flags
+paths:
+  /preview/v2/feature_flags:
+    get:
+      tags:
+      - Feature Flags
+      summary: List feature flags scoped to the caller
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List every user-visible feature flag whose audience matches the caller, along with whether the caller is currently enrolled and whether the flag is self-enrollable via `POST /v2/feature_flags/{feature_flag}`. Flags with `user_enroll = false` are read-only here. Flags not marked `user_visible` are hidden from this listing entirely.'
+      operationId: listUserFeatureFlags
+      responses:
+        '200':
+          description: Feature flags listed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUserFeatureFlagsResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+      security:
+      - bearer_auth: []
+  /preview/v2/feature_flags/{feature_flag}:
+    post:
+      tags:
+      - Feature Flags
+      summary: Enroll or unenroll the caller in a feature flag
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Set the caller''s enrollment state for a self-enrollable feature flag.'
+      operationId: setFeatureFlagEnrollment
+      parameters:
+      - name: feature_flag
+        in: path
+        description: Feature flag name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetEnrollmentRequest'
+        required: true
+      responses:
+        '200':
+          description: Enrollment updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetEnrollmentResponse'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Feature flag is not self-enrollable
+        '404':
+          description: Feature flag doesn't exist or is unavailable
+        '500':
+          description: Internal server error
+      security:
+      - bearer_auth: []
+components:
+  schemas:
+    SetEnrollmentResponse:
+      type: object
+      required:
+      - object
+      - feature_flag
+      - enrolled
+      properties:
+        object:
+          type: string
+          const: feature_flag
+          default: feature_flag
+          readOnly: true
+        feature_flag:
+          type: string
+        enrolled:
+          type: boolean
+    UserFeatureFlag:
+      type: object
+      required:
+      - object
+      - feature_flag
+      - description
+      - user_enroll
+      - enrolled
+      properties:
+        object:
+          type: string
+          const: feature_flag
+          default: feature_flag
+          readOnly: true
+        feature_flag:
+          type: string
+        description:
+          type: string
+        user_enroll:
+          type: boolean
+        enrolled:
+          type: boolean
+    ListUserFeatureFlagsResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFeatureFlag'
+        has_more:
+          type: boolean
+    SetEnrollmentRequest:
+      type: object
+      required:
+      - enrolled
+      properties:
+        enrolled:
+          type: boolean
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.

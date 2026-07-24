@@ -1,0 +1,938 @@
+openapi: 3.1.0
+info:
+  title: sfc-api Account Deployments API
+  description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
+  version: 0.1.0
+  x-apievangelist:
+    method: searched
+    generated: '2026-07-21'
+    source: Reconstructed from per-operation OpenAPI blocks published on https://docs.sfcompute.com/preview/api-reference/* (Mintlify). 65 pages merged; paths + components unioned verbatim.
+    note: Public preview API (subject to change). Base path /preview/v2 under server https://api.sfcompute.com.
+servers:
+- url: https://api.sfcompute.com
+security:
+- bearer_auth: []
+tags:
+- name: Deployments
+  description: Deployment automations that maintain a fleet of instances, including spot deployments that buy capacity up to a maximum price.
+paths:
+  /preview/v2/deployments:
+    post:
+      tags:
+      - Deployments
+      summary: Create deployment
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Create a generic deployment that uses capacity already owned in a pool, or a spot deployment that buys capacity for a specific instance SKU at or below a maximum rate.'
+      operationId: create_deployment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeploymentResourceRequest'
+        required: true
+      responses:
+        '201':
+          description: Deployment created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentResource'
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '409':
+          description: Pool and instance SKU already have an incompatible automation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Deployments
+      summary: List deployments
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        List all deployments.'
+      operationId: list_deployments
+      parameters:
+      - name: workspace
+        in: query
+        description: Filter by workspace.
+        required: true
+        schema:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+      - name: pool
+        in: query
+        description: Filter by pool.
+        required: false
+        schema:
+          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: u-int32
+          default: 50
+          maximum: 50
+          minimum: 1
+      - name: starting_after
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/DeploymentsCursor'
+      - name: ending_before
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/DeploymentsCursor'
+      responses:
+        '200':
+          description: Paginated list of deployments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentsResponse'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /preview/v2/deployments/{id}:
+    delete:
+      tags:
+      - Deployments
+      summary: Delete deployment
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Delete a deployment or spot deployment.'
+      operationId: delete_deployment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ResourcePathOrId_DeploymentId'
+          - $ref: '#/components/schemas/ResourcePathOrId_SpotDeploymentId'
+      responses:
+        '204':
+          description: Deployment deleted.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Deployment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    get:
+      tags:
+      - Deployments
+      summary: Get deployment
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Retrieve a deployment or spot deployment by ID or resource path.'
+      operationId: get_deployment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ResourcePathOrId_DeploymentId'
+          - $ref: '#/components/schemas/ResourcePathOrId_SpotDeploymentId'
+      responses:
+        '200':
+          description: Deployment details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentResource'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Deployment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    patch:
+      tags:
+      - Deployments
+      summary: Update deployment
+      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+
+
+        Update a deployment or spot deployment''s configuration.'
+      operationId: patch_deployment
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          oneOf:
+          - $ref: '#/components/schemas/ResourcePathOrId_DeploymentId'
+          - $ref: '#/components/schemas/ResourcePathOrId_SpotDeploymentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchDeploymentRequest'
+        required: true
+      responses:
+        '200':
+          description: Deployment updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentResource'
+        '400':
+          description: Deployment with this name already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '403':
+          description: Forbidden.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenError'
+        '404':
+          description: Deployment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: Validation failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnprocessableEntityError'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    DeploymentId:
+      type: string
+      examples:
+      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: depl_[0-9a-zA-Z_-]{1,21}
+    ResourcePathOrId_SpotDeploymentId:
+      type: string
+      description: A resource path like 'sfc:spot_deployment:acme:prod:my-spot_deployment' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - spot_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (spot_[0-9a-zA-Z_-]{1,21})|(sfc:spot_deployment:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    DeploymentScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/DeploymentId'
+        resource_path:
+          $ref: '#/components/schemas/deploymentResourcePath_DeploymentId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
+    SpotDeploymentId:
+      type: string
+      examples:
+      - spot_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: spot_[0-9a-zA-Z_-]{1,21}
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    CreateDeploymentResourceRequest:
+      oneOf:
+      - allOf:
+        - $ref: '#/components/schemas/CreateDeploymentRequest'
+        - type: object
+          description: Maintain the target number of instances using capacity already owned in the selected pool.
+          required:
+          - kind
+          properties:
+            kind:
+              type: string
+              const: generic
+              default: generic
+              readOnly: true
+        description: Maintain the target number of instances using capacity already owned in the selected pool.
+      - allOf:
+        - $ref: '#/components/schemas/CreateSpotDeploymentRequest'
+        - type: object
+          description: Buy capacity for a specific instance SKU at or below the maximum rate, then maintain the target number of instances on that capacity.
+          required:
+          - kind
+          properties:
+            kind:
+              type: string
+              const: spot
+              default: spot
+              readOnly: true
+        description: Buy capacity for a specific instance SKU at or below the maximum rate, then maintain the target number of instances on that capacity.
+    ListDeploymentsResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/DeploymentsCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentResource'
+    AutomationStatus:
+      type: string
+      enum:
+      - info
+      - warning
+      - error
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    SpotDeploymentResponse:
+      allOf:
+      - $ref: '#/components/schemas/SpotDeploymentScope'
+      - type: object
+        required:
+        - object
+        - pool
+        - instance_template
+        - instance_sku
+        - enabled
+        - target_instance_count
+        - max_buy_price_dollars_per_node_hour
+        - instance_name_template
+        - status
+        - created_at
+        - updated_at
+        properties:
+          object:
+            type: string
+            const: spot_deployment
+            default: spot_deployment
+            readOnly: true
+          pool:
+            $ref: '#/components/schemas/PoolSummary'
+          instance_template:
+            $ref: '#/components/schemas/InstanceTemplateSummary'
+          instance_sku:
+            $ref: '#/components/schemas/InstanceSkuSummary'
+            description: Instance SKU this spot deployment's orders are pinned to.
+          enabled:
+            type: boolean
+          target_instance_count:
+            type: integer
+            format: int32
+          max_buy_price_dollars_per_node_hour:
+            $ref: '#/components/schemas/DollarsPerNodeHour'
+            description: Maximum price to buy compute ($/node-hour).
+          instance_name_template:
+            $ref: '#/components/schemas/NameTemplate'
+          status:
+            $ref: '#/components/schemas/ReconciliationStatus'
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
+          updated_at:
+            $ref: '#/components/schemas/UnixEpoch'
+      description: A spot deployment buys compute up to a maximum price and runs instances on the secured pool.
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
+    DeploymentResource:
+      oneOf:
+      - $ref: '#/components/schemas/DeploymentResponse'
+      - $ref: '#/components/schemas/SpotDeploymentResponse'
+      discriminator:
+        propertyName: object
+        mapping:
+          deployment: '#/components/schemas/sfc-api_DeploymentResponse'
+          spot_deployment: '#/components/schemas/sfc-api_SpotDeploymentResponse'
+    ConflictError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: conflict
+              default: conflict
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ResourcePathOrId_PoolId:
+      type: string
+      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    BadRequestError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: invalid_request_error
+              default: invalid_request_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    NameTemplate:
+      type: string
+      description: 'A name template using {{variable}} syntax. Available variables: {{adjective}} (~128 random adjectives), {{noun}} (~128 random nouns), {{nanoid(N)}} (N-character alphanumeric identifier, 1 ≤ N ≤ 21). The template must produce enough unique combinations to avoid collisions — equivalent to at least the default template {{adjective}}-{{noun}}-{{nanoid(6)}} (~1 quadrillion possibilities). Must start with an alphanumeric character. Resolved names are limited to 255 characters.'
+      examples:
+      - my-fleet-{{nanoid(9)}}
+      maxLength: 512
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    deploymentResourcePath_DeploymentId:
+      type: string
+      description: 'A resource path for a deployment resource. Format: sfc:deployment:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:deployment:<account_id>:<workspace>:<name>
+      pattern: sfc:deployment:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    PatchDeploymentRequest:
+      type: object
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        instance_template:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ResourcePathOrId_InstanceTemplateId'
+        enabled:
+          type:
+          - boolean
+          - 'null'
+        target_instance_count:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        instance_name_template:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/NameTemplate'
+        max_buy_price_dollars_per_node_hour:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/DollarsPerNodeHour'
+            description: Maximum price to buy compute ($/node-hour). Only valid for spot deployments.
+    spot_deploymentResourcePath_SpotDeploymentId:
+      type: string
+      description: 'A resource path for a spot_deployment resource. Format: sfc:spot_deployment:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:spot_deployment:<account_id>:<workspace>:<name>
+      pattern: sfc:spot_deployment:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    PoolId:
+      type: string
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: pool_[0-9a-zA-Z_-]{1,21}
+    ReconciliationStatus:
+      type: object
+      required:
+      - state
+      - message
+      properties:
+        state:
+          $ref: '#/components/schemas/AutomationStatus'
+        message:
+          type: string
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    DeploymentsCursor:
+      type: string
+      examples:
+      - deplc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^deplc_[A-Za-z0-9_-]+$
+    PoolSummary:
+      type: object
+      description: A pool referenced by id and name.
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/PoolId'
+        name:
+          $ref: '#/components/schemas/Name'
+    CreateSpotDeploymentRequest:
+      type: object
+      description: A spot deployment buys capacity for a specific instance SKU at or below a maximum rate, then maintains a target number of instances on that capacity.
+      required:
+      - pool
+      - instance_sku
+      - instance_template
+      - target_instance_count
+      - max_buy_price_dollars_per_node_hour
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        pool:
+          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+          description: Instance SKU this spot deployment's orders will run on.
+        instance_template:
+          $ref: '#/components/schemas/ResourcePathOrId_InstanceTemplateId'
+        target_instance_count:
+          type: integer
+          format: int32
+        max_buy_price_dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+          description: Maximum price to buy compute ($/node-hour).
+        instance_name_template:
+          $ref: '#/components/schemas/NameTemplate'
+    SpotDeploymentScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/SpotDeploymentId'
+        resource_path:
+          $ref: '#/components/schemas/spot_deploymentResourcePath_SpotDeploymentId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
+    CreateDeploymentRequest:
+      type: object
+      description: A generic deployment maintains a target number of instances using capacity already owned in a pool. It does not buy additional capacity.
+      required:
+      - pool
+      - instance_sku
+      - instance_template
+      - target_instance_count
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        pool:
+          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+        instance_template:
+          $ref: '#/components/schemas/ResourcePathOrId_InstanceTemplateId'
+        target_instance_count:
+          type: integer
+          format: int32
+        instance_name_template:
+          $ref: '#/components/schemas/NameTemplate'
+    DeploymentResponse:
+      allOf:
+      - $ref: '#/components/schemas/DeploymentScope'
+      - type: object
+        required:
+        - object
+        - capacity
+        - pool
+        - instance_sku
+        - instance_template
+        - enabled
+        - target_instance_count
+        - instance_name_template
+        - status
+        - created_at
+        - updated_at
+        properties:
+          object:
+            type: string
+            const: deployment
+            default: deployment
+            readOnly: true
+          capacity:
+            $ref: '#/components/schemas/CapacitySummary'
+            description: Deprecated — use `pool`.
+          pool:
+            $ref: '#/components/schemas/PoolSummary'
+          instance_sku:
+            $ref: '#/components/schemas/InstanceSkuSummary'
+          instance_template:
+            $ref: '#/components/schemas/InstanceTemplateSummary'
+          enabled:
+            type: boolean
+          target_instance_count:
+            type: integer
+            format: int32
+          instance_name_template:
+            $ref: '#/components/schemas/NameTemplate'
+          status:
+            $ref: '#/components/schemas/ReconciliationStatus'
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
+          updated_at:
+            $ref: '#/components/schemas/UnixEpoch'
+    CapacityId:
+      oneOf:
+      - type: string
+        examples:
+        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: cap_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: pool_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    InstanceTemplateId:
+      oneOf:
+      - type: string
+        examples:
+        - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: itmpl_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: ntmpl_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    CapacitySummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/CapacityId'
+        name:
+          $ref: '#/components/schemas/Name'
+    InstanceSkuSummary:
+      type: object
+      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+    DollarsPerNodeHour:
+      type: string
+      description: Price rate in dollars per node-hour.
+      examples:
+      - '2.500000'
+      pattern: ^\d+\.\d+$
+    ResourcePathOrId_DeploymentId:
+      type: string
+      description: A resource path like 'sfc:deployment:acme:prod:my-deployment' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (depl_[0-9a-zA-Z_-]{1,21})|(sfc:deployment:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    InstanceTemplateSummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/InstanceTemplateId'
+        name:
+          $ref: '#/components/schemas/Name'
+    ResourcePathOrId_InstanceTemplateId:
+      type: string
+      description: A resource path like 'sfc:instance_template:acme:prod:my-instance_template' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (itmpl_[0-9a-zA-Z_-]{1,21}|ntmpl_[0-9a-zA-Z_-]{1,21})|(sfc:instance_template:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Create an API token using `sf tokens create` or at https://sfcompute.com/account/api-keys.
