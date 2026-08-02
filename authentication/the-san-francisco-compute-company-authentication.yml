@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/the-san-francisco-compute-company-openapi.json
+docs: https://docs.sfcompute.com/preview/tokens
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+description: >-
+  SF Compute's public preview API authenticates with a Bearer token. Create an
+  API token with `sf tokens create --name <name>` (or in the dashboard at
+  https://sfcompute.com/account/api-keys); the token is shown once and starts
+  with `sk_live_`. Tokens begin with no permissions - grant access per resource
+  with `sf grants create --token <name> --role <role> --workspace <workspace>`
+  (see Roles and Grants). For scripts, set the SF_BEARER_TOKEN or SF_API_KEY
+  environment variable. Send the token as `Authorization: Bearer sk_live_...`.
+schemes:
+- name: bearer_auth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  token_prefix: sk_live_
+  create_via:
+  - 'CLI: sf tokens create --name <name>'
+  - 'Dashboard: https://sfcompute.com/account/api-keys'
+  env_vars:
+  - SF_BEARER_TOKEN
+  - SF_API_KEY
+  authorization_model: role + grant per workspace/resource (see https://docs.sfcompute.com/preview/roles and https://docs.sfcompute.com/preview/grants)
+  description: Bearer token sent as Authorization header. Create via `sf tokens create` or the dashboard API keys page.
+  sources:
+  - openapi/the-san-francisco-compute-company-openapi.json

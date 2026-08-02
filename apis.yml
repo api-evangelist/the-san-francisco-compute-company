@@ -1,9 +1,31 @@
 aid: the-san-francisco-compute-company
 name: The San Francisco Compute Company
-description: The San Francisco Compute Company is a company surfaced as a portfolio company of dcvc and
-  added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  The San Francisco Compute Company (SF Compute) runs large-scale, vetted GPU
+  clusters and operates a compute marketplace where buyers reserve H100/H200
+  capacity by the hour and sellers resell unused compute back into the market
+  with no long-term lock-in. Its public preview REST API (api.sfcompute.com,
+  base path /preview/v2) and the `sf` CLI let developers buy and sell compute
+  via orders and an orderbook, manage pools of reserved balance, launch and
+  operate GPU instances from images and templates, run procurements and
+  deployments, and organize resources across workspaces with roles, grants, and
+  tags. Authentication is a Bearer token (sk_live_ API key). The API is
+  documented on a Mintlify docs site with a per-operation OpenAPI reference,
+  an llms.txt index, and an official agent skill.
 url: https://raw.githubusercontent.com/api-evangelist/the-san-francisco-compute-company/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://sfcompute.com/icon.svg
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -12,12 +34,510 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- GPU
+- Compute
+- Cloud Infrastructure
+- Artificial Intelligence
+- Machine Learning
+- Compute Marketplace
+- Reselling
+- Infrastructure
+apis:
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-account-api
+  name: The San Francisco Compute Company Account API
+  description: The authenticated account and logged-in user.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-account-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-deployments-api
+  name: The San Francisco Compute Company Deployments API
+  description: >-
+    Deployment automations that maintain a fleet of instances, including spot deployments that buy capacity
+    up to a maximum price.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Deployments
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-deployments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-feature-flags-api
+  name: The San Francisco Compute Company Feature Flags API
+  description: >-
+    The Feature Flags API from The San Francisco Compute Company — 2 operation(s) for feature flags.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Feature Flags
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-feature-flags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-images-api
+  name: The San Francisco Compute Company Images API
+  description: Custom machine images for instances.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-images-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: >-
+    the-san-francisco-compute-company:the-san-francisco-compute-company-instance-sku-catalog-api
+  name: The San Francisco Compute Company Instance SKU Catalog API
+  description: Browse available instance SKU property definitions.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Instance SKU Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-instance-sku-catalog-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-instance-skus-api
+  name: The San Francisco Compute Company Instance SKUs API
+  description: >-
+    The Instance SKUs API from The San Francisco Compute Company — 4 operation(s) for instance skus.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Instance SKUs
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-instance-skus-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: >-
+    the-san-francisco-compute-company:the-san-francisco-compute-company-instance-templates-api
+  name: The San Francisco Compute Company Instance Templates API
+  description: Reusable instance configuration.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Instance Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-instance-templates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-instances-api
+  name: The San Francisco Compute Company Instances API
+  description: Spin up instances in a capacity to use your available compute.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-instances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-orderbook-api
+  name: The San Francisco Compute Company Orderbook API
+  description: >-
+    Read-only orderbook visibility: bid/ask spread, depth, open and filled orders, and historical fills,
+    keyed on hardware requirements + delivery window.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Orderbook
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-orderbook-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-orders-api
+  name: The San Francisco Compute Company Orders API
+  description: 'Estimate an order before placing it: filled price, fee, and operational notices.'
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-pools-api
+  name: The San Francisco Compute Company Pools API
+  description: A bucket of owned compute balance over time.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Pools
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-pools-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-procurements-api
+  name: The San Francisco Compute Company Procurements API
+  description: Market automations that maintain capacity by placing buy/sell orders.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Procurements
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-procurements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-users-api
+  name: The San Francisco Compute Company Users API
+  description: Read-only access to users within the caller's organization.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+- aid: the-san-francisco-compute-company:the-san-francisco-compute-company-workspaces-api
+  name: The San Francisco Compute Company Workspaces API
+  description: Resource containers scoped to an account.
+  humanURL: https://docs.sfcompute.com/preview/using-the-api
+  baseURL: https://api.sfcompute.com/preview/v2
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/the-san-francisco-compute-company-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://docs.sfcompute.com/preview/using-the-api
+  - type: APIReference
+    url: >-
+      https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+  - type: Authentication
+    url: authentication/the-san-francisco-compute-company-authentication.yml
+  - type: Conventions
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: Idempotency
+    url: conventions/the-san-francisco-compute-company-conventions.yml
+  - type: ErrorCatalog
+    url: errors/the-san-francisco-compute-company-problem-types.yml
+  - type: DataModel
+    url: data-model/the-san-francisco-compute-company-data-model.yml
+  - type: Conformance
+    url: conformance/the-san-francisco-compute-company-conformance.yml
+  - type: AgenticAccess
+    url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
+common:
+- type: DeveloperPortal
+  url: https://docs.sfcompute.com
+- type: Documentation
+  url: https://docs.sfcompute.com/preview/using-the-api
+- type: APIReference
+  url: https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user
+- type: GettingStarted
+  url: https://docs.sfcompute.com/preview/quick-start
+- type: Blog
+  url: https://sfcompute.com/blog
+- type: ChangeLog
+  url: https://sfcompute.com/changelog
+- type: Roadmap
+  url: https://docs.sfcompute.com/preview/roadmap
+- type: GitHubOrganization
+  url: https://github.com/sfcompute
+- type: Support
+  url: mailto:support@sfcompute.com
+- type: StatusPage
+  url: https://status.sfcompute.com/
+- type: Pricing
+  url: https://sfcompute.com/prices
+- type: SignUp
+  url: https://sfcompute.com/auth/sign-up
+- type: Login
+  url: https://sfcompute.com/auth/sign-in
+- type: TermsOfService
+  url: https://sfcompute.com/legal
+- type: TrustCenter
+  url: https://trust.sfcompute.com
+- type: Twitter
+  url: https://twitter.com/sfcompute
+- type: Packages
+  url: packages/the-san-francisco-compute-company-packages.yml
+- type: SDKs
+  url: packages/the-san-francisco-compute-company-packages.yml
+- type: CLI
+  url: cli/the-san-francisco-compute-company-cli.yml
+- type: MCPServer
+  url: mcp/the-san-francisco-compute-company-mcp.yml
+- type: LLMsTxt
+  url: llms/the-san-francisco-compute-company-llms.txt
+- type: WellKnown
+  url: well-known/the-san-francisco-compute-company-well-known.yml
+- type: Authentication
+  url: authentication/the-san-francisco-compute-company-authentication.yml
+- type: Conventions
+  url: conventions/the-san-francisco-compute-company-conventions.yml
+- type: Idempotency
+  url: conventions/the-san-francisco-compute-company-conventions.yml
+- type: ErrorCatalog
+  url: errors/the-san-francisco-compute-company-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/the-san-francisco-compute-company-lifecycle.yml
+- type: Deprecation
+  url: https://docs.sfcompute.com/preview/roadmap
+- type: ChangeLog
+  url: changelog/the-san-francisco-compute-company-changelog.yml
+- type: DataModel
+  url: data-model/the-san-francisco-compute-company-data-model.yml
+- type: Conformance
+  url: conformance/the-san-francisco-compute-company-conformance.yml
+- type: Overlay
+  url: overlays/the-san-francisco-compute-company-openapi-overlay.yaml
+- type: DomainSecurity
+  url: security/the-san-francisco-compute-company-domain-security.yml
+- type: AgentSkill
+  url: skills/the-san-francisco-compute-company-sf-cli.md
+- type: AgenticAccess
+  url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

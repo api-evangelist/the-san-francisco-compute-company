@@ -1,0 +1,75 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.sfcompute.com/preview/quick-start,
+  https://github.com/sfcompute/skills/blob/main/sf-cli/SKILL.md, and
+  https://sfcompute.com/changelog
+description: >-
+  The `sf` CLI is SF Compute's primary developer interface - buy and sell
+  compute, manage pools/capacities, launch and operate GPU instances, handle
+  images, procurements, and deployments. Command groups below are captured from
+  the docs and the official agent skill; run `sf agents ctx` for the complete,
+  machine-readable command/flag catalog.
+docs: https://docs.sfcompute.com/preview/quick-start
+repo: https://github.com/sfcompute/cli
+binary: sf
+install:
+  script: curl -fsSL https://cli.sfcompute.com | bash
+  npm: npm install -g sf-cli
+lifecycle_commands:
+- name: upgrade
+  description: Update the CLI to the latest version.
+- name: version
+  description: Print the installed CLI version.
+- name: uninstall
+  description: Remove the CLI.
+auth_commands:
+- name: login
+  description: Browser-based authentication; stores credentials locally.
+- name: me
+  description: Show the current account and logged-in user.
+- name: tokens create
+  description: Create an API token (prints an sk_live_ token once).
+- name: grants create
+  description: Grant a token a role on a workspace or resource.
+- name: billing balance
+  description: Show your credit balance.
+env_vars:
+- name: SF_BEARER_TOKEN
+  description: Bearer token for non-interactive/script use.
+- name: SF_API_KEY
+  description: API key for non-interactive/script use.
+- name: NO_COLOR
+  description: Set to 1 to disable colorized output (recommended for agents).
+commands:
+  marketplace:
+  - name: buy
+    description: 'Buy compute at market price, e.g. sf buy --count 32 --duration 3d.'
+  - name: sell
+    description: 'Sell idle nodes with a floor rate, e.g. sf sell --count 4 --min-rate 1.50.'
+  - name: availability
+    description: Preview what is currently for sale, one row per instance SKU.
+  - name: orders
+    description: Place, list, and cancel buy/sell orders.
+  resources:
+  - name: instances
+    description: 'Create, list, ssh, and manage GPU instances (sf instances create/ssh).'
+  - name: pools
+    description: Create and manage pools of reserved compute balance.
+  - name: capacities
+    description: Manage containers of compute allocation over time.
+  - name: images
+    description: 'Manage custom VM images; revoke/reinstate to control availability.'
+  - name: procurements
+    description: Set up programmatic procurement workflows.
+  - name: deployments
+    description: Deploy workloads to your instances.
+  - name: nodes migrate
+    description: 'Migrate v1 nodes to v2 instances (sf nodes migrate [node]).'
+  agent:
+  - name: agents ctx
+    description: Output JSON with every command, flag, alias, default, and example - run first when scripting or driving the CLI from an agent.
+key_flows:
+- Install then sf login, then sf availability to see what is for sale.
+- sf buy --count N --duration Xd to reserve, then sf instances create and sf instances ssh.
+- sf sell --count N --min-rate R to resell idle capacity.

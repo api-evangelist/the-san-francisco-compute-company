@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.sfcompute.com/preview/roadmap, https://sfcompute.com/legal/sla,
+  https://status.sfcompute.com/, https://sfcompute.com/changelog
+description: >-
+  Versioning, maturity, deprecation, SLA, and status posture for the SF Compute
+  API. The API is currently in public preview under the /preview/v2 prefix;
+  features graduate through a documented maturity ladder before moving under a
+  stable version prefix at general availability.
+versioning:
+  scheme: uri-path + maturity prefix
+  current: /preview/v2
+  stable_prefix_at_ga: true
+  docs: https://docs.sfcompute.com/preview/roadmap
+maturity_stages:
+- {stage: in-development, description: Being built; not yet available.}
+- {stage: private-preview, description: Available to selected customers to validate designs.}
+- {stage: public-preview, description: Available to everyone; may have rough edges; NOT covered by the uptime SLA.}
+- {stage: generally-available, description: Production-ready and fully supported under a stable version prefix; covered by the standard SLA.}
+- {stage: planned-end-of-life, description: Scheduled for retirement; still works, migrate to the recommended alternative.}
+- {stage: end-of-life, description: No longer available or supported.}
+deprecation:
+  policy_url: https://docs.sfcompute.com/preview/roadmap
+  model: >-
+    Features enter a "planned end of life" stage with a recommended migration
+    path before reaching end of life. Example in-flight migration: v1 nodes ->
+    v2 instances via `sf nodes migrate`.
+sla:
+  url: https://sfcompute.com/legal/sla
+  note: Standard SLA covers generally-available features; public preview is excluded.
+status_page: https://status.sfcompute.com/
+support: mailto:support@sfcompute.com

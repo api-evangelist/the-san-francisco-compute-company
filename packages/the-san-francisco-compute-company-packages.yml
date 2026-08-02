@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://github.com/sfcompute org repositories + npm registry
+  (registry.npmjs.org) + pkg.go.dev. npm front-end returns 403 to automated
+  clients; npm entries confirmed via https://registry.npmjs.org. The bare
+  `sfcompute` npm and PyPI names are third-party security-holder placeholders
+  (NOT first-party) and are excluded.
+description: >-
+  First-party SF Compute client libraries and the `sf` CLI. The CLI is the
+  primary interface (install script at https://cli.sfcompute.com); official
+  TypeScript and Go SDKs are published from the github.com/sfcompute org. The
+  Nodes SDKs target the earlier v1 Nodes API; @sfcompute/sdk targets the newer
+  preview API surface.
+packages:
+- language: shell
+  registry: install-script
+  name: sf
+  url: https://cli.sfcompute.com
+  source: https://github.com/sfcompute/cli
+  install: curl -fsSL https://cli.sfcompute.com | bash
+  official: true
+  note: The `sf` CLI (npm package name sf-cli). See cli/ for the command surface.
+- language: javascript
+  registry: npm
+  name: sf-cli
+  url: https://www.npmjs.com/package/sf-cli
+  source: https://github.com/sfcompute/cli
+  install: npm install -g sf-cli
+  official: true
+- language: javascript
+  registry: npm
+  name: "@sfcompute/sdk"
+  url: https://www.npmjs.com/package/@sfcompute/sdk
+  source: https://github.com/sfcompute/sfc-sdk-typescript
+  install: npm install @sfcompute/sdk
+  official: true
+- language: javascript
+  registry: npm
+  name: "@sfcompute/nodes-sdk-alpha"
+  url: https://www.npmjs.com/package/@sfcompute/nodes-sdk-alpha
+  source: https://github.com/sfcompute/nodes-typescript
+  install: npm install @sfcompute/nodes-sdk-alpha
+  official: true
+  note: Official TypeScript library for the SFC Nodes API (alpha).
+- language: go
+  registry: pkg.go.dev
+  name: github.com/sfcompute/sfc-go
+  url: https://pkg.go.dev/github.com/sfcompute/sfc-go
+  source: https://github.com/sfcompute/sfc-go
+  install: go get github.com/sfcompute/sfc-go
+  official: true
+  note: Experimental Go SDK.
+- language: go
+  registry: pkg.go.dev
+  name: github.com/sfcompute/nodes-go
+  url: https://pkg.go.dev/github.com/sfcompute/nodes-go
+  source: https://github.com/sfcompute/nodes-go
+  install: go get github.com/sfcompute/nodes-go
+  official: true
+  note: Go SDK for the Nodes API.

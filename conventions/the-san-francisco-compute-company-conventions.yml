@@ -1,0 +1,63 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://docs.sfcompute.com/preview/using-the-api,
+  https://docs.sfcompute.com/preview/resource-paths, and the published OpenAPI
+  (openapi/the-san-francisco-compute-company-openapi.json) - cross-cutting
+  request/response semantics that apply across every operation.
+description: >-
+  How the SF Compute preview API behaves across every operation: base URL,
+  authentication, idempotency, pagination, resource-path references, error
+  envelope, and versioning. Derived from the OpenAPI and confirmed against the
+  docs.
+base_url: https://api.sfcompute.com/preview/v2
+api_style: REST over HTTPS, JSON requests and responses
+authentication:
+  scheme: Bearer token (Authorization header)
+  key_format: sk_live_
+  detail: authentication/the-san-francisco-compute-company-authentication.yml
+  docs: https://docs.sfcompute.com/preview/tokens
+idempotency:
+  supported: true
+  mechanism: Idempotency-Key request header
+  applies_to: >-
+    Write operations (POST) accept an Idempotency-Key header; the parameter is
+    declared across the create/order/instance/pool operations in the OpenAPI.
+  key_format: Client-generated unique value (e.g. a UUID)
+  evidence: Idempotency-Key parameter present in openapi/the-san-francisco-compute-company-openapi.json
+pagination:
+  style: cursor
+  request_params:
+    limit: page size
+    starting_after: object id - fetch the page after this object
+    ending_before: object id - fetch the page before this object
+    sort_by: sort field
+  additional_filters:
+  - created_after
+  - created_before
+  - seqnum_after
+  - seqnum_before
+  - since_at
+resource_paths:
+  description: >-
+    Human-readable, colon-separated references for named resources (an
+    alternative to opaque IDs), URL-safe so they can appear directly in path
+    parameters.
+  prefix: 'sfc:'
+  format_workspace_scoped: 'sfc:<type>:<account>:<workspace>:<name>'
+  format_account_scoped: 'sfc:<type>:<account>:<name>'
+  example: 'sfc:pool:acme:production:training-pool'
+  docs: https://docs.sfcompute.com/preview/resource-paths
+error_envelope:
+  format: JSON error object (code + message + details)
+  detail: errors/the-san-francisco-compute-company-problem-types.yml
+versioning:
+  style: uri-path + maturity-prefix
+  current: /preview/v2
+  policy: >-
+    Features move through in-development -> private preview -> public preview ->
+    generally available -> planned end of life -> end of life. The public
+    preview prefix (/preview) is not covered by the SLA; GA moves under a stable
+    version prefix.
+  docs: https://docs.sfcompute.com/preview/roadmap
+  detail: lifecycle/the-san-francisco-compute-company-lifecycle.yml

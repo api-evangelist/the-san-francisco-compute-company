@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+source: https://sfcompute.com/changelog
+description: >-
+  Recent dated entries from the SF Compute product changelog. Captured window
+  only (the live changelog at https://sfcompute.com/changelog is the source of
+  truth). The changelog is product/dashboard + CLI focused; API-surface changes
+  are also tracked via the /preview/v2 maturity ladder in lifecycle/.
+scheme: dated (calendar) entries
+current_prefix: /preview/v2
+entries:
+- date: '2026-06-09'
+  highlights:
+  - Dashboard navigation redesign around Capacities and Instances.
+  - "Migrate v1 nodes to v2 instances with `sf nodes migrate` (no VM interruption)."
+  - Revoke and reinstate VM images (sf images revoke / sf images reinstate).
+  - Auto Reload credits when balance drops below a threshold.
+  - Manage saved cards and default payment method in billing settings.
+- date: '2026-05-12'
+  highlights: [Product and platform updates - see the live changelog for detail.]
+- date: '2026-04-07'
+  highlights: [Product and platform updates - see the live changelog for detail.]
+- date: '2026-03-02'
+  highlights: [Product and platform updates - see the live changelog for detail.]
+- date: '2026-02-02'
+  highlights: [Product and platform updates - see the live changelog for detail.]
+- date: '2026-01-12'
+  highlights: [Product and platform updates - see the live changelog for detail.]
+- date: '2026-01-01'
+  highlights: [Product and platform updates - see the live changelog for detail.]

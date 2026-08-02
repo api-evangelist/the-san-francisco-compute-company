@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/the-san-francisco-compute-company-openapi.json (schema names + path
+  hierarchy) and https://docs.sfcompute.com/preview/resource-paths (the
+  account -> workspace -> resource scoping hierarchy and resource-path id scheme).
+description: >-
+  Entity-relationship graph for the SF Compute API, derived from the OpenAPI
+  resource schemas and the documented resource-path hierarchy. Named resources
+  are addressable by a colon-separated resource path (sfc:<type>:...); orders and
+  other unnamed resources are referenced by id only.
+id_scheme:
+  named_resources: 'resource path, e.g. sfc:pool:<account>:<workspace>:<name>'
+  unnamed_resources: opaque id (e.g. orders)
+  typed_id_schemas: [PoolId, OrderId, InstanceId, ImageId, InstanceSkuId, InstanceTemplateId, DeploymentId]
+entities:
+- {name: Account, description: Top-level billing/ownership scope.}
+- {name: User, description: A logged-in user belonging to an account.}
+- {name: Workspace, description: Groups resources to isolate teams or environments.}
+- {name: Pool, description: A bucket of owned compute balance over time (schema PoolSummary/PoolResponse).}
+- {name: PoolTransfer, description: Moves compute balance between pools.}
+- {name: Order, description: A buy or sell order that fills on a single instance SKU and changes reserved balance.}
+- {name: InstanceSku, description: Identifier for a specific instance configuration (hardware SKU).}
+- {name: Instance, description: A GPU machine running on a pool's capacity.}
+- {name: InstanceTemplate, description: Reusable instance configuration.}
+- {name: Image, description: Custom machine image for instances.}
+- {name: Procurement, description: Programmatic procurement workflow that acquires capacity.}
+- {name: Deployment, description: Deploys workloads to instances; owns DeploymentResources.}
+- {name: DeploymentResource, description: A resource managed by a deployment.}
+relationships:
+- {from: User, type: belongs_to, to: Account}
+- {from: Workspace, type: belongs_to, to: Account, via: account}
+- {from: Pool, type: belongs_to, to: Workspace, via: workspace}
+- {from: PoolTransfer, type: references, to: Pool, via: pool}
+- {from: Order, type: belongs_to, to: Workspace, via: workspace}
+- {from: Order, type: references, to: InstanceSku, via: instance_sku}
+- {from: Order, type: increases, to: Pool, via: pool}
+- {from: Instance, type: belongs_to, to: Pool, via: pool}
+- {from: Instance, type: references, to: InstanceSku, via: instance_sku}
+- {from: Instance, type: references, to: Image, via: image}
+- {from: Instance, type: references, to: InstanceTemplate, via: template}
+- {from: InstanceTemplate, type: references, to: Image, via: image}
+- {from: Procurement, type: produces, to: Instance}
+- {from: Deployment, type: has_many, to: DeploymentResource}
+- {from: Deployment, type: targets, to: Instance}
+- {from: Image, type: scoped_to, to: Workspace, via: workspace}

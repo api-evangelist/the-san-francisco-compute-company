@@ -1,0 +1,91 @@
+# San Francisco Compute Docs
+
+> San Francisco Compute is a market for very large scale GPU clusters.
+
+## Docs
+
+- [Get the authenticated account and logged-in user](https://docs.sfcompute.com/preview/api-reference/account/get-the-authenticated-account-and-logged-in-user.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create deployment](https://docs.sfcompute.com/preview/api-reference/deployments/create-deployment.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Delete deployment](https://docs.sfcompute.com/preview/api-reference/deployments/delete-deployment.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get deployment](https://docs.sfcompute.com/preview/api-reference/deployments/get-deployment.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List deployments](https://docs.sfcompute.com/preview/api-reference/deployments/list-deployments.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Update deployment](https://docs.sfcompute.com/preview/api-reference/deployments/update-deployment.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Enroll or unenroll the caller in a feature flag](https://docs.sfcompute.com/preview/api-reference/feature-flags/enroll-or-unenroll-the-caller-in-a-feature-flag.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List feature flags scoped to the caller](https://docs.sfcompute.com/preview/api-reference/feature-flags/list-feature-flags-scoped-to-the-caller.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Complete image upload](https://docs.sfcompute.com/preview/api-reference/images/complete-image-upload.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create image](https://docs.sfcompute.com/preview/api-reference/images/create-image.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Delete image](https://docs.sfcompute.com/preview/api-reference/images/delete-image.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Download image](https://docs.sfcompute.com/preview/api-reference/images/download-image.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get image](https://docs.sfcompute.com/preview/api-reference/images/get-image.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get upload part URL](https://docs.sfcompute.com/preview/api-reference/images/get-upload-part-url.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List images](https://docs.sfcompute.com/preview/api-reference/images/list-images.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Reinstate image](https://docs.sfcompute.com/preview/api-reference/images/reinstate-image.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Revoke image](https://docs.sfcompute.com/preview/api-reference/images/revoke-image.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List instance SKU property catalog](https://docs.sfcompute.com/preview/api-reference/instance-sku-catalog/list-instance-sku-property-catalog.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get instance SKU](https://docs.sfcompute.com/preview/api-reference/instance-skus/get-instance-sku.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get instance-SKU availability](https://docs.sfcompute.com/preview/api-reference/instance-skus/get-instance-sku-availability.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List instance-SKU availability](https://docs.sfcompute.com/preview/api-reference/instance-skus/list-instance-sku-availability.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List instance SKUs](https://docs.sfcompute.com/preview/api-reference/instance-skus/list-instance-skus.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create instance template](https://docs.sfcompute.com/preview/api-reference/instance-templates/create-instance-template.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Delete instance template](https://docs.sfcompute.com/preview/api-reference/instance-templates/delete-instance-template.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get instance template](https://docs.sfcompute.com/preview/api-reference/instance-templates/get-instance-template.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List instance templates](https://docs.sfcompute.com/preview/api-reference/instance-templates/list-instance-templates.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create instance](https://docs.sfcompute.com/preview/api-reference/instances/create-instance.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Delete instance](https://docs.sfcompute.com/preview/api-reference/instances/delete-instance.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get instance](https://docs.sfcompute.com/preview/api-reference/instances/get-instance.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get instance logs](https://docs.sfcompute.com/preview/api-reference/instances/get-instance-logs.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get instance SSH info](https://docs.sfcompute.com/preview/api-reference/instances/get-instance-ssh-info.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List instances](https://docs.sfcompute.com/preview/api-reference/instances/list-instances.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Replace instance](https://docs.sfcompute.com/preview/api-reference/instances/replace-instance.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Terminate instance](https://docs.sfcompute.com/preview/api-reference/instances/terminate-instance.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Update instance](https://docs.sfcompute.com/preview/api-reference/instances/update-instance.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Update multiple instances](https://docs.sfcompute.com/preview/api-reference/instances/update-multiple-instances.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get market depth](https://docs.sfcompute.com/preview/api-reference/orderbook/get-market-depth.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get market quote](https://docs.sfcompute.com/preview/api-reference/orderbook/get-market-quote.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List market fills](https://docs.sfcompute.com/preview/api-reference/orderbook/list-market-fills.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List market windows](https://docs.sfcompute.com/preview/api-reference/orderbook/list-market-windows.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Cancel order](https://docs.sfcompute.com/preview/api-reference/orders/cancel-order.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create order](https://docs.sfcompute.com/preview/api-reference/orders/create-order.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Estimate an order](https://docs.sfcompute.com/preview/api-reference/orders/estimate-an-order.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get order](https://docs.sfcompute.com/preview/api-reference/orders/get-order.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List orders](https://docs.sfcompute.com/preview/api-reference/orders/list-orders.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create pool](https://docs.sfcompute.com/preview/api-reference/pools/create-pool.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create pool transfer](https://docs.sfcompute.com/preview/api-reference/pools/create-pool-transfer.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Delete pool](https://docs.sfcompute.com/preview/api-reference/pools/delete-pool.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get pool](https://docs.sfcompute.com/preview/api-reference/pools/get-pool.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get pool transfer](https://docs.sfcompute.com/preview/api-reference/pools/get-pool-transfer.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List pool transfers](https://docs.sfcompute.com/preview/api-reference/pools/list-pool-transfers.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List pools](https://docs.sfcompute.com/preview/api-reference/pools/list-pools.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Update pool](https://docs.sfcompute.com/preview/api-reference/pools/update-pool.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create procurement](https://docs.sfcompute.com/preview/api-reference/procurements/create-procurement.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Delete procurement](https://docs.sfcompute.com/preview/api-reference/procurements/delete-procurement.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get procurement](https://docs.sfcompute.com/preview/api-reference/procurements/get-procurement.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List procurements](https://docs.sfcompute.com/preview/api-reference/procurements/list-procurements.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Update procurement](https://docs.sfcompute.com/preview/api-reference/procurements/update-procurement.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get user](https://docs.sfcompute.com/preview/api-reference/users/get-user.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List users](https://docs.sfcompute.com/preview/api-reference/users/list-users.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Create workspace](https://docs.sfcompute.com/preview/api-reference/workspaces/create-workspace.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Delete workspace](https://docs.sfcompute.com/preview/api-reference/workspaces/delete-workspace.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Get workspace](https://docs.sfcompute.com/preview/api-reference/workspaces/get-workspace.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [List workspaces](https://docs.sfcompute.com/preview/api-reference/workspaces/list-workspaces.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Update workspace](https://docs.sfcompute.com/preview/api-reference/workspaces/update-workspace.md): > ⚠️ This endpoint is in [public preview](/preview/roadmap).
+- [Deployments](https://docs.sfcompute.com/preview/deployments.md): Automate instance creation and management
+- [Grants](https://docs.sfcompute.com/preview/grants.md): Assign roles to users and tokens
+- [Inference fleet](https://docs.sfcompute.com/preview/guides/inference.md): Run inference on spot compute with managed procurement
+- [Reselling](https://docs.sfcompute.com/preview/guides/reselling-introduction.md): Resell unused reserved compute on SF Compute to recover cost on idle time
+- [Images](https://docs.sfcompute.com/preview/images.md): Build, upload, and manage custom VM images
+- [Instance SKUs](https://docs.sfcompute.com/preview/instance-skus.md): Pick the hardware your orders run on
+- [Instance templates](https://docs.sfcompute.com/preview/instance-templates.md): Reusable instance configurations for deployments
+- [Instances](https://docs.sfcompute.com/preview/instances.md): GPU compute instances — create, connect, and manage
+- [Orderbook](https://docs.sfcompute.com/preview/orderbook.md): Market orders, liquidity, and fills
+- [Orders](https://docs.sfcompute.com/preview/orders.md): Buy and sell compute time
+- [Pools](https://docs.sfcompute.com/preview/pools.md): Manage compute allocation
+- [Procurements](https://docs.sfcompute.com/preview/procurements.md): Automate buying and selling compute time
+- [Quick Start](https://docs.sfcompute.com/preview/quick-start.md): Get your first GPU instance running
+- [Resource paths](https://docs.sfcompute.com/preview/resource-paths.md): Human-readable references for resources across the API and CLI
+- [Roadmap](https://docs.sfcompute.com/preview/roadmap.md): Development priorities and public preview features
+- [Roles](https://docs.sfcompute.com/preview/roles.md): Define a policy of allowed actions
+- [Tags](https://docs.sfcompute.com/preview/tags.md): Track and organize resources with key-value pairs
+- [Tokens](https://docs.sfcompute.com/preview/tokens.md): Authenticate the API and CLI with bearer tokens
+- [Using the API](https://docs.sfcompute.com/preview/using-the-api.md): Authenticate and make your first API request
+- [Workspaces](https://docs.sfcompute.com/preview/workspaces.md): Group resources to isolate teams or environments

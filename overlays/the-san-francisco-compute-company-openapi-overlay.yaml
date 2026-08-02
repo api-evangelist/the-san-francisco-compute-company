@@ -1,0 +1,25 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for The San Francisco Compute Company
+  version: 1.0.0
+extends: openapi/the-san-francisco-compute-company-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment:
+      method: searched
+      generated: '2026-07-21'
+      note: >-
+        Spec reconstructed from the per-operation OpenAPI blocks published on
+        docs.sfcompute.com (Mintlify), 65 operations across 42 paths merged
+        verbatim. Base path /preview/v2 under server https://api.sfcompute.com.
+      conventions: conventions/the-san-francisco-compute-company-conventions.yml
+      errors: errors/the-san-francisco-compute-company-problem-types.yml
+      authentication: authentication/the-san-francisco-compute-company-authentication.yml
+      lifecycle: lifecycle/the-san-francisco-compute-company-lifecycle.yml
+      data_model: data-model/the-san-francisco-compute-company-data-model.yml
+- target: $.info
+  update:
+    x-apievangelist-maturity: public-preview
+    x-apievangelist-idempotency: Idempotency-Key header on write operations
+    x-apievangelist-pagination: cursor (starting_after / ending_before / limit / sort_by)

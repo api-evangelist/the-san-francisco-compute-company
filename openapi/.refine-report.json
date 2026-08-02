@@ -1,0 +1,40 @@
+{
+  "provider": "the-san-francisco-compute-company",
+  "sources": [
+    "the-san-francisco-compute-company-account-api-openapi.yml",
+    "the-san-francisco-compute-company-deployments-api-openapi.yml",
+    "the-san-francisco-compute-company-feature-flags-api-openapi.yml",
+    "the-san-francisco-compute-company-images-api-openapi.yml",
+    "the-san-francisco-compute-company-instance-sku-catalog-api-openapi.yml",
+    "the-san-francisco-compute-company-instance-skus-api-openapi.yml",
+    "the-san-francisco-compute-company-instance-templates-api-openapi.yml",
+    "the-san-francisco-compute-company-instances-api-openapi.yml",
+    "the-san-francisco-compute-company-orderbook-api-openapi.yml",
+    "the-san-francisco-compute-company-orders-api-openapi.yml",
+    "the-san-francisco-compute-company-pools-api-openapi.yml",
+    "the-san-francisco-compute-company-procurements-api-openapi.yml",
+    "the-san-francisco-compute-company-users-api-openapi.yml",
+    "the-san-francisco-compute-company-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "the-san-francisco-compute-company-account-api-openapi.yml",
+    "the-san-francisco-compute-company-deployments-api-openapi.yml",
+    "the-san-francisco-compute-company-feature-flags-api-openapi.yml",
+    "the-san-francisco-compute-company-images-api-openapi.yml",
+    "the-san-francisco-compute-company-instance-sku-catalog-api-openapi.yml",
+    "the-san-francisco-compute-company-instance-skus-api-openapi.yml",
+    "the-san-francisco-compute-company-instance-templates-api-openapi.yml",
+    "the-san-francisco-compute-company-instances-api-openapi.yml",
+    "the-san-francisco-compute-company-orderbook-api-openapi.yml",
+    "the-san-francisco-compute-company-orders-api-openapi.yml",
+    "the-san-francisco-compute-company-pools-api-openapi.yml",
+    "the-san-francisco-compute-company-procurements-api-openapi.yml",
+    "the-san-francisco-compute-company-users-api-openapi.yml",
+    "the-san-francisco-compute-company-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

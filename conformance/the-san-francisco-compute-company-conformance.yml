@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: derived
+source: >-
+  openapi/the-san-francisco-compute-company-openapi.json +
+  https://docs.sfcompute.com. Cross-cutting standards conformance asserted from
+  the spec content and documented conventions. No published compliance-program
+  certifications were found in machine-readable form (the Trust Center at
+  trust.sfcompute.com is a JS app), so no Compliance pointer is emitted.
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'Published as OpenAPI 3.1.0 (per-operation blocks on the Mintlify docs).'
+- id: oauth2
+  conforms: false
+  evidence: 'API uses HTTP Bearer tokens (sk_live_) not OAuth2 client flows. The docs MCP server does use OAuth2.'
+- id: oidc
+  conforms: false
+- id: http-bearer-auth
+  conforms: true
+  evidence: 'securityScheme bearer_auth type http scheme bearer (JWT).'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: 'Errors use a custom error envelope, not application/problem+json.'
+- id: idempotency-keys
+  conforms: true
+  evidence: 'Idempotency-Key request header parameter present on write operations.'
+- id: cursor-pagination
+  conforms: true
+  evidence: 'starting_after / ending_before / limit / sort_by cursor params across list operations.'
+- id: rest
+  conforms: true
+  evidence: 'Resource-oriented REST over HTTPS, JSON.'
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: fapi
+  conforms: false

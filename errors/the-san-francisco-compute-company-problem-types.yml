@@ -1,0 +1,61 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/the-san-francisco-compute-company-openapi.json
+format: json-error-object
+description: >-
+  SF Compute API error catalog, derived from the error response schemas in the
+  published OpenAPI. Errors are NOT RFC 9457 problem+json; they use a JSON
+  envelope { "error": { "type": <stable code>, "message": <human text>,
+  "details"?: [ { "field", "code", "message" } ] } }. The `type` string is a
+  stable machine-readable code; `details[]` carries per-field validation codes.
+envelope:
+  shape: '{ "error": { "type": string, "message": string, "details"?: ErrorDetail[] } }'
+  error_type_field: error.type
+  message_field: error.message
+  detail_fields: [field, code, message]
+problems:
+- status: 400
+  type: invalid_request_error
+  title: Bad request
+  schema: BadRequestError
+  remediation: 'Fix the request parameters or body; check details[] for the offending field.'
+- status: 401
+  type: authentication_error
+  title: Unauthorized
+  schema: UnauthorizedError
+  remediation: 'Provide a valid Bearer token (sk_live_) in the Authorization header.'
+- status: 402
+  type: payment_required
+  title: Payment required
+  schema: PaymentRequiredError
+  remediation: 'Add credits / a payment method; check billing balance.'
+- status: 403
+  type: forbidden
+  title: Forbidden
+  schema: ForbiddenError
+  remediation: 'The token lacks a grant/role for this resource; grant access with sf grants create.'
+- status: 404
+  type: not_found
+  title: Not found
+  schema: NotFoundError
+  remediation: 'Verify the resource id or resource path exists and is in scope.'
+- status: 409
+  type: conflict
+  title: Conflict
+  schema: ConflictError
+  remediation: 'The request conflicts with current state (duplicate or concurrent modification); re-fetch and retry.'
+- status: 422
+  type: unprocessable_entity
+  title: Unprocessable entity
+  schema: UnprocessableEntityError
+  remediation: 'The request was well-formed but semantically invalid; check details[].'
+- status: 500
+  type: api_error
+  title: Internal server error
+  schema: InternalServerError
+  remediation: 'Transient server error; retry with backoff and contact support if persistent.'
+- status: 503
+  type: service_unavailable
+  title: Service unavailable
+  schema: ServiceUnavailableError
+  remediation: 'Temporary outage or overload; retry with backoff. Check the status page.'

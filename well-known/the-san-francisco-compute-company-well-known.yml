@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+description: >-
+  Results of probing the /.well-known/ discovery surface on the SF Compute API
+  host (api.sfcompute.com), marketing host (sfcompute.com), and docs host
+  (docs.sfcompute.com). Absence (404) is recorded as valid data. The only hit
+  is the OAuth authorization-server metadata on the docs host, which advertises
+  the Mintlify docs MCP server (scope mcp:search).
+hosts:
+- host: https://api.sfcompute.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://sfcompute.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+- host: https://docs.sfcompute.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: the-san-francisco-compute-company-docs-oauth-authorization-server.json
+    note: MCP OAuth metadata for the Mintlify docs MCP server (scope mcp:search).
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
