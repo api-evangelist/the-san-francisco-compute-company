@@ -1,0 +1,1978 @@
+{
+  "item": [
+    {
+      "id": "68b814c7-8354-4919-b42c-2202baf0b10e",
+      "name": "Deployments",
+      "description": {
+        "content": "Deployment automations that maintain a fleet of instances, including spot deployments that buy capacity up to a maximum price.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ba5cc0c2-491d-4b0d-9877-38168705c3ce",
+          "name": "Create deployment",
+          "request": {
+            "name": "Create deployment",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nCreate a generic deployment that uses capacity already owned in a pool, or a spot deployment that buys capacity for a specific instance SKU at or below a maximum rate.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"instance_sku\": \"<string>\",\n  \"instance_template\": \"<string>\",\n  \"pool\": \"<string>\",\n  \"target_instance_count\": \"<integer>\",\n  \"name\": \"<null>\",\n  \"instance_name_template\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dd0d7904-5378-4ed2-b4f4-a4b8630e95d9",
+              "name": "Deployment created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_template\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"target_instance_count\": 8479,\n  \"name\": null,\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"created_at\": 1738972800,\n  \"enabled\": true,\n  \"id\": \"depl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\",\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"instance_template\": {\n    \"id\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"deployment\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:deployment:WyAO-:UYe4cT3R:6BRv7peuhMs\",\n  \"status\": {\n    \"state\": \"info\",\n    \"message\": \"string\"\n  },\n  \"target_instance_count\": 1092,\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2e24c7d-f82a-4f6c-bb2c-2aa6b8ef681d",
+              "name": "Invalid request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_template\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"target_instance_count\": 8479,\n  \"name\": null,\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f1dcfaa-9436-4406-b8cc-c22906d4d20d",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_template\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"target_instance_count\": 8479,\n  \"name\": null,\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2a5a9f3-e5e4-49f4-8b36-6706c466062a",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_template\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"target_instance_count\": 8479,\n  \"name\": null,\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbcab581-2239-49b3-8efa-ec4556ad5abb",
+              "name": "Pool and instance SKU already have an incompatible automation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_template\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"target_instance_count\": 8479,\n  \"name\": null,\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"conflict\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63f1a0dc-9fc8-4f41-afc5-0c101f74f251",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_template\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"target_instance_count\": 8479,\n  \"name\": null,\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63d80d6e-4702-4da6-8595-97ece46368a9",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_template\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"target_instance_count\": 8479,\n  \"name\": null,\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5039dbe6-0ce7-429e-b6d6-4006c2504e7c",
+          "name": "List deployments",
+          "request": {
+            "name": "List deployments",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList all deployments.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "deployments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "(Required) Filter by workspace."
+                },
+                {
+                  "disabled": false,
+                  "key": "pool",
+                  "value": "<string>",
+                  "description": "Filter by pool."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1628f3f7-2e16-4f5d-81fb-6e87c5304a21",
+              "name": "Paginated list of deployments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"has_more\": true,\n  \"data\": [\n    {\n      \"capacity\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"created_at\": 1738972800,\n      \"enabled\": false,\n      \"id\": \"depl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\",\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"alias\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"instance_template\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"name\": \"my-resource-name\",\n      \"object\": \"deployment\",\n      \"owner\": \"my-resource-name\",\n      \"pool\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"resource_path\": \"sfc:deployment:Z:TB:RRBVGc\",\n      \"status\": {\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"message\": \"string\"\n      },\n      \"target_instance_count\": 83,\n      \"updated_at\": 1738972800,\n      \"workspace\": \"my-resource-name\",\n      \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\"\n    },\n    {\n      \"capacity\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"created_at\": 1738972800,\n      \"enabled\": true,\n      \"id\": \"depl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\",\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"alias\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"instance_template\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"name\": \"my-resource-name\",\n      \"object\": \"deployment\",\n      \"owner\": \"my-resource-name\",\n      \"pool\": {\n        \"id\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      \"resource_path\": \"sfc:deployment:F9:sv2QfzG:u7yqzPuD\",\n      \"status\": {\n        \"state\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"message\": \"string\"\n      },\n      \"target_instance_count\": 6714,\n      \"updated_at\": 1738972800,\n      \"workspace\": \"my-resource-name\",\n      \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\"\n    }\n  ],\n  \"cursor\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0318114-824b-4bf1-b874-bd49a9ee1a04",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb915d1f-ce41-4edb-9939-19c3a20d1a32",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f7b3ac1-9836-4c5e-a8d1-970c0664d2ad",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5cb57a0-68a9-431c-98a8-b6c774607e3a",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "deplc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09e7da80-f9d4-4e98-a990-07a17e989b90",
+          "name": "Delete deployment",
+          "request": {
+            "name": "Delete deployment",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDelete a deployment or spot deployment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "deployments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84209cc7-338a-45ff-ba53-a6340825ae01",
+              "name": "Deployment deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a7398ac5-feb9-4eb8-87b0-af41ce4231fc",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51557446-7fed-489c-abf1-94e32e52967b",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c82efd7d-ca24-4759-842a-bbec4b4f5442",
+              "name": "Deployment not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3790ef5-92e7-4500-a952-cfcbd7ac6306",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "90e5ef77-f211-4986-8e42-972aa5bd9288",
+          "name": "Get deployment",
+          "request": {
+            "name": "Get deployment",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve a deployment or spot deployment by ID or resource path.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "deployments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "58a2b8ff-69a2-4390-8fec-b477e96100f0",
+              "name": "Deployment details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"created_at\": 1738972800,\n  \"enabled\": true,\n  \"id\": \"depl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\",\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"instance_template\": {\n    \"id\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"deployment\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:deployment:WyAO-:UYe4cT3R:6BRv7peuhMs\",\n  \"status\": {\n    \"state\": \"info\",\n    \"message\": \"string\"\n  },\n  \"target_instance_count\": 1092,\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75b058e1-021a-40a4-8b64-80e22974023f",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebf2a04e-b423-4c40-94ef-13945639726e",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60186eac-a72a-4a46-bd4e-f94ebd1b52f9",
+              "name": "Deployment not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "960e996e-ba6f-45d8-b4ed-875774bc1445",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5fee0f2-d10a-4db0-ba5b-912e9a0ead86",
+          "name": "Update deployment",
+          "request": {
+            "name": "Update deployment",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nUpdate a deployment or spot deployment's configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "deployments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "32de82cf-f15f-404e-a0f4-b7710c8de45b",
+              "name": "Deployment updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"created_at\": 1738972800,\n  \"enabled\": true,\n  \"id\": \"depl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_name_template\": \"my-fleet-{{nanoid(9)}}\",\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"instance_template\": {\n    \"id\": \"itmpl_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"deployment\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:deployment:WyAO-:UYe4cT3R:6BRv7peuhMs\",\n  \"status\": {\n    \"state\": \"info\",\n    \"message\": \"string\"\n  },\n  \"target_instance_count\": 1092,\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "205cd61c-7522-4390-93e6-c9db70301f78",
+              "name": "Deployment with this name already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7ab1502-3404-41b6-817e-cf01c3813c5b",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "852f1ebf-5ee1-42e0-89d9-d8e06beadc5c",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c8153281-3d42-4a73-9d50-3edc61f932e2",
+              "name": "Deployment not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b6758e1-7712-4a2d-8ac3-9a272c8fd6dc",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fc042e0-7aee-4c6b-9035-d850622fac7b",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "deployments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"instance_template\": \"<null>\",\n  \"enabled\": \"<boolean,null>\",\n  \"target_instance_count\": \"<integer,null-int32>\",\n  \"instance_name_template\": \"<null>\",\n  \"max_buy_price_dollars_per_node_hour\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sfcompute.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "777decef-11a7-408c-8b6f-c01a064a145f",
+    "name": "sfc-api Account Deployments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.",
+      "type": "text/plain"
+    }
+  }
+}

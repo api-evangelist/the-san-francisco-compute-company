@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Instance Templates API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Instance Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List instance templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instance_templates",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Scope the returned list to a single workspace (ID, resource path, or name). Without it, the returned list spans every workspace the caller has requisite permissions on."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by instance template ID or name (repeatable)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the next page."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the previous page."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Additional fields to include in the response."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList all instance templates."
+        },
+        {
+          "info": {
+            "name": "Create instance template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/instance_templates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nCreate a reusable instance template."
+        },
+        {
+          "info": {
+            "name": "Get instance template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instance_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve an instance template by ID or resource path."
+        },
+        {
+          "info": {
+            "name": "Delete instance template",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sfcompute.com/preview/v2/instance_templates/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDelete an instance template. The template must not be in use by any capacity."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

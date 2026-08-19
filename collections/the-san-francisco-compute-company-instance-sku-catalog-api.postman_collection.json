@@ -1,0 +1,337 @@
+{
+  "item": [
+    {
+      "id": "838b2107-604c-47f0-ac0e-865ce23ba208",
+      "name": "Instance SKU Catalog",
+      "description": {
+        "content": "Browse available instance SKU property definitions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04c9ac49-876e-4b99-9453-710d3f8ff6c0",
+          "name": "List instance SKU property catalog",
+          "request": {
+            "name": "List instance SKU property catalog",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList every property key and its allowed values. Use the keys and values here when filling in `requirements` on orders and procurements.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instance_sku_property_catalog"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of results to return (1-200, default 50)."
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for forward pagination (from a previous response's `cursor` field)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Cursor for backward pagination."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "35f377ba-c0a2-48ea-8eb1-553e4d77af74",
+              "name": "Paginated property catalog.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instance_sku_property_catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"has_more\": true,\n  \"data\": [\n    {\n      \"key\": {\n        \"name\": \"my-resource-name\",\n        \"display_name\": \"string\",\n        \"description\": \"string\",\n        \"stable_at\": 1738972800,\n        \"documentation_link\": \"string\",\n        \"deprecated_at\": null,\n        \"deprecation_info\": \"string\"\n      },\n      \"values\": [\n        {\n          \"name\": \"my-resource-name\",\n          \"display_name\": \"string\",\n          \"description\": \"string\",\n          \"stable_at\": 1738972800,\n          \"documentation_link\": \"string\",\n          \"deprecated_at\": null,\n          \"deprecation_info\": \"string\"\n        },\n        {\n          \"name\": \"my-resource-name\",\n          \"display_name\": \"string\",\n          \"description\": \"string\",\n          \"stable_at\": 1738972800,\n          \"documentation_link\": \"string\",\n          \"deprecated_at\": null,\n          \"deprecation_info\": \"string\"\n        }\n      ],\n      \"type\": \"enumeration\"\n    },\n    {\n      \"key\": {\n        \"name\": \"my-resource-name\",\n        \"display_name\": \"string\",\n        \"description\": \"string\",\n        \"stable_at\": 1738972800,\n        \"documentation_link\": \"string\",\n        \"deprecated_at\": null,\n        \"deprecation_info\": \"string\"\n      },\n      \"values\": [\n        {\n          \"name\": \"my-resource-name\",\n          \"display_name\": \"string\",\n          \"description\": \"string\",\n          \"stable_at\": 1738972800,\n          \"documentation_link\": \"string\",\n          \"deprecated_at\": null,\n          \"deprecation_info\": \"string\"\n        },\n        {\n          \"name\": \"my-resource-name\",\n          \"display_name\": \"string\",\n          \"description\": \"string\",\n          \"stable_at\": 1738972800,\n          \"documentation_link\": \"string\",\n          \"deprecated_at\": null,\n          \"deprecation_info\": \"string\"\n        }\n      ],\n      \"type\": \"enumeration\"\n    }\n  ],\n  \"cursor\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "362921cf-7571-4d1a-b246-d8dd297cfc95",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instance_sku_property_catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cebc727-66d7-4134-aaa0-29e2e9fcce98",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instance_sku_property_catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b506b070-5e85-49d7-a0c1-48212e2b5004",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instance_sku_property_catalog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sfcompute.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0ebc71c8-14bb-4468-9c2f-7be6623daf4b",
+    "name": "sfc-api Account Instance SKU Catalog API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.",
+      "type": "text/plain"
+    }
+  }
+}

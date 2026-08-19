@@ -1,0 +1,4567 @@
+{
+  "item": [
+    {
+      "id": "016792e7-8b57-4adf-9d77-6af4fa1f5e62",
+      "name": "Instances",
+      "description": {
+        "content": "Spin up instances in a capacity to use your available compute.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e5124c81-098a-4ba1-8b76-ab9ae6e67203",
+          "name": "Create instance",
+          "request": {
+            "name": "Create instance",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nCreate an instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pool\": \"<string>\",\n  \"image\": \"<string>\",\n  \"instance_sku\": \"<string>\",\n  \"name\": \"<null>\",\n  \"cloud_init_user_data\": \"<byte>\",\n  \"enable_public_ipv4\": \"<boolean>\",\n  \"firewall\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\",\n  \"_preview_enable_infiniband\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7928d70-7d84-4f7b-84ee-ddc6de95a86c",
+              "name": "Instance created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"name\": \"<null>\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": \"<boolean>\",\n  \"firewall\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\",\n  \"_preview_enable_infiniband\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"cloud_init_user_data_used\": true,\n  \"created_at\": 1738972800,\n  \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": {\n    \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"instance\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:instance:L4IZtT:R5HYXvL6K:6fuJ3pLrL\",\n  \"status\": \"running\",\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"managed_by\": null,\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": true,\n  \"public_ip\": \"string\",\n  \"firewall\": null,\n  \"tags\": null,\n  \"expected_shutdown_at\": null,\n  \"priority_level\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20798058-57c5-415a-8a54-263ff22ecc06",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"name\": \"<null>\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": \"<boolean>\",\n  \"firewall\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\",\n  \"_preview_enable_infiniband\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72448580-87d8-46b9-961f-33340c4a5d7f",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"name\": \"<null>\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": \"<boolean>\",\n  \"firewall\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\",\n  \"_preview_enable_infiniband\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48827c85-99d1-4e0a-b0d7-1a36886b7190",
+              "name": "Capacity not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"name\": \"<null>\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": \"<boolean>\",\n  \"firewall\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\",\n  \"_preview_enable_infiniband\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5856fe7-5231-42cc-aafd-8e0d9183d741",
+              "name": "Validation error (e.g. capacity limit reached).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"name\": \"<null>\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": \"<boolean>\",\n  \"firewall\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\",\n  \"_preview_enable_infiniband\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf48ce80-4bdc-4b69-8e57-53b4e509e495",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"name\": \"<null>\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": \"<boolean>\",\n  \"firewall\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\",\n  \"_preview_enable_infiniband\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1fe490f-a70e-4f2e-be1d-5be6a0714fbe",
+          "name": "List instances",
+          "request": {
+            "name": "List instances",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList all instances.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "Scope the returned list to a single workspace (ID, resource path, or name). Without it, the returned list spans every workspace the caller has requisite permissions on."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Filter by instance ID (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Filter by instance ID (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "pool",
+                  "value": "<string>",
+                  "description": "Filter by pool (repeatable). Instances on any of the given pools match."
+                },
+                {
+                  "disabled": false,
+                  "key": "pool",
+                  "value": "<string>",
+                  "description": "Filter by pool (repeatable). Instances on any of the given pools match."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by instance status (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by instance status (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<long>",
+                  "description": "Filter to instances created at or after this Unix timestamp (seconds)."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_before",
+                  "value": "<long>",
+                  "description": "Filter to instances created at or before this Unix timestamp (seconds)."
+                },
+                {
+                  "disabled": false,
+                  "key": "instance_sku",
+                  "value": "<string>",
+                  "description": "Filter by instance SKU (repeatable). Instances on any of the given SKUs match."
+                },
+                {
+                  "disabled": false,
+                  "key": "instance_sku",
+                  "value": "<string>",
+                  "description": "Filter by instance SKU (repeatable). Instances on any of the given SKUs match."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Cursor for forward pagination (from a previous response's `cursor` field)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Cursor for backward pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "cloud_init_user_data",
+                  "description": "Additional fields to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "cloud_init_user_data",
+                  "description": "Additional fields to include in the response."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter by tag key-value pair (repeatable). Format: `key=value` (the `=` between key and value must be percent-encoded in the URL)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter by tag key-value pair (repeatable). Format: `key=value` (the `=` between key and value must be percent-encoded in the URL)."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag_key",
+                  "value": "<string>",
+                  "description": "Filter by tag key existence (repeatable). Returns resources that have a tag with this key, regardless of the value."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag_key",
+                  "value": "<string>",
+                  "description": "Filter by tag key existence (repeatable). Returns resources that have a tag with this key, regardless of the value."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "514e9b9e-c359-4716-816c-8b4b3c39f1e1",
+              "name": "Paginated list of instances.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "status",
+                      "value": "failed"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_allocation"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"has_more\": false,\n  \"data\": [\n    {\n      \"capacity\": {\n        \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"cloud_init_user_data_used\": true,\n      \"created_at\": 1738972800,\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"image\": {\n        \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"alias\": \"my-resource-name\"\n      },\n      \"name\": \"my-resource-name\",\n      \"object\": \"instance\",\n      \"owner\": \"my-resource-name\",\n      \"pool\": {\n        \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"resource_path\": \"sfc:instance:x-sXm:3F:ic8V9n.C\",\n      \"status\": \"terminated\",\n      \"updated_at\": 1738972800,\n      \"workspace\": \"my-resource-name\",\n      \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"managed_by\": null,\n      \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n      \"enable_public_ipv4\": false,\n      \"public_ip\": \"string\",\n      \"firewall\": null,\n      \"tags\": null,\n      \"expected_shutdown_at\": null,\n      \"priority_level\": null\n    },\n    {\n      \"capacity\": {\n        \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"cloud_init_user_data_used\": false,\n      \"created_at\": 1738972800,\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"image\": {\n        \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"alias\": \"my-resource-name\"\n      },\n      \"name\": \"my-resource-name\",\n      \"object\": \"instance\",\n      \"owner\": \"my-resource-name\",\n      \"pool\": {\n        \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"resource_path\": \"sfc:instance:3jTvuES:DYV:PHsL\",\n      \"status\": \"running\",\n      \"updated_at\": 1738972800,\n      \"workspace\": \"my-resource-name\",\n      \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"managed_by\": null,\n      \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n      \"enable_public_ipv4\": false,\n      \"public_ip\": \"string\",\n      \"firewall\": null,\n      \"tags\": null,\n      \"expected_shutdown_at\": null,\n      \"priority_level\": null\n    }\n  ],\n  \"cursor\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d418101b-d628-46e3-872f-95f2729d46d4",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "status",
+                      "value": "failed"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_allocation"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31ca13d9-1c00-49b1-a7b8-c957d0e100f6",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "status",
+                      "value": "failed"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_allocation"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "847bf606-db6d-4367-96df-9abea32f77a8",
+              "name": "Capacity not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "status",
+                      "value": "failed"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_allocation"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a71f40c3-2dcc-4586-a2b8-76567b94fcc3",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "status",
+                      "value": "failed"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_allocation"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67daf815-7eeb-4596-bb5c-1119591980bf",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "status",
+                      "value": "failed"
+                    },
+                    {
+                      "key": "status",
+                      "value": "awaiting_allocation"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "instance_sku",
+                      "value": "isku_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "nodec_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "include",
+                      "value": "cloud_init_user_data"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag_key",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b03c3ed-64d6-484a-8d38-2bed34817d3c",
+          "name": "Update multiple instances",
+          "request": {
+            "name": "Update multiple instances",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nUpdate one or more instances atomically. All listed instances must be in the same workspace; mixed-workspace batches are rejected with 422.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"priority_level\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"priority_level\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da19ae47-9c7c-4e1a-8e09-986b2ecb21ac",
+              "name": "Instances updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"critical\"\n    },\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"yield\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"capacity\": {\n        \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"cloud_init_user_data_used\": false,\n      \"created_at\": 1738972800,\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"image\": {\n        \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"alias\": \"my-resource-name\"\n      },\n      \"name\": \"my-resource-name\",\n      \"object\": \"instance\",\n      \"owner\": \"my-resource-name\",\n      \"pool\": {\n        \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"resource_path\": \"sfc:instance:4e3lBDyzyB:fwf8OEFw4:p2A\",\n      \"status\": \"awaiting_allocation\",\n      \"updated_at\": 1738972800,\n      \"workspace\": \"my-resource-name\",\n      \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"managed_by\": null,\n      \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n      \"enable_public_ipv4\": false,\n      \"public_ip\": \"string\",\n      \"firewall\": null,\n      \"tags\": null,\n      \"expected_shutdown_at\": null,\n      \"priority_level\": null\n    },\n    {\n      \"capacity\": {\n        \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"cloud_init_user_data_used\": false,\n      \"created_at\": 1738972800,\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"image\": {\n        \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"alias\": \"my-resource-name\"\n      },\n      \"name\": \"my-resource-name\",\n      \"object\": \"instance\",\n      \"owner\": \"my-resource-name\",\n      \"pool\": {\n        \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"resource_path\": \"sfc:instance:hiCTjSGgC:AOH:egJJjUhy\",\n      \"status\": \"running\",\n      \"updated_at\": 1738972800,\n      \"workspace\": \"my-resource-name\",\n      \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"managed_by\": null,\n      \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n      \"enable_public_ipv4\": true,\n      \"public_ip\": \"string\",\n      \"firewall\": null,\n      \"tags\": null,\n      \"expected_shutdown_at\": null,\n      \"priority_level\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7fd3e27b-5171-4c12-9629-d175cb0bbc4a",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"critical\"\n    },\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"yield\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f239fc0b-f317-4240-82cd-6db3ef4b0c35",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"critical\"\n    },\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"yield\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23b7eb09-f3ff-48c8-91f0-1cebabaaecf7",
+              "name": "Unknown instance, cross-workspace batch, or batch over the entry cap.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"critical\"\n    },\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"yield\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf251304-6a7c-494f-9190-ae2223cba0ac",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": [\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"critical\"\n    },\n    {\n      \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"priority_level\": \"yield\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "558ea448-da6c-497f-92b9-4b1fd0a67b96",
+          "name": "Delete instance",
+          "request": {
+            "name": "Delete instance",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDelete an instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9eddc431-c3d7-4e9b-8c46-19d83ed9d0b5",
+              "name": "Instance deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "19cc16d4-2117-42d9-8a10-55ec44498b37",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c13d054b-859c-4c4f-93f1-27b8281abf92",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "866d512d-4b5e-4fcf-83a2-6dc1dac7b87f",
+              "name": "Instance not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7ab43fc-ef39-489d-912f-029678dcca53",
+              "name": "Instance must be terminated before deletion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"conflict\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d28ade82-471e-4231-80e0-1ee33d6a1bba",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "65af0afb-e121-43a3-9c72-318c4fb5858b",
+          "name": "Get instance",
+          "request": {
+            "name": "Get instance",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve an instance by ID or name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11e8b889-6b54-4040-8a6c-2e719827ac29",
+              "name": "Instance details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"cloud_init_user_data_used\": true,\n  \"created_at\": 1738972800,\n  \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": {\n    \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"instance\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:instance:L4IZtT:R5HYXvL6K:6fuJ3pLrL\",\n  \"status\": \"running\",\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"managed_by\": null,\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": true,\n  \"public_ip\": \"string\",\n  \"firewall\": null,\n  \"tags\": null,\n  \"expected_shutdown_at\": null,\n  \"priority_level\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a32d253a-8afd-4560-8bf5-0dcbd9edfa93",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f2971c9-6879-423a-9d7b-bb0295e86f8b",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "384ec697-e1f2-432a-99cf-e2ec90fa92b9",
+              "name": "Instance not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c424e623-4e78-443c-88d7-47a64c281ac3",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b917ba5-6f90-441c-9f2d-2799da50312c",
+          "name": "Update instance",
+          "request": {
+            "name": "Update instance",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nUpdate an instance. Omitted fields are left unchanged.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "637ec0ca-7f30-417f-91af-292fb6c0659e",
+              "name": "Instance updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"cloud_init_user_data_used\": true,\n  \"created_at\": 1738972800,\n  \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": {\n    \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"instance\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:instance:L4IZtT:R5HYXvL6K:6fuJ3pLrL\",\n  \"status\": \"running\",\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"managed_by\": null,\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": true,\n  \"public_ip\": \"string\",\n  \"firewall\": null,\n  \"tags\": null,\n  \"expected_shutdown_at\": null,\n  \"priority_level\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7d82b5f-22f7-4bf3-91b0-07b5428408fc",
+              "name": "Validation error (e.g. duplicate name).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab199442-d3ae-48a9-b362-eb2135b96178",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b764744-5ab6-492c-8fa8-b911c8ca498f",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e1e60523-e3b5-442e-8785-78b25c006544",
+              "name": "Instance not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e81b4446-baff-4ef1-8821-ef9020ca8a0b",
+              "name": "Validation error (e.g. field not applicable to this instance).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc011908-879f-4fd4-b99b-cd01ae5f9f5b",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<null>\",\n  \"tags\": \"<null>\",\n  \"priority_level\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32f55d33-6d93-4b07-a72e-be4acf9da04d",
+          "name": "Get instance logs",
+          "request": {
+            "name": "Get instance logs",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve logs for an instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances",
+                ":id",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "seqnum_before",
+                  "value": "<u-int64>",
+                  "description": "Return logs with `seqnum` less than or equal to this value."
+                },
+                {
+                  "disabled": false,
+                  "key": "seqnum_after",
+                  "value": "<u-int64>",
+                  "description": "Return logs with `seqnum` greater than or equal to this value."
+                },
+                {
+                  "disabled": false,
+                  "key": "realtime_timestamp_before",
+                  "value": "<long>",
+                  "description": "Due to clock synchronization, some earlier log messages may have a realtime timestamp after this value."
+                },
+                {
+                  "disabled": false,
+                  "key": "realtime_timestamp_after",
+                  "value": "<long>",
+                  "description": "Due to clock synchronization, some later log messages may have a realtime timestamp before this value."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5b9af3b-99d4-41db-9c2f-1a00c50bc906",
+              "name": "Log chunks.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "seqnum_before",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "seqnum_after",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "realtime_timestamp_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "realtime_timestamp_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"timestamp_realtime\": 1738972800,\n      \"timestamp_monotonic_secs\": 6013,\n      \"timestamp_monotonic_nanos\": 3198,\n      \"seqnum\": 3673,\n      \"data\": \"SGVsbG8gV29ybGQK\"\n    },\n    {\n      \"timestamp_realtime\": 1738972800,\n      \"timestamp_monotonic_secs\": 7688,\n      \"timestamp_monotonic_nanos\": 7462,\n      \"seqnum\": 7870,\n      \"data\": \"SGVsbG8gV29ybGQK\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85af44ce-a635-4497-a36b-2455e759a720",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "seqnum_before",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "seqnum_after",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "realtime_timestamp_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "realtime_timestamp_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bcc7f720-8cc2-4215-a43f-84a504fa7411",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "seqnum_before",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "seqnum_after",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "realtime_timestamp_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "realtime_timestamp_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "36f65fa7-45a9-4184-822a-f853488fc417",
+              "name": "Instance not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "seqnum_before",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "seqnum_after",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "realtime_timestamp_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "realtime_timestamp_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb98ae78-f7f5-48b2-8487-f9d9b29301d5",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "seqnum_before",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "seqnum_after",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "realtime_timestamp_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "realtime_timestamp_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e969e5d-1368-478c-b0cf-71ca7df84d77",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "seqnum_before",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "seqnum_after",
+                      "value": "<u-int64>"
+                    },
+                    {
+                      "key": "realtime_timestamp_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "realtime_timestamp_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7175ea46-3b33-4e79-9d68-f3c9fd5c8cf2",
+          "name": "Replace instance",
+          "request": {
+            "name": "Replace instance",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nTerminates the target instance and creates a fresh one on the same capacity and SKU with a new image (and optionally a new startup script and name). Capacity, SKU, subnet, public IPv4, firewall, tags, and priority are inherited from the replaced instance. The two operations happen in a single transaction. Pass an `Idempotency-Key` header to make retries safe: a repeated request returns the replacement created by the first attempt instead of creating another one.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances",
+                ":id",
+                "replace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                "key": "Idempotency-Key",
+                "value": "<string,null>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"image\": \"<string>\",\n  \"cloud_init_user_data\": \"<byte>\",\n  \"name\": \"<null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8dd4bf28-77e7-4ff0-b9dd-70bc71127c05",
+              "name": "Replacement instance created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"name\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"cloud_init_user_data_used\": true,\n  \"created_at\": 1738972800,\n  \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": {\n    \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"instance\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:instance:L4IZtT:R5HYXvL6K:6fuJ3pLrL\",\n  \"status\": \"running\",\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"managed_by\": null,\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": true,\n  \"public_ip\": \"string\",\n  \"firewall\": null,\n  \"tags\": null,\n  \"expected_shutdown_at\": null,\n  \"priority_level\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "717967b5-265b-4fa0-a9f2-44b4e306b45e",
+              "name": "Invalid request (e.g. requested name already in use).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"name\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55539fed-0068-4b83-bdb9-26e86fdd231b",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"name\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df866ae9-b7e2-43cd-899c-4274d6e82ff2",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"name\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69552fd3-7e59-4279-9c11-88817912441a",
+              "name": "Instance not found or already terminated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"name\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b484667-9db8-4cde-8854-17f6f07fc1fc",
+              "name": "Validation error (e.g. image not available).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"name\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0d7cc6b5-3106-48a5-bdb5-3e990cf056c9",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "replace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Optional key that makes the request idempotent. Retries with the same key return the original replacement.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"name\": \"<null>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "345f3452-bf78-4072-acd0-3f2f1158b96b",
+          "name": "Get instance SSH info",
+          "request": {
+            "name": "Get instance SSH info",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve SSH connection details for an instance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances",
+                ":id",
+                "ssh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "43f13311-9a41-403b-877f-64adb720c9a2",
+              "name": "SSH connection details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "ssh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hostname\": \"24.125.89.203\",\n  \"port\": 22,\n  \"host_keys\": [\n    {\n      \"key_type\": \"ssh-ed25519\",\n      \"key\": \"AAAAC3NzaC1lZDI1NTE5AAAAI...\"\n    },\n    {\n      \"key_type\": \"ssh-ed25519\",\n      \"key\": \"AAAAC3NzaC1lZDI1NTE5AAAAI...\"\n    }\n  ],\n  \"last_successful_key_update_at\": null,\n  \"last_attempted_key_update_at\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78ab7f97-1549-410f-93f6-f0e576f7c87a",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "ssh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5257ddef-1028-45b6-9af4-90313b54a03a",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "ssh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d730af9e-3ad0-4bef-9ea4-f0be0e2675b1",
+              "name": "SSH details not available.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "ssh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "01bf0d19-8c52-418c-9308-5966cbf271b3",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "ssh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "931c1dd8-1cab-4f8c-b9f2-84f9bb6074a3",
+          "name": "Terminate instance",
+          "request": {
+            "name": "Terminate instance",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nTerminates a running instance. Terminated instances can not be restarted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "instances",
+                ":id",
+                "terminate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95439f70-ed0d-40a0-9c30-c86caac67e3a",
+              "name": "Instance terminated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"cloud_init_user_data_used\": true,\n  \"created_at\": 1738972800,\n  \"id\": \"inst_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"image\": {\n    \"id\": \"image_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"name\": \"my-resource-name\",\n  \"object\": \"instance\",\n  \"owner\": \"my-resource-name\",\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"resource_path\": \"sfc:instance:L4IZtT:R5HYXvL6K:6fuJ3pLrL\",\n  \"status\": \"running\",\n  \"updated_at\": 1738972800,\n  \"workspace\": \"my-resource-name\",\n  \"workspace_id\": \"wksp_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"managed_by\": null,\n  \"cloud_init_user_data\": \"IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=\",\n  \"enable_public_ipv4\": true,\n  \"public_ip\": \"string\",\n  \"firewall\": null,\n  \"tags\": null,\n  \"expected_shutdown_at\": null,\n  \"priority_level\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "842c82c6-0c0a-4e3d-a908-d3405f204453",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "493bea6f-29a4-437d-b87d-3f698f04c571",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55d84642-82b2-4a56-8a23-2a089673bd65",
+              "name": "Instance not found or already terminated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47d41bdb-3e7e-4a7a-b007-4cf55e3b2e56",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "instances",
+                    ":id",
+                    "terminate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sfcompute.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c3c225c3-649b-4635-94a0-49e28bbe6b55",
+    "name": "sfc-api Account Instances API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.",
+      "type": "text/plain"
+    }
+  }
+}

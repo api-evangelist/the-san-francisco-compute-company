@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Workspaces API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/workspaces",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by workspace ID, resource path, or name (repeatable)."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList all workspaces for the authenticated account."
+        },
+        {
+          "info": {
+            "name": "Create workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/workspaces",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nCreate a workspace."
+        },
+        {
+          "info": {
+            "name": "Get workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/workspaces/:workspace",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace name or ID"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve a workspace by name or ID."
+        },
+        {
+          "info": {
+            "name": "Update workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sfcompute.com/preview/v2/workspaces/:workspace",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace name or ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRename a workspace."
+        },
+        {
+          "info": {
+            "name": "Delete workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sfcompute.com/preview/v2/workspaces/:workspace",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "path",
+                "description": "Workspace name or ID"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nSoft-delete a workspace by name or ID. Workspace must be empty (no capacities, instance templates, or images)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

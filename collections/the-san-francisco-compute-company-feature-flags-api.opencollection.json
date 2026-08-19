@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Feature Flags API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Feature Flags",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List feature flags scoped to the caller",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/feature_flags",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList every user-visible feature flag whose audience matches the caller, along with whether the caller is currently enrolled and whether the flag is self-enrollable via `POST /v2/feature_flags/{feature_flag}`. Flags with `user_enroll = false` are read-only here. Flags not marked `user_visible` are hidden from this listing entirely."
+        },
+        {
+          "info": {
+            "name": "Enroll or unenroll the caller in a feature flag",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/feature_flags/:feature_flag",
+            "params": [
+              {
+                "name": "feature_flag",
+                "value": "",
+                "type": "path",
+                "description": "Feature flag name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nSet the caller's enrollment state for a self-enrollable feature flag."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Users API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by user ID or resource path (repeatable)."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "Filter to the user with this email address. Matched case-insensitively against the member's non-deleted identities."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the next page."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the previous page."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList users that are members of the caller's organization."
+        },
+        {
+          "info": {
+            "name": "Get user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/users/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "User ID or resource path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nReturns user details by ID or resource path."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

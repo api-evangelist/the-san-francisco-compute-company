@@ -1,0 +1,223 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Images API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/images",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Scope the returned list to a single workspace (ID, resource path, or name). Pass `sfc:workspace:sfcompute:public` to list sfc-provided public images. Without it, the returned list spans every workspace the caller has requisite permissions on (public images are not included — request them via the public workspace)."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by image ID (repeatable)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return (1-200, default 50)."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination (from a previous response's `cursor` field)."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList images in the specified workspace. Pass `sfc:workspace:sfcompute:public` as the workspace to list sfc-provided public images instead."
+        },
+        {
+          "info": {
+            "name": "Create image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/images",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nCreate an image and start a multipart upload."
+        },
+        {
+          "info": {
+            "name": "Get image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/images/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID or resource path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve an image by ID. Returns both user-owned and public images."
+        },
+        {
+          "info": {
+            "name": "Delete image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sfcompute.com/preview/v2/images/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID, name, or resource path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDelete an image."
+        },
+        {
+          "info": {
+            "name": "Complete image upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/images/:id/complete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID, name, or resource path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nFinalize a multipart image upload."
+        },
+        {
+          "info": {
+            "name": "Download image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/images/:id/download",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID, name, or resource path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nGet a presigned URL to download an image."
+        },
+        {
+          "info": {
+            "name": "Get upload part URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/images/:id/parts",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID, name, or resource path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nGet a presigned URL to upload one part of a multipart image upload."
+        },
+        {
+          "info": {
+            "name": "Reinstate image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/images/:id/reinstate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID, name, or resource path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nReinstate a revoked image, making it available for new instances again"
+        },
+        {
+          "info": {
+            "name": "Revoke image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/images/:id/revoke",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Image ID, name, or resource path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRevoke a private image. Revoked images can't back new instances; existing instances continue running."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

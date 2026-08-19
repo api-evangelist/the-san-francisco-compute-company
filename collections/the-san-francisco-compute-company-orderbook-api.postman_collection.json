@@ -1,0 +1,1345 @@
+{
+  "item": [
+    {
+      "id": "f58df89f-aec5-46d0-84e3-5976116162e9",
+      "name": "Orderbook",
+      "description": {
+        "content": "Read-only orderbook visibility: bid/ask spread, depth, open and filled orders, and historical fills, keyed on hardware requirements + delivery window.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ab1b2231-649d-4fff-ab60-b9011f342aaf",
+          "name": "Get market depth",
+          "request": {
+            "name": "Get market depth",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDepth of book for the given requirements and delivery window, aggregated by instance SKU and price level. Individual orders and participants are not exposed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orderbook",
+                "depth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "requirements",
+                  "value": "<string>",
+                  "description": "URL-safe `field[:op]:value` triples joined by `;`."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_at",
+                  "value": "<long>",
+                  "description": "(Required) Start of the delivery window."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_at",
+                  "value": "<long>",
+                  "description": "(Required) End of the delivery window."
+                },
+                {
+                  "disabled": false,
+                  "key": "depth",
+                  "value": "20",
+                  "description": "Maximum levels returned per side. Clamped to [1, 100]. Default 20."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "335875a6-9c07-410e-bb56-913ffe3b38be",
+              "name": "Market depth.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "depth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"start_at\": 1738972800,\n  \"end_at\": 1738972800,\n  \"requested_at\": 1738972800,\n  \"bids\": [\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"dollars_per_node_hour\": \"2.500000\",\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 3137,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 6413,\n          \"end_at\": null\n        }\n      ]\n    },\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"dollars_per_node_hour\": \"2.500000\",\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 4385,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 8397,\n          \"end_at\": null\n        }\n      ]\n    }\n  ],\n  \"asks\": [\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"dollars_per_node_hour\": \"2.500000\",\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 2696,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 206,\n          \"end_at\": null\n        }\n      ]\n    },\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"dollars_per_node_hour\": \"2.500000\",\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 6089,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 9272,\n          \"end_at\": null\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e9f8f45a-da0f-4ea8-999b-1d5dbc153f08",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "depth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6f87a70-426f-4c09-acd1-60bda7ac8e65",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "depth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddc65cdd-9b84-4962-9657-7a1daad552cc",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "depth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "depth",
+                      "value": "20"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2296a746-ff67-4d03-a9d7-8a6cdaf9dc65",
+          "name": "List market fills",
+          "request": {
+            "name": "List market fills",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nAll contracts that filled on hardware meeting the requirements for the given delivery window, sorted newest first. One row per fill (contract), including the instance SKU. Participant identity is never exposed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orderbook",
+                "fills"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "requirements",
+                  "value": "<string>",
+                  "description": "URL-safe `field[:op]:value` triples joined by `;`."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_at",
+                  "value": "<long>",
+                  "description": "(Required) Start of the delivery window."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_at",
+                  "value": "<long>",
+                  "description": "(Required) End of the delivery window."
+                },
+                {
+                  "disabled": false,
+                  "key": "since_at",
+                  "value": "<long>",
+                  "description": "Lower bound on the contract's `created_at` (when the fill was recorded). Unix epoch seconds. Defaults to `now - 7d`. Must be no more than 30 days before `now`; older values return 422."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum results to return. Clamped to [1, 200]. Default 50."
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Set to the response's `cursor` to fetch the next (older) page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "149ddab5-c1ce-4f2d-8392-9e01386b2a60",
+              "name": "Paginated list of fills.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "fills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "since_at",
+                      "value": "1745452800"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mfilc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"start_at\": 1738972800,\n  \"end_at\": 1738972800,\n  \"requested_at\": 1738972800,\n  \"has_more\": true,\n  \"data\": [\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"dollars_per_node_hour\": \"2.500000\",\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 6341,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 7436,\n          \"end_at\": null\n        }\n      ],\n      \"filled_at\": 1738972800\n    },\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"dollars_per_node_hour\": \"2.500000\",\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 9140,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 7365,\n          \"end_at\": null\n        }\n      ],\n      \"filled_at\": 1738972800\n    }\n  ],\n  \"cursor\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c0784c2-d8d2-4db4-9d60-1e8b2168a722",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "fills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "since_at",
+                      "value": "1745452800"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mfilc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92b9dde8-bc0a-4e3e-8cdb-cca43ee526f1",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "fills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "since_at",
+                      "value": "1745452800"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mfilc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91201341-755c-4b3e-ab4d-6c6cf6833f60",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "fills"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    },
+                    {
+                      "key": "since_at",
+                      "value": "1745452800"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mfilc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c81cf125-bc21-45e5-b874-895238bc2f80",
+          "name": "Get market quote",
+          "request": {
+            "name": "Get market quote",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nTop-of-book quote (best bid + best ask) for the given requirements and delivery window. Returned price levels include the matching instance SKU.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orderbook",
+                "quote"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "requirements",
+                  "value": "<string>",
+                  "description": "URL-safe `field[:op]:value` triples joined by `;`."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_at",
+                  "value": "<long>",
+                  "description": "(Required) Start of the delivery window."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_at",
+                  "value": "<long>",
+                  "description": "(Required) End of the delivery window."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e7c06558-c55d-4740-bcb2-209e66ef90cc",
+              "name": "Market quote.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"start_at\": 1738972800,\n  \"end_at\": 1738972800,\n  \"requested_at\": 1738972800,\n  \"best_bid\": null,\n  \"best_ask\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d416cd10-9b84-4e5e-b50c-0f42987cc996",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff8ab8af-4dff-47f2-809c-e7670f65c4e7",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e43d6696-8ec2-4def-a205-7a21bbc8af52",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "quote"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "end_at",
+                      "value": "1746662400"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a748c2a6-1868-4c7d-b4bf-e29b3c403e42",
+          "name": "List market windows",
+          "request": {
+            "name": "List market windows",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList every instance SKU and delivery window with resting orders matching the requirements, within the given time range. Each row is a summary; use /quote or /depth for detail on a specific SKU window.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orderbook",
+                "windows"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "requirements",
+                  "value": "<string>",
+                  "description": "URL-safe `field[:op]:value` triples joined by `;`."
+                },
+                {
+                  "disabled": false,
+                  "key": "range_start_at",
+                  "value": "<long>",
+                  "description": "(Required) Start of the delivery-window range to browse. Unix epoch seconds, minute-aligned."
+                },
+                {
+                  "disabled": false,
+                  "key": "range_end_at",
+                  "value": "<long>",
+                  "description": "(Required) End of the delivery-window range to browse. Unix epoch seconds, minute-aligned, must be > `range_start_at`."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum results to return. Clamped to [1, 200]. Default 50."
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Set to the response's `cursor` to fetch the next page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eabdcf8a-9044-457b-a568-ae9745a65b16",
+              "name": "Active windows in the range.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "windows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "range_start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "range_end_at",
+                      "value": "1748649600"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mwin_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"range_start_at\": 1738972800,\n  \"range_end_at\": 1738972800,\n  \"has_more\": true,\n  \"data\": [\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"start_at\": 1738972800,\n      \"end_at\": 1738972800,\n      \"duration_hours\": 168,\n      \"total_bid_order_count\": 3,\n      \"total_ask_order_count\": 5,\n      \"best_bid\": null,\n      \"best_ask\": null\n    },\n    {\n      \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"start_at\": 1738972800,\n      \"end_at\": 1738972800,\n      \"duration_hours\": 168,\n      \"total_bid_order_count\": 3,\n      \"total_ask_order_count\": 5,\n      \"best_bid\": null,\n      \"best_ask\": null\n    }\n  ],\n  \"cursor\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb6e0671-9450-4fa4-afcc-e23391a72ad5",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "windows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "range_start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "range_end_at",
+                      "value": "1748649600"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mwin_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac6202a8-2bbd-4ef5-90be-4434b5b3ed0b",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "windows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "range_start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "range_end_at",
+                      "value": "1748649600"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mwin_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7069e4c-f129-41ef-9a3b-43e8e204256f",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orderbook",
+                    "windows"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "requirements",
+                      "value": "accelerator:H100"
+                    },
+                    {
+                      "key": "range_start_at",
+                      "value": "1746057600"
+                    },
+                    {
+                      "key": "range_end_at",
+                      "value": "1748649600"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "mwin_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sfcompute.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "10e99c13-2d2f-4778-a9d2-5cce68d498e9",
+    "name": "sfc-api Account Orderbook API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.",
+      "type": "text/plain"
+    }
+  }
+}

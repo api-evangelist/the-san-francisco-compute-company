@@ -1,0 +1,245 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Pools API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List pool transfers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/pool_transfers",
+            "params": [
+              {
+                "name": "pool",
+                "value": "",
+                "type": "query",
+                "description": "Filter by source or destination pool (repeatable). Returns transfers where the source or destination pool is any of the supplied pools."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transfer status."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the next page."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the previous page."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList pool transfers for the caller's organization."
+        },
+        {
+          "info": {
+            "name": "Create pool transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/pool_transfers",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nTransfer some or all of one pool into another"
+        },
+        {
+          "info": {
+            "name": "Get pool transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/pool_transfers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "pxfr_abc123",
+                "type": "path",
+                "description": "Pool transfer ID"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve a pool transfer by ID."
+        },
+        {
+          "info": {
+            "name": "List pools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/pools",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Scope the returned list to a single workspace (ID, resource path, or name). Without it, the returned list spans every workspace the caller has requisite permissions on."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pool ID, resource path, or name (repeatable)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the next page."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the previous page."
+              },
+              {
+                "name": "schedule_history_minutes",
+                "value": "",
+                "type": "query",
+                "description": "How many minutes of past schedule to include."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag key-value pair (repeatable). Format: `key=value` (the `=` between key and value must be percent-encoded in the URL)."
+              },
+              {
+                "name": "tag_key",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag key existence (repeatable). Returns resources that have a tag with this key, regardless of the value."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList all pools."
+        },
+        {
+          "info": {
+            "name": "Create pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/pools",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nCreate a pool to hold compute."
+        },
+        {
+          "info": {
+            "name": "Get pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/pools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schedule_history_minutes",
+                "value": "",
+                "type": "query",
+                "description": "How many minutes of past schedule to include."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve a pool by ID, resource path, or name, including its compute schedule."
+        },
+        {
+          "info": {
+            "name": "Update pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sfcompute.com/preview/v2/pools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nUpdate a pool. Omitted fields are left unchanged."
+        },
+        {
+          "info": {
+            "name": "Delete pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sfcompute.com/preview/v2/pools/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDelete a pool. The pool must have no active orders, future allocations, active nodes, deployments, or procurements. Remove all dependencies before deleting."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

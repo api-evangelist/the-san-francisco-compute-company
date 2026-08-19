@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the authenticated account and logged-in user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/me"
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nReturns the authenticated account along with details about the logged-in user that issued the calling token.\n\nThe `user` field is `null` when authenticated with a service token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

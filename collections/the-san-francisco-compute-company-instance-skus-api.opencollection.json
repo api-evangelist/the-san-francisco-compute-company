@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Instance SKUs API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Instance SKUs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List instance SKUs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instance_skus",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return (1-200, default 50)."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination (from a previous response's `cursor` field)."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList the instance SKUs available on the market with their properties."
+        },
+        {
+          "info": {
+            "name": "List instance-SKU availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instance_skus/availability",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return (1-200, default 50)."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination (from a previous response's `cursor` field)."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter to a single SKU by id."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "Filter by region, e.g. `europe-north1`."
+              },
+              {
+                "name": "availability_zone",
+                "value": "",
+                "type": "query",
+                "description": "Filter by availability zone, e.g. `a`."
+              },
+              {
+                "name": "accelerator",
+                "value": "",
+                "type": "query",
+                "description": "Filter by accelerator, e.g. `h100`."
+              },
+              {
+                "name": "form_factor",
+                "value": "",
+                "type": "query",
+                "description": "Filter by accelerator form factor, e.g. `sxm`."
+              },
+              {
+                "name": "rdma_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by RDMA type (`infiniband` or `roce`)."
+              },
+              {
+                "name": "num_accelerators",
+                "value": "",
+                "type": "query",
+                "description": "Filter by accelerators per node, e.g. `8`."
+              },
+              {
+                "name": "num_vcpus",
+                "value": "",
+                "type": "query",
+                "description": "Filter by vCPUs per node, e.g. `56`."
+              },
+              {
+                "name": "memory",
+                "value": "",
+                "type": "query",
+                "description": "Filter by total system memory in bytes."
+              },
+              {
+                "name": "local_storage",
+                "value": "",
+                "type": "query",
+                "description": "Filter by total local storage in bytes."
+              },
+              {
+                "name": "supports_public_ipv4",
+                "value": "",
+                "type": "query",
+                "description": "Filter by public-IPv4 capability."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nThe purchasable-capacity schedule of every instance SKU. Each enshrined property is accepted as an equality filter."
+        },
+        {
+          "info": {
+            "name": "Get instance SKU",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instance_skus/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Instance SKU ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve an instance SKU by ID, including its properties."
+        },
+        {
+          "info": {
+            "name": "Get instance-SKU availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instance_skus/:id/availability",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Instance SKU ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nThe purchasable-capacity schedule of one instance SKU."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

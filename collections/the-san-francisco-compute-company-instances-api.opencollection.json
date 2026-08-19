@@ -1,0 +1,318 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Instances API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instances",
+            "params": [
+              {
+                "name": "workspace",
+                "value": "",
+                "type": "query",
+                "description": "Scope the returned list to a single workspace (ID, resource path, or name). Without it, the returned list spans every workspace the caller has requisite permissions on."
+              },
+              {
+                "name": "id",
+                "value": "inst_k3R-nX9vLm7Qp2Yw5Jd8F",
+                "type": "query",
+                "description": "Filter by instance ID (repeatable)."
+              },
+              {
+                "name": "pool",
+                "value": "",
+                "type": "query",
+                "description": "Filter by pool (repeatable). Instances on any of the given pools match."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by instance status (repeatable)."
+              },
+              {
+                "name": "created_after",
+                "value": "",
+                "type": "query",
+                "description": "Filter to instances created at or after this Unix timestamp (seconds)."
+              },
+              {
+                "name": "created_before",
+                "value": "",
+                "type": "query",
+                "description": "Filter to instances created at or before this Unix timestamp (seconds)."
+              },
+              {
+                "name": "instance_sku",
+                "value": "",
+                "type": "query",
+                "description": "Filter by instance SKU (repeatable). Instances on any of the given SKUs match."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for forward pagination (from a previous response's `cursor` field)."
+              },
+              {
+                "name": "ending_before",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for backward pagination."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Additional fields to include in the response."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag key-value pair (repeatable). Format: `key=value` (the `=` between key and value must be percent-encoded in the URL)."
+              },
+              {
+                "name": "tag_key",
+                "value": "",
+                "type": "query",
+                "description": "Filter by tag key existence (repeatable). Returns resources that have a tag with this key, regardless of the value."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList all instances."
+        },
+        {
+          "info": {
+            "name": "Create instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/instances",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nCreate an instance."
+        },
+        {
+          "info": {
+            "name": "Update multiple instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sfcompute.com/preview/v2/instances",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nUpdate one or more instances atomically. All listed instances must be in the same workspace; mixed-workspace batches are rejected with 422."
+        },
+        {
+          "info": {
+            "name": "Get instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instances/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve an instance by ID or name."
+        },
+        {
+          "info": {
+            "name": "Update instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.sfcompute.com/preview/v2/instances/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nUpdate an instance. Omitted fields are left unchanged."
+        },
+        {
+          "info": {
+            "name": "Delete instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.sfcompute.com/preview/v2/instances/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDelete an instance."
+        },
+        {
+          "info": {
+            "name": "Get instance logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instances/:id/logs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "seqnum_before",
+                "value": "",
+                "type": "query",
+                "description": "Return logs with `seqnum` less than or equal to this value."
+              },
+              {
+                "name": "seqnum_after",
+                "value": "",
+                "type": "query",
+                "description": "Return logs with `seqnum` greater than or equal to this value."
+              },
+              {
+                "name": "realtime_timestamp_before",
+                "value": "",
+                "type": "query",
+                "description": "Due to clock synchronization, some earlier log messages may have a realtime timestamp after this value."
+              },
+              {
+                "name": "realtime_timestamp_after",
+                "value": "",
+                "type": "query",
+                "description": "Due to clock synchronization, some later log messages may have a realtime timestamp before this value."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve logs for an instance."
+        },
+        {
+          "info": {
+            "name": "Replace instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/instances/:id/replace",
+            "headers": [
+              {
+                "name": "Idempotency-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nTerminates the target instance and creates a fresh one on the same capacity and SKU with a new image (and optionally a new startup script and name). Capacity, SKU, subnet, public IPv4, firewall, tags, and priority are inherited from the replaced instance. The two operations happen in a single transaction. Pass an `Idempotency-Key` header to make retries safe: a repeated request returns the replacement created by the first attempt inst"
+        },
+        {
+          "info": {
+            "name": "Get instance SSH info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/instances/:id/ssh",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve SSH connection details for an instance."
+        },
+        {
+          "info": {
+            "name": "Terminate instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.sfcompute.com/preview/v2/instances/:id/terminate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nTerminates a running instance. Terminated instances can not be restarted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

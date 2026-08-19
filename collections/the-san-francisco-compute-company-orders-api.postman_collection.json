@@ -1,0 +1,2141 @@
+{
+  "item": [
+    {
+      "id": "a38d5381-74af-4c89-964e-c3549fc493cf",
+      "name": "Orders",
+      "description": {
+        "content": "Estimate an order before placing it: filled price, fee, and operational notices.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0cdd9e25-7ef8-49b9-a19f-b326fdd3fa23",
+          "name": "Estimate an order",
+          "request": {
+            "name": "Estimate an order",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nEstimate a buy or sell order before placing it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "order_preview"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"duration_seconds\": \"<u-int64>\",\n  \"node_count\": \"<integer>\",\n  \"requirements\": {\n    \"key_0\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"key_1\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"start_at\": \"<long>\",\n  \"pool\": \"<null>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8dbb24cf-3244-4c59-a240-a37174b476aa",
+              "name": "Estimate result.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "order_preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_seconds\": 6456,\n  \"node_count\": 3830,\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"start_at\": 1738972800,\n  \"pool\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"post_order_body\": {\n    \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"side\": \"sell\",\n    \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"allocation_schedule_delta\": [\n      {\n        \"start_at\": 1738972800,\n        \"node_count\": 9206,\n        \"end_at\": null\n      },\n      {\n        \"start_at\": 1738972800,\n        \"node_count\": 6463,\n        \"end_at\": null\n      }\n    ],\n    \"limit_price_dollars_per_node_hour\": \"2.500000\",\n    \"allow_standing\": true,\n    \"allow_partial\": false\n  },\n  \"fee\": {\n    \"flat_dollars_per_node_hour\": \"2.500000\",\n    \"percentage_bps\": 7220\n  },\n  \"type\": \"quoted\",\n  \"notices\": [\n    {\n      \"start_at\": 1738972800,\n      \"end_at\": 1738972800,\n      \"maintenance_type\": \"info\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"maintenance_window\",\n      \"action_message\": \"string\"\n    },\n    {\n      \"start_at\": 1738972800,\n      \"end_at\": 1738972800,\n      \"maintenance_type\": \"degraded_performance\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"maintenance_window\",\n      \"action_message\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14939b5b-05f6-419f-983c-9e511c3a1116",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "order_preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_seconds\": 6456,\n  \"node_count\": 3830,\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"start_at\": 1738972800,\n  \"pool\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd514368-f7ba-4aef-913a-78731e9ce5d3",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "order_preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_seconds\": 6456,\n  \"node_count\": 3830,\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"start_at\": 1738972800,\n  \"pool\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae2c240f-8fab-44f1-a570-034ed24da2db",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "order_preview"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"duration_seconds\": 6456,\n  \"node_count\": 3830,\n  \"requirements\": {\n    \"accelerator\": [\n      \"H100\"\n    ]\n  },\n  \"start_at\": 1738972800,\n  \"pool\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "75989de6-28c5-4847-8c93-0a73e5240385",
+          "name": "Create order",
+          "request": {
+            "name": "Create order",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nPlace a buy or sell order. Orders fill on a single instance SKU matching the order's `requirements`. By default orders fill completely or not at all; set `allow_partial` to permit a partial fill. Order filling is asynchronous; poll `GET /v2/orders/{id}` to check status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                "key": "Idempotency-Key",
+                "value": "<string,null>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pool\": \"<string>\",\n  \"side\": \"<string>\",\n  \"instance_sku\": \"<string>\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": \"<long>\",\n      \"node_count\": \"<integer>\",\n      \"end_at\": \"<null>\"\n    },\n    {\n      \"start_at\": \"<long>\",\n      \"node_count\": \"<integer>\",\n      \"end_at\": \"<null>\"\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"<string>\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6fa6656d-5f6b-4571-a65d-4e18bbd95a20",
+              "name": "Order created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"order\",\n  \"id\": \"ordr_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"side\": \"sell\",\n  \"allow_standing\": true,\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 1863,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 7105,\n      \"end_at\": null\n    }\n  ],\n  \"filled_allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 1996,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 5143,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"status\": \"rejected\",\n  \"created_at\": 1738972800,\n  \"allow_partial\": true,\n  \"created_by\": null,\n  \"filled_at\": null,\n  \"filled_average_price_dollars_per_node_hour\": null,\n  \"fills\": [\n    {\n      \"filled_at\": 1738972800,\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 7088,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 3373,\n          \"end_at\": null\n        }\n      ],\n      \"price_dollars_per_node_hour\": \"2.500000\",\n      \"contract\": null\n    },\n    {\n      \"filled_at\": 1738972800,\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 4695,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 6612,\n          \"end_at\": null\n        }\n      ],\n      \"price_dollars_per_node_hour\": \"2.500000\",\n      \"contract\": null\n    }\n  ],\n  \"cancelled_at\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60860ac2-3829-4123-91f3-372e75fadc80",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fd29b02-3d8f-4ddb-b76e-c3f1afab3bf4",
+              "name": "Insufficient balance.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"payment_required\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45a2ac3a-6405-4058-9047-675260e90004",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "015b840e-5bed-4df6-a402-8c5d04d222ef",
+              "name": "Not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2c4838a-4574-451a-b086-8b1f7394a42f",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40115381-3529-45da-9c0b-673a6d2cfc07",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bea8e01-7e4d-4a3d-b3a0-6df94a6e4400",
+              "name": "Service temporarily unavailable. Try again later.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "Unique key to ensure idempotent order creation. If provided, duplicate requests with the same key will not place a new order and return the original order.",
+                    "key": "Idempotency-Key",
+                    "value": "<string,null>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pool\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"side\": \"sell\",\n  \"instance_sku\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 2142,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 6019,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"allow_standing\": \"<boolean>\",\n  \"allow_partial\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"service_unavailable\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88d068ba-e746-41d2-9394-3bb4933821f5",
+          "name": "List orders",
+          "request": {
+            "name": "List orders",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList all orders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Filter by order ID (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Filter by order ID (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "pool",
+                  "value": "<string>",
+                  "description": "Filter by pool."
+                },
+                {
+                  "disabled": false,
+                  "key": "workspace",
+                  "value": "<string>",
+                  "description": "Scope the listing to a single workspace (ID, resource path, or name). Ignored when `pool` is given (the pool already names its workspace). Without either, the list spans the whole organization and requires an org-level `Order:List` grant."
+                },
+                {
+                  "disabled": false,
+                  "key": "side",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by status (repeatable)."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_after",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "created_before",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "procurement",
+                  "value": "<string>",
+                  "description": "Filter to one procurement's orders (ID or resource path). Without it, the list omits procurement orders."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "Prefix with `-` for descending."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50"
+                },
+                {
+                  "disabled": false,
+                  "key": "starting_after",
+                  "value": "<string>",
+                  "description": "Set to the response's `cursor` to fetch the next page."
+                },
+                {
+                  "disabled": false,
+                  "key": "ending_before",
+                  "value": "<string>",
+                  "description": "Set to the response's `cursor` to fetch the previous page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e042fb63-fbbd-48c0-ab2c-2380112d663e",
+              "name": "Paginated list of orders.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "side",
+                      "value": "sell"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "procurement",
+                      "value": "proc_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"has_more\": false,\n  \"data\": [\n    {\n      \"object\": \"order\",\n      \"id\": \"ordr_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"capacity\": {\n        \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"pool\": {\n        \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"side\": \"sell\",\n      \"allow_standing\": true,\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"alias\": \"my-resource-name\"\n      },\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 2933,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 5010,\n          \"end_at\": null\n        }\n      ],\n      \"filled_allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 146,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 9091,\n          \"end_at\": null\n        }\n      ],\n      \"limit_price_dollars_per_node_hour\": \"2.500000\",\n      \"status\": \"partially_filled\",\n      \"created_at\": 1738972800,\n      \"allow_partial\": true,\n      \"created_by\": null,\n      \"filled_at\": null,\n      \"filled_average_price_dollars_per_node_hour\": null,\n      \"fills\": [\n        {\n          \"filled_at\": 1738972800,\n          \"allocation_schedule_delta\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"price_dollars_per_node_hour\": \"2.500000\",\n          \"contract\": null\n        },\n        {\n          \"filled_at\": 1738972800,\n          \"allocation_schedule_delta\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"price_dollars_per_node_hour\": \"2.500000\",\n          \"contract\": null\n        }\n      ],\n      \"cancelled_at\": null\n    },\n    {\n      \"object\": \"order\",\n      \"id\": \"ordr_k3R-nX9vLm7Qp2Yw5Jd8F\",\n      \"capacity\": {\n        \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"pool\": {\n        \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"name\": \"my-resource-name\"\n      },\n      \"side\": \"buy\",\n      \"allow_standing\": false,\n      \"instance_sku\": {\n        \"object\": \"instance_sku\",\n        \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n        \"alias\": \"my-resource-name\"\n      },\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 5407,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 3955,\n          \"end_at\": null\n        }\n      ],\n      \"filled_allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 9146,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 4941,\n          \"end_at\": null\n        }\n      ],\n      \"limit_price_dollars_per_node_hour\": \"2.500000\",\n      \"status\": \"pending\",\n      \"created_at\": 1738972800,\n      \"allow_partial\": true,\n      \"created_by\": null,\n      \"filled_at\": null,\n      \"filled_average_price_dollars_per_node_hour\": null,\n      \"fills\": [\n        {\n          \"filled_at\": 1738972800,\n          \"allocation_schedule_delta\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"price_dollars_per_node_hour\": \"2.500000\",\n          \"contract\": null\n        },\n        {\n          \"filled_at\": 1738972800,\n          \"allocation_schedule_delta\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"price_dollars_per_node_hour\": \"2.500000\",\n          \"contract\": null\n        }\n      ],\n      \"cancelled_at\": null\n    }\n  ],\n  \"cursor\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6a9b8c7-1185-45d5-abc8-e3c2a9d8ae3a",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "side",
+                      "value": "sell"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "procurement",
+                      "value": "proc_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "576f4ae4-63fc-4e86-88d0-443d861d20d8",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "side",
+                      "value": "sell"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "procurement",
+                      "value": "proc_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0d06437-f06f-4569-bbb3-bfc96aaecdca",
+              "name": "Validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "side",
+                      "value": "sell"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "procurement",
+                      "value": "proc_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "365d43f1-0282-4ed8-a00a-15891cb097b7",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "id",
+                      "value": "ordr_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "pool",
+                      "value": "pool_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "workspace",
+                      "value": "wksp_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "side",
+                      "value": "sell"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "status",
+                      "value": "filled"
+                    },
+                    {
+                      "key": "created_after",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "created_before",
+                      "value": "1738972800"
+                    },
+                    {
+                      "key": "procurement",
+                      "value": "proc_k3R-nX9vLm7Qp2Yw5Jd8F"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "created_at"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "starting_after",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    },
+                    {
+                      "key": "ending_before",
+                      "value": "ordrc_gqXR7s0Kj5mHvE2wNpLc4Q"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b55cdf4-3ee8-41a5-b2e5-26a104cffe2b",
+          "name": "Cancel order",
+          "request": {
+            "name": "Cancel order",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRequest cancellation of an order. This is asynchronous — poll `GET /v2/orders/{id}` to confirm the status has changed to cancelled.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7d226e81-3886-4775-be1b-3e4ffb9e8fa8",
+              "name": "Order cancellation initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "91195e8a-11ab-4f33-9fc4-644744052012",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aa33b70-c840-4efe-9f65-f68aacd305cd",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5db767f9-9b24-4275-9293-26182f0a0aa8",
+              "name": "Order not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1000d158-a8f5-457e-9d1c-8cf8bf169c09",
+              "name": "Order cannot be cancelled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"unprocessable_entity\",\n    \"message\": \"string\",\n    \"details\": [\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      },\n      {\n        \"code\": \"string\",\n        \"message\": \"string\",\n        \"field\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3b357d3-360e-4829-9b3f-39975597d888",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "650eda5f-efe6-44e0-b0e9-e89cde091d0a",
+          "name": "Get order",
+          "request": {
+            "name": "Get order",
+            "description": {
+              "content": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nRetrieve an order by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "preview",
+                "v2",
+                "orders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "43a7d3f3-7d53-4031-88e3-59a311d379df",
+              "name": "Order details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"order\",\n  \"id\": \"ordr_k3R-nX9vLm7Qp2Yw5Jd8F\",\n  \"capacity\": {\n    \"id\": \"cap_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"pool\": {\n    \"id\": \"pool_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"name\": \"my-resource-name\"\n  },\n  \"side\": \"sell\",\n  \"allow_standing\": true,\n  \"instance_sku\": {\n    \"object\": \"instance_sku\",\n    \"id\": \"isku_k3R-nX9vLm7Qp2Yw5Jd8F\",\n    \"alias\": \"my-resource-name\"\n  },\n  \"allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 1863,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 7105,\n      \"end_at\": null\n    }\n  ],\n  \"filled_allocation_schedule_delta\": [\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 1996,\n      \"end_at\": null\n    },\n    {\n      \"start_at\": 1738972800,\n      \"node_count\": 5143,\n      \"end_at\": null\n    }\n  ],\n  \"limit_price_dollars_per_node_hour\": \"2.500000\",\n  \"status\": \"rejected\",\n  \"created_at\": 1738972800,\n  \"allow_partial\": true,\n  \"created_by\": null,\n  \"filled_at\": null,\n  \"filled_average_price_dollars_per_node_hour\": null,\n  \"fills\": [\n    {\n      \"filled_at\": 1738972800,\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 7088,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 3373,\n          \"end_at\": null\n        }\n      ],\n      \"price_dollars_per_node_hour\": \"2.500000\",\n      \"contract\": null\n    },\n    {\n      \"filled_at\": 1738972800,\n      \"allocation_schedule_delta\": [\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 4695,\n          \"end_at\": null\n        },\n        {\n          \"start_at\": 1738972800,\n          \"node_count\": 6612,\n          \"end_at\": null\n        }\n      ],\n      \"price_dollars_per_node_hour\": \"2.500000\",\n      \"contract\": null\n    }\n  ],\n  \"cancelled_at\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31ced4fa-7ed2-433d-922e-ce5dbc5b8883",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"authentication_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bc68cda-5bea-4637-b60f-8ccaf537eafa",
+              "name": "Forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"forbidden\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d67e8c59-4d08-4fcb-9de8-10c71e6cf3a0",
+              "name": "Order not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"not_found\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65a05d82-134d-40a6-977f-2c486b721972",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "preview",
+                    "v2",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"type\": \"api_error\",\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.sfcompute.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "410da10f-3f33-4fba-8c2f-590fc25d6949",
+    "name": "sfc-api Account Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.",
+      "type": "text/plain"
+    }
+  }
+}

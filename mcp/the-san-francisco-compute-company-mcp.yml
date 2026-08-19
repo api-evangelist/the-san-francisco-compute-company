@@ -1,16 +1,12 @@
 generated: '2026-07-21'
 method: searched
 status: published
-source: >-
-  https://docs.sfcompute.com/mcp (documented Mintlify docs MCP server; the
-  /.well-known/oauth-authorization-server on docs.sfcompute.com advertises the
-  MCP OAuth metadata and the mcp:search scope).
-description: >-
-  SF Compute publishes a hosted MCP server for its documentation (served by the
-  Mintlify docs platform). It exposes documentation search to MCP-capable
-  agents. There is no first-party MCP server for the compute API itself yet;
-  the candidate_tools[] below are DERIVED from the OpenAPI as a starting point
-  for one (status: candidate) and are not an official offering.
+source: https://docs.sfcompute.com/mcp (documented Mintlify docs MCP server; the /.well-known/oauth-authorization-server
+  on docs.sfcompute.com advertises the MCP OAuth metadata and the mcp:search scope).
+description: 'SF Compute publishes a hosted MCP server for its documentation (served by the Mintlify docs
+  platform). It exposes documentation search to MCP-capable agents. There is no first-party MCP server
+  for the compute API itself yet; the candidate_tools[] below are DERIVED from the OpenAPI as a starting
+  point for one (status: candidate) and are not an official offering.'
 server:
   name: sfcompute-docs
   transport: http
@@ -28,12 +24,36 @@ tools:
 candidate_tools_source: openapi/the-san-francisco-compute-company-openapi.json
 candidate_tools_status: candidate
 candidate_tools:
-- {name: list_instance_sku_availability, description: See what compute is currently for sale, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#list_instance_sku_availability"}
-- {name: create_order, description: Place a buy or sell order, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#create_order"}
-- {name: get_order_preview, description: Estimate an order before placing it, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#get_order_preview"}
-- {name: list_orders, description: List orders, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#list_orders"}
-- {name: create_instance, description: Launch a GPU instance, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#create_instance"}
-- {name: list_instances, description: List instances, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#list_instances"}
-- {name: get_instance_ssh, description: Get SSH connection info for an instance, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#get_instance_ssh"}
-- {name: create_pool, description: Create a pool of reserved compute balance, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#create_pool"}
-- {name: get_orderbook_quote, description: Get a market quote, source_operation: "openapi/the-san-francisco-compute-company-openapi.json#get_orderbook_quote"}
+- name: list_instance_sku_availability
+  description: See what compute is currently for sale
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#list_instance_sku_availability
+- name: create_order
+  description: Place a buy or sell order
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#create_order
+- name: get_order_preview
+  description: Estimate an order before placing it
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#get_order_preview
+- name: list_orders
+  description: List orders
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#list_orders
+- name: create_instance
+  description: Launch a GPU instance
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#create_instance
+- name: list_instances
+  description: List instances
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#list_instances
+- name: get_instance_ssh
+  description: Get SSH connection info for an instance
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#get_instance_ssh
+- name: create_pool
+  description: Create a pool of reserved compute balance
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#create_pool
+- name: get_orderbook_quote
+  description: Get a market quote
+  source_operation: openapi/the-san-francisco-compute-company-openapi.json#get_orderbook_quote
+deployment:
+  mode: remote
+  verified: searched
+  tools: 1
+  checked: '2026-08-12'
+  source: catalog MCP census

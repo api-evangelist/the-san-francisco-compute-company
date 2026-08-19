@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "sfc-api Account Orderbook API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orderbook",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get market depth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/orderbook/depth",
+            "params": [
+              {
+                "name": "requirements",
+                "value": "accelerator:H100",
+                "type": "query",
+                "description": "URL-safe `field[:op]:value` triples joined by `;`."
+              },
+              {
+                "name": "start_at",
+                "value": "1746057600",
+                "type": "query",
+                "description": "Start of the delivery window."
+              },
+              {
+                "name": "end_at",
+                "value": "1746662400",
+                "type": "query",
+                "description": "End of the delivery window."
+              },
+              {
+                "name": "depth",
+                "value": "",
+                "type": "query",
+                "description": "Maximum levels returned per side. Clamped to [1, 100]. Default 20."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nDepth of book for the given requirements and delivery window, aggregated by instance SKU and price level. Individual orders and participants are not exposed."
+        },
+        {
+          "info": {
+            "name": "List market fills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/orderbook/fills",
+            "params": [
+              {
+                "name": "requirements",
+                "value": "accelerator:H100",
+                "type": "query",
+                "description": "URL-safe `field[:op]:value` triples joined by `;`."
+              },
+              {
+                "name": "start_at",
+                "value": "1746057600",
+                "type": "query",
+                "description": "Start of the delivery window."
+              },
+              {
+                "name": "end_at",
+                "value": "1746662400",
+                "type": "query",
+                "description": "End of the delivery window."
+              },
+              {
+                "name": "since_at",
+                "value": "1745452800",
+                "type": "query",
+                "description": "Lower bound on the contract's `created_at` (when the fill was recorded). Unix epoch seconds. Defaults to `now - 7d`. Must be no more than 30 days before `now`; older values return 422."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum results to return. Clamped to [1, 200]. Default 50."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the next (older) page."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nAll contracts that filled on hardware meeting the requirements for the given delivery window, sorted newest first. One row per fill (contract), including the instance SKU. Participant identity is never exposed."
+        },
+        {
+          "info": {
+            "name": "Get market quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/orderbook/quote",
+            "params": [
+              {
+                "name": "requirements",
+                "value": "accelerator:H100",
+                "type": "query",
+                "description": "URL-safe `field[:op]:value` triples joined by `;`."
+              },
+              {
+                "name": "start_at",
+                "value": "1746057600",
+                "type": "query",
+                "description": "Start of the delivery window."
+              },
+              {
+                "name": "end_at",
+                "value": "1746662400",
+                "type": "query",
+                "description": "End of the delivery window."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nTop-of-book quote (best bid + best ask) for the given requirements and delivery window. Returned price levels include the matching instance SKU."
+        },
+        {
+          "info": {
+            "name": "List market windows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.sfcompute.com/preview/v2/orderbook/windows",
+            "params": [
+              {
+                "name": "requirements",
+                "value": "accelerator:H100",
+                "type": "query",
+                "description": "URL-safe `field[:op]:value` triples joined by `;`."
+              },
+              {
+                "name": "range_start_at",
+                "value": "1746057600",
+                "type": "query",
+                "description": "Start of the delivery-window range to browse. Unix epoch seconds, minute-aligned."
+              },
+              {
+                "name": "range_end_at",
+                "value": "1748649600",
+                "type": "query",
+                "description": "End of the delivery-window range to browse. Unix epoch seconds, minute-aligned, must be > `range_start_at`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum results to return. Clamped to [1, 200]. Default 50."
+              },
+              {
+                "name": "starting_after",
+                "value": "",
+                "type": "query",
+                "description": "Set to the response's `cursor` to fetch the next page."
+              }
+            ]
+          },
+          "docs": "> ⚠️ This endpoint is in [public preview](/preview/roadmap).\n\nList every instance SKU and delivery window with resting orders matching the requirements, within the given time range. Each row is a summary; use /quote or /depth for detail on a specific SKU window."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
