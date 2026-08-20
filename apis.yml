@@ -41,6 +41,16 @@ tags:
 - Compute
 - Cloud Infrastructure
 - Artificial Intelligence
+- Machine-Learning
+- Compute Marketplace
+- Reselling
+- Infrastructure
+tags_raw:
+- Company
+- GPU
+- Compute
+- Cloud Infrastructure
+- Artificial Intelligence
 - Machine Learning
 - Compute Marketplace
 - Reselling
@@ -83,6 +93,8 @@ apis:
   humanURL: https://docs.sfcompute.com/preview/using-the-api
   baseURL: https://api.sfcompute.com/preview/v2
   tags:
+  - Deployment
+  tags_raw:
   - Deployments
   properties:
   - type: OpenAPI
@@ -142,6 +154,8 @@ apis:
   humanURL: https://docs.sfcompute.com/preview/using-the-api
   baseURL: https://api.sfcompute.com/preview/v2
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -292,6 +306,8 @@ apis:
   humanURL: https://docs.sfcompute.com/preview/using-the-api
   baseURL: https://api.sfcompute.com/preview/v2
   tags:
+  - Order Book
+  tags_raw:
   - Orderbook
   properties:
   - type: OpenAPI
@@ -321,6 +337,8 @@ apis:
   humanURL: https://docs.sfcompute.com/preview/using-the-api
   baseURL: https://api.sfcompute.com/preview/v2
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -408,6 +426,8 @@ apis:
   humanURL: https://docs.sfcompute.com/preview/using-the-api
   baseURL: https://api.sfcompute.com/preview/v2
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
