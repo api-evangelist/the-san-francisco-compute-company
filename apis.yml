@@ -493,6 +493,9 @@ apis:
   - type: AgenticAccess
     url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
 common:
+- type: CapabilityMap
+  url: capabilities/the-san-francisco-compute-company-capability-edges.yml
+  name: The San Francisco Compute Company Business Capability Map
 - type: DeveloperPortal
   url: https://docs.sfcompute.com
 - type: Documentation
