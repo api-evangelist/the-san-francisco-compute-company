@@ -470,6 +470,8 @@ apis:
   humanURL: https://docs.sfcompute.com/preview/using-the-api
   baseURL: https://api.sfcompute.com/preview/v2
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
