@@ -11,6 +11,10 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: developer-api
 pricing_basis: usage-other
+delivery:
+  delivery: managed
+  method: keyword-prefilter
+  read: '2026-09-20'
 published: true
 note: Homepage with a pricing section quoting an average GPU-hour market rate; custom H100/B300/GB300
   long-term clusters require contacting the team. Resale figures appear to come from an interactive calculator.
