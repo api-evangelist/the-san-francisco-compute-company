@@ -496,6 +496,8 @@ apis:
   - type: AgenticAccess
     url: agentic-access/the-san-francisco-compute-company-agentic-access.yml
 common:
+- type: Plans
+  url: plans/the-san-francisco-compute-company-plans-pricing.yml
 - type: Website
   url: https://www.sfcompute.com/
 - type: CapabilityMap

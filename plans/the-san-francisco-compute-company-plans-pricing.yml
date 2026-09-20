@@ -1,0 +1,41 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://sfcompute.com/#prices
+sources:
+- https://sfcompute.com/#prices
+- https://sfcompute.com/prices
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: usage-other
+published: true
+note: Homepage with a pricing section quoting an average GPU-hour market rate; custom H100/B300/GB300
+  long-term clusters require contacting the team. Resale figures appear to come from an interactive calculator.
+plan_count: 3
+currency: USD
+plans:
+- name: Reserve compute at market rate
+  price_text: $ 2.11 average gpu/hr
+  price: 2.11
+  currency: USD
+  period: per-use
+  unit: gpu/hr
+  included_quota: Contracts ranging from one node for one hour to thousands of nodes for multiple years;
+    virtual machines, bare metal, and managed slurm
+- name: Resale example - realized price
+  price_text: $ 4.29 /gpu/hr
+  price: 4.29
+  currency: USD
+  period: per-use
+  unit: gpu/hr
+  included_quota: Illustrative resale calculator figure
+- name: Resale example - reserved price
+  price_text: $ 3.00 /gpu/hr
+  price: 3.0
+  currency: USD
+  period: per-use
+  unit: gpu/hr
+  included_quota: Illustrative reserved price in calculator (Reserved 3 mo $302,400)
