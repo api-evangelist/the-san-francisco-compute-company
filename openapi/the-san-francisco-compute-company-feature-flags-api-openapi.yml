@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: sfc-api Account Feature Flags API
+  title: sfc-api Feature Flags API
   description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
   version: 0.1.0
   x-apievangelist:
@@ -20,7 +20,7 @@ paths:
       tags:
       - Feature Flags
       summary: List feature flags scoped to the caller
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         List every user-visible feature flag whose audience matches the caller, along with whether the caller is currently enrolled and whether the flag is self-enrollable via `POST /v2/feature_flags/{feature_flag}`. Flags with `user_enroll = false` are read-only here. Flags not marked `user_visible` are hidden from this listing entirely.'
@@ -43,7 +43,7 @@ paths:
       tags:
       - Feature Flags
       summary: Enroll or unenroll the caller in a feature flag
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Set the caller''s enrollment state for a self-enrollable feature flag.'
@@ -80,6 +80,31 @@ paths:
       - bearer_auth: []
 components:
   schemas:
+    SetEnrollmentRequest:
+      type: object
+      required:
+      - enrolled
+      properties:
+        enrolled:
+          type: boolean
+    ListUserFeatureFlagsResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFeatureFlag'
+        has_more:
+          type: boolean
     SetEnrollmentResponse:
       type: object
       required:
@@ -116,31 +141,6 @@ components:
           type: string
         user_enroll:
           type: boolean
-        enrolled:
-          type: boolean
-    ListUserFeatureFlagsResponse:
-      type: object
-      required:
-      - object
-      - data
-      - has_more
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserFeatureFlag'
-        has_more:
-          type: boolean
-    SetEnrollmentRequest:
-      type: object
-      required:
-      - enrolled
-      properties:
         enrolled:
           type: boolean
   securitySchemes:

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: sfc-api Account Instance SKU Catalog API
+  title: sfc-api Instance SKU Catalog API
   description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
   version: 0.1.0
   x-apievangelist:
@@ -21,7 +21,7 @@ paths:
       tags:
       - Instance SKU Catalog
       summary: List instance SKU property catalog
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         List every property key and its allowed values. Use the keys and values here when filling in `requirements` on orders and procurements.'
@@ -78,6 +78,23 @@ paths:
       - bearer_auth: []
 components:
   schemas:
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
     InstanceSkuEnumerationValue:
       type: object
       description: One allowed value for an enumeration-typed property key.
@@ -109,50 +126,6 @@ components:
           - string
           - 'null'
           description: Migration guidance shown when the value is deprecated.
-    ListInstanceSkuPropertyCatalogResponse:
-      type: object
-      description: Paginated list of property-catalog entries returned by `GET /v2/instance_sku_property_catalog`.
-      required:
-      - object
-      - has_more
-      - data
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: Pass as `starting_after` or `ending_before` to paginate.
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceSkuPropertyDefinition'
-    InstanceSkuPropertyDefinition:
-      oneOf:
-      - type: object
-        required:
-        - key
-        - values
-        - type
-        properties:
-          key:
-            $ref: '#/components/schemas/InstanceSkuPropertyKey'
-          values:
-            type: array
-            items:
-              $ref: '#/components/schemas/InstanceSkuEnumerationValue'
-          type:
-            type: string
-            const: enumeration
-            default: enumeration
-            readOnly: true
-      description: A catalog entry describing a property key together with its allowed enumeration values.
     InternalServerError:
       type: object
       required:
@@ -211,6 +184,25 @@ components:
           - string
           - 'null'
           description: Migration guidance shown when the key is deprecated.
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
     UnprocessableEntityError:
       type: object
       required:
@@ -239,42 +231,50 @@ components:
       format: int64
       description: Unix timestamp.
       example: 1738972800
-    UnauthorizedError:
+    ListInstanceSkuPropertyCatalogResponse:
       type: object
+      description: Paginated list of property-catalog entries returned by `GET /v2/instance_sku_property_catalog`.
       required:
-      - error
+      - object
+      - has_more
+      - data
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
           type:
           - string
           - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
+          description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceSkuPropertyDefinition'
+    InstanceSkuPropertyDefinition:
+      oneOf:
+      - type: object
+        required:
+        - key
+        - values
+        - type
+        properties:
+          key:
+            $ref: '#/components/schemas/InstanceSkuPropertyKey'
+          values:
+            type: array
+            items:
+              $ref: '#/components/schemas/InstanceSkuEnumerationValue'
+          type:
+            type: string
+            const: enumeration
+            default: enumeration
+            readOnly: true
+      description: A catalog entry describing a property key together with its allowed enumeration values.
   securitySchemes:
     bearer_auth:
       type: http

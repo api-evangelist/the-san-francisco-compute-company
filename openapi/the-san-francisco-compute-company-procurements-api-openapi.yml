@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: sfc-api Account Procurements API
+  title: sfc-api Procurements API
   description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
   version: 0.1.0
   x-apievangelist:
@@ -21,7 +21,7 @@ paths:
       tags:
       - Procurements
       summary: Create procurement
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Create a market automation that maintains capacity by placing buy/sell orders.'
@@ -79,7 +79,7 @@ paths:
       tags:
       - Procurements
       summary: List procurements
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         List all procurements.'
@@ -152,7 +152,7 @@ paths:
       tags:
       - Procurements
       summary: Delete procurement
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Delete a procurement. Standing orders are cancelled automatically.'
@@ -198,7 +198,7 @@ paths:
       tags:
       - Procurements
       summary: Get procurement
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Retrieve a procurement by ID or name.'
@@ -248,7 +248,7 @@ paths:
       tags:
       - Procurements
       summary: Update procurement
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Update a procurement''s configuration.'
@@ -314,113 +314,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    InstanceSkuId:
-      oneOf:
-      - type: string
-        examples:
-        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: isku_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: clus_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    InternalServerError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    ProcurementScope:
-      type: object
-      required:
-      - id
-      - resource_path
-      - owner
-      - workspace
-      - workspace_id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/ProcurementId'
-        resource_path:
-          $ref: '#/components/schemas/procurementResourcePath_ProcurementId'
-        owner:
-          $ref: '#/components/schemas/Name'
-        workspace:
-          $ref: '#/components/schemas/Name'
-        workspace_id:
-          $ref: '#/components/schemas/WorkspaceId'
-        name:
-          $ref: '#/components/schemas/Name'
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    AutomationStatus:
-      type: string
-      enum:
-      - info
-      - warning
-      - error
-    ProcurementsCursor:
-      type: string
-      examples:
-      - procc_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^procc_[A-Za-z0-9_-]+$
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
-    WorkspaceId:
-      type: string
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: wksp_[0-9a-zA-Z_-]{1,21}
     ConflictError:
       type: object
       required:
@@ -444,59 +337,48 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ErrorDetail'
-    ResourcePathOrId_PoolId:
-      type: string
-      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    BadRequestError:
+    ListProcurementsResponse:
       type: object
       required:
-      - error
+      - object
+      - has_more
+      - data
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: invalid_request_error
-              default: invalid_request_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    ProcurementId:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ProcurementsCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProcurementResponse'
+    ProcurementsCursor:
       type: string
       examples:
-      - proc_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: proc_[0-9a-zA-Z_-]{1,21}
-    UnauthorizedError:
+      - procc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^procc_[A-Za-z0-9_-]+$
+    ReconciliationStatus:
       type: object
       required:
-      - error
+      - state
+      - message
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
+        state:
+          $ref: '#/components/schemas/AutomationStatus'
+        message:
+          type: string
+    NodeCountTag:
+      type: string
+      const: node_count
+      default: node_count
+      readOnly: true
     ProcurementResponse:
       allOf:
       - $ref: '#/components/schemas/ProcurementScope'
@@ -551,28 +433,24 @@ components:
             $ref: '#/components/schemas/UnixEpoch'
           updated_at:
             $ref: '#/components/schemas/UnixEpoch'
-    procurementResourcePath_ProcurementId:
-      type: string
-      description: 'A resource path for a procurement resource. Format: sfc:procurement:<account>:<workspace>:<name>.'
-      examples:
-      - sfc:procurement:<account_id>:<workspace>:<name>
-      pattern: sfc:procurement:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
-    PoolId:
-      type: string
-      examples:
-      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: pool_[0-9a-zA-Z_-]{1,21}
-    ReconciliationStatus:
+    ErrorDetail:
       type: object
       required:
-      - state
+      - code
       - message
       properties:
-        state:
-          $ref: '#/components/schemas/AutomationStatus'
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
         message:
           type: string
-    NotFoundError:
+          description: Human-readable error message
+    BadRequestError:
       type: object
       required:
       - error
@@ -585,90 +463,40 @@ components:
           properties:
             type:
               type: string
-              const: not_found
-              default: not_found
+              const: invalid_request_error
+              default: invalid_request_error
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-    PoolSummary:
-      type: object
-      description: A pool referenced by id and name.
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/PoolId'
-        name:
-          $ref: '#/components/schemas/Name'
-    NodeCountTag:
-      type: string
-      const: node_count
-      default: node_count
-      readOnly: true
-    CapacityId:
-      oneOf:
-      - type: string
-        examples:
-        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: cap_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: pool_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    ProcurementTarget:
-      oneOf:
-      - $ref: '#/components/schemas/NodeCountTag'
-      - type: integer
-        format: u-int64
-        minimum: 0
-    CapacitySummary:
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    UnauthorizedError:
       type: object
       required:
-      - id
-      - name
+      - error
       properties:
-        id:
-          $ref: '#/components/schemas/CapacityId'
-        name:
-          $ref: '#/components/schemas/Name'
-    InstanceSkuSummary:
-      type: object
-      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
-      required:
-      - object
-      - id
-      - alias
-      properties:
-        object:
-          type: string
-          const: instance_sku
-          default: instance_sku
-          readOnly: true
-        id:
-          $ref: '#/components/schemas/InstanceSkuId'
-        alias:
-          $ref: '#/components/schemas/Name'
-    DollarsPerNodeHour:
-      type: string
-      description: Price rate in dollars per node-hour.
-      examples:
-      - '2.500000'
-      pattern: ^\d+\.\d+$
-    ResourcePathOrId_WorkspaceId:
-      type: string
-      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
     CreateProcurementRequest:
       type: object
       required:
@@ -706,33 +534,12 @@ components:
           type: boolean
           description: Enable/disable the procurement.
           default: true
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    ListProcurementsResponse:
-      type: object
-      required:
-      - object
-      - has_more
-      - data
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ProcurementsCursor'
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProcurementResponse'
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
     PatchProcurementRequest:
       type: object
       properties:
@@ -767,6 +574,142 @@ components:
           type:
           - boolean
           - 'null'
+    PoolId:
+      type: string
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: pool_[0-9a-zA-Z_-]{1,21}
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
+    AutomationStatus:
+      type: string
+      enum:
+      - info
+      - warning
+      - error
+    CapacitySummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/CapacityId'
+        name:
+          $ref: '#/components/schemas/Name'
+    CapacityId:
+      oneOf:
+      - type: string
+        examples:
+        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: cap_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: pool_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    InstanceSkuSummary:
+      type: object
+      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+    ResourcePathOrId_PoolId:
+      type: string
+      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    ProcurementScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/ProcurementId'
+        resource_path:
+          $ref: '#/components/schemas/procurementResourcePath_ProcurementId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
     ForbiddenError:
       type: object
       required:
@@ -786,6 +729,63 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
+    ProcurementTarget:
+      oneOf:
+      - $ref: '#/components/schemas/NodeCountTag'
+      - type: integer
+        format: u-int64
+        minimum: 0
+    PoolSummary:
+      type: object
+      description: A pool referenced by id and name.
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/PoolId'
+        name:
+          $ref: '#/components/schemas/Name'
+    ProcurementId:
+      type: string
+      examples:
+      - proc_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: proc_[0-9a-zA-Z_-]{1,21}
+    DollarsPerNodeHour:
+      type: string
+      description: Price rate in dollars per node-hour.
+      examples:
+      - '2.500000'
+      pattern: ^\d+\.\d+$
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    procurementResourcePath_ProcurementId:
+      type: string
+      description: 'A resource path for a procurement resource. Format: sfc:procurement:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:procurement:<account_id>:<workspace>:<name>
+      pattern: sfc:procurement:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
   securitySchemes:
     bearer_auth:
       type: http

@@ -1,20 +1,7 @@
 {
   "provider": "the-san-francisco-compute-company",
   "sources": [
-    "the-san-francisco-compute-company-account-api-openapi.yml",
-    "the-san-francisco-compute-company-deployments-api-openapi.yml",
-    "the-san-francisco-compute-company-feature-flags-api-openapi.yml",
-    "the-san-francisco-compute-company-images-api-openapi.yml",
-    "the-san-francisco-compute-company-instance-sku-catalog-api-openapi.yml",
-    "the-san-francisco-compute-company-instance-skus-api-openapi.yml",
-    "the-san-francisco-compute-company-instance-templates-api-openapi.yml",
-    "the-san-francisco-compute-company-instances-api-openapi.yml",
-    "the-san-francisco-compute-company-orderbook-api-openapi.yml",
-    "the-san-francisco-compute-company-orders-api-openapi.yml",
-    "the-san-francisco-compute-company-pools-api-openapi.yml",
-    "the-san-francisco-compute-company-procurements-api-openapi.yml",
-    "the-san-francisco-compute-company-users-api-openapi.yml",
-    "the-san-francisco-compute-company-workspaces-api-openapi.yml"
+    "_original/the-san-francisco-compute-company-openapi.json"
   ],
   "outputs": [
     "the-san-francisco-compute-company-account-api-openapi.yml",
@@ -35,6 +22,27 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "the-san-francisco-compute-company-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "the-san-francisco-compute-company-openapi.json: declared missing tag: Feature Flags",
+    "the-san-francisco-compute-company-openapi.json: declared missing tag: Instance SKUs",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "the-san-francisco-compute-company-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-deployments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-feature-flags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-instance-sku-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-instance-skus-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-instance-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-instances-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-orderbook-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-pools-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-procurements-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "the-san-francisco-compute-company-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

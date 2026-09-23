@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: sfc-api Account Instance Templates API
+  title: sfc-api Instance Templates API
   description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
   version: 0.1.0
   x-apievangelist:
@@ -21,7 +21,7 @@ paths:
       tags:
       - Instance Templates
       summary: Create instance template
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Create a reusable instance template.'
@@ -67,7 +67,7 @@ paths:
       tags:
       - Instance Templates
       summary: List instance templates
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         List all instance templates.'
@@ -154,7 +154,7 @@ paths:
       tags:
       - Instance Templates
       summary: Delete instance template
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Delete an instance template. The template must not be in use by any capacity.'
@@ -206,7 +206,7 @@ paths:
       tags:
       - Instance Templates
       summary: Get instance template
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Retrieve an instance template by ID or resource path.'
@@ -254,54 +254,12 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    InternalServerError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    instance_templateResourcePath_InstanceTemplateId:
+    ResourcePathOrId_ImageId:
       type: string
-      description: 'A resource path for a instance_template resource. Format: sfc:instance_template:<account>:<workspace>:<name>.'
+      description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
       examples:
-      - sfc:instance_template:<account_id>:<workspace>:<name>
-      pattern: sfc:instance_template:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
+      - image_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
     ErrorDetail:
       type: object
       required:
@@ -319,38 +277,6 @@ components:
         message:
           type: string
           description: Human-readable error message
-    WorkspaceId:
-      type: string
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: wksp_[0-9a-zA-Z_-]{1,21}
-    InstanceTemplateScope:
-      type: object
-      required:
-      - id
-      - resource_path
-      - owner
-      - workspace
-      - workspace_id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/InstanceTemplateId'
-        resource_path:
-          $ref: '#/components/schemas/instance_templateResourcePath_InstanceTemplateId'
-        owner:
-          $ref: '#/components/schemas/Name'
-        workspace:
-          $ref: '#/components/schemas/Name'
-        workspace_id:
-          $ref: '#/components/schemas/WorkspaceId'
-        name:
-          $ref: '#/components/schemas/Name'
-    InstanceTemplateInclude:
-      type: string
-      const: cloud_init_user_data
-      default: cloud_init_user_data
-      readOnly: true
     ImageId:
       oneOf:
       - type: string
@@ -360,6 +286,16 @@ components:
       - type: string
         description: Legacy alias prefix; accepted on read, never emitted on write.
         pattern: vmi_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InstanceTemplateId:
+      oneOf:
+      - type: string
+        examples:
+        - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: itmpl_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: ntmpl_[0-9a-zA-Z_-]{1,21}
       description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
     UnauthorizedError:
       type: object
@@ -380,68 +316,45 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
-    NotFoundError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: not_found
-              default: not_found
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    ResourcePathOrId_ImageId:
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    ResourcePathOrId_WorkspaceId:
       type: string
-      description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
       examples:
-      - image_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    ImageSummary:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
+    ListInstanceTemplatesResponse:
       type: object
       required:
-      - id
-      - name
+      - object
+      - has_more
+      - data
       properties:
-        id:
-          $ref: '#/components/schemas/ImageId'
-        name:
-          $ref: '#/components/schemas/Name'
-    CreateInstanceTemplateRequest:
-      type: object
-      required:
-      - workspace
-      - image
-      properties:
-        name:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Name'
-        workspace:
-          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
-          description: Workspace to create this template in.
-        image:
-          $ref: '#/components/schemas/ResourcePathOrId_ImageId'
-          description: Machine image to use when starting instances with this template. Accepts name or ID.
-        tags:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Tags'
-            description: Metadata tags to attach to this instance template.
-        cloud_init_user_data:
+        object:
           type: string
-          format: byte
-          description: Base64-encoded [cloud-init user data](https://cloudinit.readthedocs.io/en/latest/explanation/format/index.html). Maximum 64KB.
-          example: IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=
-          contentEncoding: base64
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/InstanceTemplatesCursor'
+            description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceTemplateResponse'
     Tags:
       type: object
       additionalProperties:
@@ -461,6 +374,30 @@ components:
       - env: prod
         team: infra
       maxProperties: 50
+    InstanceTemplatesCursor:
+      type: string
+      examples:
+      - itmplc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^itmplc_[A-Za-z0-9_-]+$
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
     Name:
       type: string
       examples:
@@ -468,21 +405,31 @@ components:
       maxLength: 255
       minLength: 1
       pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    InstanceTemplatesCursor:
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ResourcePathOrId_InstanceTemplateId:
       type: string
+      description: A resource path like 'sfc:instance_template:acme:prod:my-instance_template' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
       examples:
-      - itmplc_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^itmplc_[A-Za-z0-9_-]+$
-    InstanceTemplateId:
-      oneOf:
-      - type: string
-        examples:
-        - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: itmpl_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: ntmpl_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+      - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (itmpl_[0-9a-zA-Z_-]{1,21}|ntmpl_[0-9a-zA-Z_-]{1,21})|(sfc:instance_template:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
     InstanceTemplateResponse:
       allOf:
       - $ref: '#/components/schemas/InstanceTemplateScope'
@@ -517,46 +464,33 @@ components:
             description: Base64-encoded [cloud-init user data](https://cloudinit.readthedocs.io/en/latest/explanation/format/index.html).
             example: IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=
             contentEncoding: base64
-    ResourcePathOrId_WorkspaceId:
-      type: string
-      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
-    ResourcePathOrId_InstanceTemplateId:
-      type: string
-      description: A resource path like 'sfc:instance_template:acme:prod:my-instance_template' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (itmpl_[0-9a-zA-Z_-]{1,21}|ntmpl_[0-9a-zA-Z_-]{1,21})|(sfc:instance_template:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    ListInstanceTemplatesResponse:
+    InstanceTemplateScope:
       type: object
       required:
-      - object
-      - has_more
-      - data
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
       properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/InstanceTemplatesCursor'
-            description: Pass as `starting_after` or `ending_before` to paginate.
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceTemplateResponse'
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
+        id:
+          $ref: '#/components/schemas/InstanceTemplateId'
+        resource_path:
+          $ref: '#/components/schemas/instance_templateResourcePath_InstanceTemplateId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
+    InstanceTemplateInclude:
+      type: string
+      const: cloud_init_user_data
+      default: cloud_init_user_data
+      readOnly: true
     ForbiddenError:
       type: object
       required:
@@ -576,6 +510,72 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    instance_templateResourcePath_InstanceTemplateId:
+      type: string
+      description: 'A resource path for a instance_template resource. Format: sfc:instance_template:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:instance_template:<account_id>:<workspace>:<name>
+      pattern: sfc:instance_template:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    CreateInstanceTemplateRequest:
+      type: object
+      required:
+      - workspace
+      - image
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+          description: Workspace to create this template in.
+        image:
+          $ref: '#/components/schemas/ResourcePathOrId_ImageId'
+          description: Machine image to use when starting instances with this template. Accepts name or ID.
+        tags:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Tags'
+            description: Metadata tags to attach to this instance template.
+        cloud_init_user_data:
+          type: string
+          format: byte
+          description: Base64-encoded [cloud-init user data](https://cloudinit.readthedocs.io/en/latest/explanation/format/index.html). Maximum 64KB.
+          example: IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=
+          contentEncoding: base64
+    ImageSummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/ImageId'
+        name:
+          $ref: '#/components/schemas/Name'
   securitySchemes:
     bearer_auth:
       type: http

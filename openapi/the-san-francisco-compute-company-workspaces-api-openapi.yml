@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: sfc-api Account Workspaces API
+  title: sfc-api Workspaces API
   description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
   version: 0.1.0
   x-apievangelist:
@@ -21,7 +21,7 @@ paths:
       tags:
       - Workspaces
       summary: Create workspace
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Create a workspace.'
@@ -67,7 +67,7 @@ paths:
       tags:
       - Workspaces
       summary: List workspaces
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         List all workspaces for the authenticated account.'
@@ -119,7 +119,7 @@ paths:
       tags:
       - Workspaces
       summary: Delete workspace
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Soft-delete a workspace by name or ID. Workspace must be empty (no capacities, instance templates, or images).'
@@ -172,7 +172,7 @@ paths:
       tags:
       - Workspaces
       summary: Get workspace
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Retrieve a workspace by name or ID.'
@@ -223,7 +223,7 @@ paths:
       tags:
       - Workspaces
       summary: Update workspace
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Rename a workspace.'
@@ -284,30 +284,23 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    WorkspaceId:
-      type: string
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: wksp_[0-9a-zA-Z_-]{1,21}
-    ForbiddenError:
+    ErrorDetail:
       type: object
       required:
-      - error
+      - code
+      - message
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: forbidden
-              default: forbidden
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
     BadRequestError:
       type: object
       required:
@@ -331,22 +324,11 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ErrorDetail'
-    WorkspaceScope:
-      type: object
-      required:
-      - id
-      - resource_path
-      - owner
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/WorkspaceId'
-        resource_path:
-          $ref: '#/components/schemas/workspaceResourcePath_WorkspaceId'
-        owner:
-          $ref: '#/components/schemas/Name'
-        name:
-          $ref: '#/components/schemas/Name'
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
     ListWorkspacesResponse:
       type: object
       required:
@@ -365,6 +347,40 @@ components:
             $ref: '#/components/schemas/WorkspaceResponse'
         has_more:
           type: boolean
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    WorkspaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceScope'
+      - type: object
+        required:
+        - object
+        - created_at
+        properties:
+          object:
+            type: string
+            const: workspace
+            default: workspace
+            readOnly: true
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
     InternalServerError:
       type: object
       required:
@@ -384,7 +400,27 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
-    NotFoundError:
+    workspaceResourcePath_WorkspaceId:
+      type: string
+      description: 'A resource path for a workspace resource. Format: sfc:workspace:<account>:<name>.'
+      examples:
+      - sfc:workspace:<account_id>:<name>
+      pattern: sfc:workspace:([a-zA-Z0-9._-]+:){1}[a-zA-Z0-9._-]+
+    PatchWorkspaceRequest:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    UnauthorizedError:
       type: object
       required:
       - error
@@ -397,19 +433,12 @@ components:
           properties:
             type:
               type: string
-              const: not_found
-              default: not_found
+              const: authentication_error
+              default: authentication_error
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
     UnprocessableEntityError:
       type: object
       required:
@@ -433,25 +462,7 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ErrorDetail'
-    CreateWorkspaceRequest:
-      type: object
-      properties:
-        name:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Name'
-    ResourcePathOrId_WorkspaceId:
-      type: string
-      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    UnauthorizedError:
+    NotFoundError:
       type: object
       required:
       - error
@@ -464,57 +475,46 @@ components:
           properties:
             type:
               type: string
-              const: authentication_error
-              default: authentication_error
+              const: not_found
+              default: not_found
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-    ErrorDetail:
+    WorkspaceScope:
       type: object
       required:
-      - code
-      - message
+      - id
+      - resource_path
+      - owner
+      - name
       properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
-    PatchWorkspaceRequest:
+        id:
+          $ref: '#/components/schemas/WorkspaceId'
+        resource_path:
+          $ref: '#/components/schemas/workspaceResourcePath_WorkspaceId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        name:
+          $ref: '#/components/schemas/Name'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    CreateWorkspaceRequest:
       type: object
       properties:
         name:
-          type:
-          - string
-          - 'null'
-    WorkspaceResponse:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceScope'
-      - type: object
-        required:
-        - object
-        - created_at
-        properties:
-          object:
-            type: string
-            const: workspace
-            default: workspace
-            readOnly: true
-          created_at:
-            $ref: '#/components/schemas/UnixEpoch'
-    workspaceResourcePath_WorkspaceId:
-      type: string
-      description: 'A resource path for a workspace resource. Format: sfc:workspace:<account>:<name>.'
-      examples:
-      - sfc:workspace:<account_id>:<name>
-      pattern: sfc:workspace:([a-zA-Z0-9._-]+:){1}[a-zA-Z0-9._-]+
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
   securitySchemes:
     bearer_auth:
       type: http

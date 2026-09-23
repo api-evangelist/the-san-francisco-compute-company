@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: sfc-api Account Instances API
+  title: sfc-api Instances API
   description: Public preview API - subject to change. See https://docs.sfcompute.com/preview/roadmap for details.
   version: 0.1.0
   x-apievangelist:
@@ -21,7 +21,7 @@ paths:
       tags:
       - Instances
       summary: Create instance
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Create an instance.'
@@ -73,7 +73,7 @@ paths:
       tags:
       - Instances
       summary: List instances
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         List all instances.'
@@ -230,7 +230,7 @@ paths:
       tags:
       - Instances
       summary: Update multiple instances
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Update one or more instances atomically. All listed instances must be in the same workspace; mixed-workspace batches are rejected with 422.'
@@ -277,7 +277,7 @@ paths:
       tags:
       - Instances
       summary: Delete instance
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Delete an instance.'
@@ -329,7 +329,7 @@ paths:
       tags:
       - Instances
       summary: Get instance
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Retrieve an instance by ID or name.'
@@ -379,7 +379,7 @@ paths:
       tags:
       - Instances
       summary: Update instance
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Update an instance. Omitted fields are left unchanged.'
@@ -448,7 +448,7 @@ paths:
       tags:
       - Instances
       summary: Get instance logs
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Retrieve logs for an instance.'
@@ -550,7 +550,7 @@ paths:
       tags:
       - Instances
       summary: Replace instance
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Terminates the target instance and creates a fresh one on the same capacity and SKU with a new image (and optionally a new startup script and name). Capacity, SKU, subnet, public IPv4, firewall, tags, and priority are inherited from the replaced instance. The two operations happen in a single transaction. Pass an `Idempotency-Key` header to make retries safe: a repeated request returns the replacement created by the first attempt instead of creating another one.'
@@ -627,7 +627,7 @@ paths:
       tags:
       - Instances
       summary: Get instance SSH info
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Retrieve SSH connection details for an instance.'
@@ -678,7 +678,7 @@ paths:
       tags:
       - Instances
       summary: Terminate instance
-      description: '> ⚠️ This endpoint is in [public preview](/preview/roadmap).
+      description: '> ⚠️ This endpoint is in public preview.
 
 
         Terminates a running instance. Terminated instances can not be restarted.'
@@ -726,137 +726,26 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    InstanceSkuId:
-      oneOf:
-      - type: string
-        examples:
-        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: isku_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: clus_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    InternalServerError:
+    ReplaceInstanceRequest:
       type: object
+      description: Request body for `POST /v2/instances/{id}/replace`. Terminates the target instance and creates a fresh one on the **same capacity and SKU**, with a new image (and optionally a new startup script / name). Capacity, SKU, subnet, public-IPv4, firewall, tags, and priority are inherited from the terminated instance.
       required:
-      - error
+      - image
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    DeploymentId:
-      type: string
-      examples:
-      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: depl_[0-9a-zA-Z_-]{1,21}
-    InstancePriority:
-      type: string
-      description: 'Instance priority — a relative ranking that determines which instances the system prefers to keep running when capacity is constrained. When a capacity''s quota drops below its running-instance count, instances are terminated in priority order (lower first).
-
-
-        Ordering: `yield < normal < preferred < critical`.'
-      enum:
-      - yield
-      - normal
-      - preferred
-      - critical
-    SpotDeploymentId:
-      type: string
-      examples:
-      - spot_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: spot_[0-9a-zA-Z_-]{1,21}
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
-    FirewallId:
-      type: string
-      examples:
-      - frwl_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: frwl_[0-9a-zA-Z_-]{1,21}
-    WorkspaceId:
-      type: string
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: wksp_[0-9a-zA-Z_-]{1,21}
-    InstanceLogChunk:
-      type: object
-      required:
-      - timestamp_realtime
-      - timestamp_monotonic_secs
-      - timestamp_monotonic_nanos
-      - seqnum
-      - data
-      properties:
-        timestamp_realtime:
-          $ref: '#/components/schemas/UnixEpoch'
-          description: Wall-clock time. Unix timestamp.
-        timestamp_monotonic_secs:
-          type: integer
-          format: int64
-          description: Monotonic clock seconds.
-        timestamp_monotonic_nanos:
-          type: integer
-          format: u-int32
-          description: Nanosecond component of the monotonic clock.
-          minimum: 0
-        seqnum:
-          type: integer
-          format: u-int64
-          minimum: 0
-        data:
+        image:
+          $ref: '#/components/schemas/ResourcePathOrId_ImageId'
+          description: Image to launch the replacement instance from.
+        cloud_init_user_data:
           type: string
           format: byte
-          description: Base-64 encoded raw console output.
-          example: SGVsbG8gV29ybGQK
+          description: Base64-encoded [cloud-init user data](https://cloudinit.readthedocs.io/en/latest/explanation/format/index.html). Maximum 64KB. If omitted, the replacement starts with no startup script — you will not be able to SSH into it.
+          example: IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=
           contentEncoding: base64
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+            description: Optional name for the replacement. A name is generated if omitted. Must differ from the replaced instance's name, which stays reserved while that instance lingers in the `terminated` state.
     ConflictError:
       type: object
       required:
@@ -872,35 +761,6 @@ components:
               type: string
               const: conflict
               default: conflict
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    ResourcePathOrId_PoolId:
-      type: string
-      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    BadRequestError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: invalid_request_error
-              default: invalid_request_error
               readOnly: true
             message:
               type: string
@@ -926,78 +786,6 @@ components:
           - type: 'null'
           - $ref: '#/components/schemas/InstancePriority'
             description: Instance priority. Omit to leave unchanged.
-    InstancesCursor:
-      type: string
-      examples:
-      - nodec_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^nodec_[A-Za-z0-9_-]+$
-    ImageId:
-      oneOf:
-      - type: string
-        examples:
-        - image_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: image_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: vmi_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    ResourcePathOrId_FirewallId:
-      type: string
-      description: A resource path like 'sfc:firewall:acme:prod:my-firewall' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - frwl_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (frwl_[0-9a-zA-Z_-]{1,21})|(sfc:firewall:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    InstanceId:
-      oneOf:
-      - type: string
-        examples:
-        - inst_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: inst_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: vm_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    InstanceScope:
-      type: object
-      required:
-      - id
-      - resource_path
-      - owner
-      - workspace
-      - workspace_id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/InstanceId'
-        resource_path:
-          $ref: '#/components/schemas/instanceResourcePath_InstanceId'
-        owner:
-          $ref: '#/components/schemas/Name'
-        workspace:
-          $ref: '#/components/schemas/Name'
-        workspace_id:
-          $ref: '#/components/schemas/WorkspaceId'
-        name:
-          $ref: '#/components/schemas/Name'
     InstanceSshInfo:
       type: object
       required:
@@ -1029,6 +817,121 @@ components:
           - type: 'null'
           - $ref: '#/components/schemas/UnixEpoch'
             description: Unix timestamp of the last attempted host key refresh.
+    ResourcePathOrId_ImageId:
+      type: string
+      description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - image_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    DeploymentId:
+      type: string
+      examples:
+      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: depl_[0-9a-zA-Z_-]{1,21}
+    InstanceScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/InstanceId'
+        resource_path:
+          $ref: '#/components/schemas/instanceResourcePath_InstanceId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    BadRequestError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: invalid_request_error
+              default: invalid_request_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    SpotDeploymentSummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/SpotDeploymentId'
+        name:
+          $ref: '#/components/schemas/Name'
+    InstancePriority:
+      type: string
+      description: 'Instance priority — a relative ranking that determines which instances the system prefers to keep running when capacity is constrained. When a capacity''s quota drops below its running-instance count, instances are terminated in priority order (lower first).
+
+
+        Ordering: `yield < normal < preferred < critical`.'
+      enum:
+      - yield
+      - normal
+      - preferred
+      - critical
+    instanceResourcePath_InstanceId:
+      type: string
+      description: 'A resource path for a instance resource. Format: sfc:instance:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:instance:<account_id>:<workspace>:<name>
+      pattern: sfc:instance:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    ImageId:
+      oneOf:
+      - type: string
+        examples:
+        - image_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: image_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: vmi_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    InstancesCursor:
+      type: string
+      examples:
+      - nodec_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^nodec_[A-Za-z0-9_-]+$
     CreateInstanceRequest:
       type: object
       required:
@@ -1079,16 +982,30 @@ components:
           description: '**Experimental — subject to change or removal without notice.** Enables InfiniBand. The chosen `instance_sku` must support InfiniBand.'
           default: false
           example: false
-    PoolId:
-      type: string
-      examples:
-      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: pool_[0-9a-zA-Z_-]{1,21}
-    ListInstancesResponse:
+    UnauthorizedError:
       type: object
       required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    BatchPatchInstancesResponse:
+      type: object
+      description: 'Response shape for `PATCH /v2/instances` (batch). Mirrors the input list — one `InstanceResponse` per *unique* `id` in the request body, reflecting the post-write state. Unlike the paginated list response, there''s no `cursor` or `has_more`: the response is exactly the instances the caller mentioned, no pagination involved.'
+      required:
       - object
-      - has_more
       - data
       properties:
         object:
@@ -1096,17 +1013,203 @@ components:
           const: list
           default: list
           readOnly: true
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/InstancesCursor'
-            description: Pass as `starting_after` or `ending_before` to paginate.
-        has_more:
-          type: boolean
         data:
           type: array
           items:
             $ref: '#/components/schemas/InstanceResponse'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    SpotDeploymentId:
+      type: string
+      examples:
+      - spot_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: spot_[0-9a-zA-Z_-]{1,21}
+    InstanceStatus:
+      type: string
+      description: '`awaiting_allocation` when waiting for compute allocation on its capacity, `running` once assigned and the physical machine is running (still takes time for the image to be downloaded and booted), `terminated` when stopped by the user or after running out of allocation, `failed` on hardware fault.
+
+
+        Values are not exhaustive across API versions. Clients should tolerate new statuses.'
+      enum:
+      - awaiting_allocation
+      - running
+      - terminated
+      - failed
+      x-speakeasy-unknown-values: true
+    BatchPatchInstanceEntry:
+      type: object
+      description: 'One entry in a [`BatchPatchInstancesRequest`]: the instance to patch (`id`) and the fields to update. `priority_level` is the only field currently patchable here. To update name, tags, or other instance fields, use `PATCH /v2/instances/{id}`.'
+      required:
+      - id
+      - priority_level
+      properties:
+        id:
+          $ref: '#/components/schemas/InstanceId'
+        priority_level:
+          $ref: '#/components/schemas/InstancePriority'
+          description: Instance priority arm to apply to this instance. Required.
+    PoolId:
+      type: string
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: pool_[0-9a-zA-Z_-]{1,21}
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
+    CapacityId:
+      oneOf:
+      - type: string
+        examples:
+        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: cap_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: pool_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    CapacitySummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/CapacityId'
+        name:
+          $ref: '#/components/schemas/Name'
+    Tags:
+      type: object
+      additionalProperties:
+        type: string
+        examples:
+        - prod
+        maxLength: 256
+        pattern: ^[^,=]{0,256}$
+      propertyNames:
+        type: string
+        examples:
+        - env
+        maxLength: 128
+        minLength: 1
+        pattern: ^[^_,= ][^,= ]{0,127}$
+      examples:
+      - env: prod
+        team: infra
+      maxProperties: 50
+    InstanceLogChunk:
+      type: object
+      required:
+      - timestamp_realtime
+      - timestamp_monotonic_secs
+      - timestamp_monotonic_nanos
+      - seqnum
+      - data
+      properties:
+        timestamp_realtime:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Wall-clock time. Unix timestamp.
+        timestamp_monotonic_secs:
+          type: integer
+          format: int64
+          description: Monotonic clock seconds.
+        timestamp_monotonic_nanos:
+          type: integer
+          format: u-int32
+          description: Nanosecond component of the monotonic clock.
+          minimum: 0
+        seqnum:
+          type: integer
+          format: u-int64
+          minimum: 0
+        data:
+          type: string
+          format: byte
+          description: Base-64 encoded raw console output.
+          example: SGVsbG8gV29ybGQK
+          contentEncoding: base64
+    ResourcePathOrId_FirewallId:
+      type: string
+      description: A resource path like 'sfc:firewall:acme:prod:my-firewall' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - frwl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (frwl_[0-9a-zA-Z_-]{1,21})|(sfc:firewall:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    InstanceSshHostKey:
+      type: object
+      required:
+      - key_type
+      - key
+      properties:
+        key_type:
+          type: string
+          description: Key algorithm.
+          examples:
+          - ssh-ed25519
+          - ssh-rsa
+        key:
+          type: string
+          format: byte
+          description: Base64-encoded public key.
+          example: AAAAC3NzaC1lZDI1NTE5AAAAI...
+          contentEncoding: base64
+    InstanceSkuSummary:
+      type: object
+      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+    ResourcePathOrId_PoolId:
+      type: string
+      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
     NotFoundError:
       type: object
       required:
@@ -1126,69 +1229,16 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
-    ResourcePathOrId_ImageId:
-      type: string
-      description: A resource path like 'sfc:image:acme:prod:my-image' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - image_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (image_[0-9a-zA-Z_-]{1,21}|vmi_[0-9a-zA-Z_-]{1,21})|(sfc:image:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    BatchPatchInstancesResponse:
-      type: object
-      description: 'Response shape for `PATCH /v2/instances` (batch). Mirrors the input list — one `InstanceResponse` per *unique* `id` in the request body, reflecting the post-write state. Unlike the paginated list response, there''s no `cursor` or `has_more`: the response is exactly the instances the caller mentioned, no pagination involved.'
-      required:
-      - object
-      - data
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceResponse'
-    PoolSummary:
-      type: object
-      description: A pool referenced by id and name.
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/PoolId'
-        name:
-          $ref: '#/components/schemas/Name'
-    SpotDeploymentSummary:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/SpotDeploymentId'
-        name:
-          $ref: '#/components/schemas/Name'
-    ReplaceInstanceRequest:
-      type: object
-      description: Request body for `POST /v2/instances/{id}/replace`. Terminates the target instance and creates a fresh one on the **same capacity and SKU**, with a new image (and optionally a new startup script / name). Capacity, SKU, subnet, public-IPv4, firewall, tags, and priority are inherited from the terminated instance.
-      required:
-      - image
-      properties:
-        image:
-          $ref: '#/components/schemas/ResourcePathOrId_ImageId'
-          description: Image to launch the replacement instance from.
-        cloud_init_user_data:
-          type: string
-          format: byte
-          description: Base64-encoded [cloud-init user data](https://cloudinit.readthedocs.io/en/latest/explanation/format/index.html). Maximum 64KB. If omitted, the replacement starts with no startup script — you will not be able to SSH into it.
-          example: IyEvYmluL2Jhc2gKZWNobyBoZWxsbyB3b3JsZAo=
-          contentEncoding: base64
-        name:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Name'
-            description: Optional name for the replacement. A name is generated if omitted. Must differ from the replaced instance's name, which stays reserved while that instance lingers in the `terminated` state.
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
     InstanceLogsResponse:
       type: object
       required:
@@ -1204,28 +1254,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InstanceLogChunk'
-    BatchPatchInstanceEntry:
-      type: object
-      description: 'One entry in a [`BatchPatchInstancesRequest`]: the instance to patch (`id`) and the fields to update. `priority_level` is the only field currently patchable here. To update name, tags, or other instance fields, use `PATCH /v2/instances/{id}`.'
-      required:
-      - id
-      - priority_level
-      properties:
-        id:
-          $ref: '#/components/schemas/InstanceId'
-        priority_level:
-          $ref: '#/components/schemas/InstancePriority'
-          description: Instance priority arm to apply to this instance. Required.
-    ImageSummary:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/ImageId'
-        name:
-          $ref: '#/components/schemas/Name'
     InstanceManagedBySummary:
       oneOf:
       - allOf:
@@ -1250,82 +1278,6 @@ components:
               const: spot_deployment
               default: spot_deployment
               readOnly: true
-    Tags:
-      type: object
-      additionalProperties:
-        type: string
-        examples:
-        - prod
-        maxLength: 256
-        pattern: ^[^,=]{0,256}$
-      propertyNames:
-        type: string
-        examples:
-        - env
-        maxLength: 128
-        minLength: 1
-        pattern: ^[^_,= ][^,= ]{0,127}$
-      examples:
-      - env: prod
-        team: infra
-      maxProperties: 50
-    InstanceStatus:
-      type: string
-      description: '`awaiting_allocation` when waiting for compute allocation on its capacity, `running` once assigned and the physical machine is running (still takes time for the image to be downloaded and booted), `terminated` when stopped by the user or after running out of allocation, `failed` on hardware fault.
-
-
-        Values are not exhaustive across API versions. Clients should tolerate new statuses.'
-      enum:
-      - awaiting_allocation
-      - running
-      - terminated
-      - failed
-      x-speakeasy-unknown-values: true
-    CapacityId:
-      oneOf:
-      - type: string
-        examples:
-        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: cap_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: pool_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    CapacitySummary:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/CapacityId'
-        name:
-          $ref: '#/components/schemas/Name'
-    InstanceSshHostKey:
-      type: object
-      required:
-      - key_type
-      - key
-      properties:
-        key_type:
-          type: string
-          description: Key algorithm.
-          examples:
-          - ssh-ed25519
-          - ssh-rsa
-        key:
-          type: string
-          format: byte
-          description: Base64-encoded public key.
-          example: AAAAC3NzaC1lZDI1NTE5AAAAI...
-          contentEncoding: base64
     InstanceResponse:
       allOf:
       - $ref: '#/components/schemas/InstanceScope'
@@ -1404,68 +1356,6 @@ components:
             - type: 'null'
             - $ref: '#/components/schemas/InstancePriority'
               description: Instance priority. Lower-priority instances are terminated first when the capacity's quota drops below the running-instance count.
-    InstanceSkuSummary:
-      type: object
-      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
-      required:
-      - object
-      - id
-      - alias
-      properties:
-        object:
-          type: string
-          const: instance_sku
-          default: instance_sku
-          readOnly: true
-        id:
-          $ref: '#/components/schemas/InstanceSkuId'
-        alias:
-          $ref: '#/components/schemas/Name'
-    BatchPatchInstancesRequest:
-      type: object
-      description: 'Request body for `PATCH /v2/instances` (batch). Each entry in `data` applies a partial patch to one instance; instances not mentioned are untouched. All entries must succeed or none — a single failure rolls back every other entry''s writes (422).
-
-
-        When the same `id` appears more than once in `data`, the last occurrence wins.'
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/BatchPatchInstanceEntry'
-    InstanceInclude:
-      type: string
-      const: cloud_init_user_data
-      default: cloud_init_user_data
-      readOnly: true
-    ResourcePathOrId_WorkspaceId:
-      type: string
-      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
-    instanceResourcePath_InstanceId:
-      type: string
-      description: 'A resource path for a instance resource. Format: sfc:instance:<account>:<workspace>:<name>.'
-      examples:
-      - sfc:instance:<account_id>:<workspace>:<name>
-      pattern: sfc:instance:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
-    DeploymentSummary:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/DeploymentId'
-        name:
-          $ref: '#/components/schemas/Name'
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
     ForbiddenError:
       type: object
       required:
@@ -1485,6 +1375,116 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
+    DeploymentSummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/DeploymentId'
+        name:
+          $ref: '#/components/schemas/Name'
+    PoolSummary:
+      type: object
+      description: A pool referenced by id and name.
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/PoolId'
+        name:
+          $ref: '#/components/schemas/Name'
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ListInstancesResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/InstancesCursor'
+            description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceResponse'
+    InstanceInclude:
+      type: string
+      const: cloud_init_user_data
+      default: cloud_init_user_data
+      readOnly: true
+    FirewallId:
+      type: string
+      examples:
+      - frwl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: frwl_[0-9a-zA-Z_-]{1,21}
+    InstanceId:
+      oneOf:
+      - type: string
+        examples:
+        - inst_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: inst_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: vm_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    BatchPatchInstancesRequest:
+      type: object
+      description: 'Request body for `PATCH /v2/instances` (batch). Each entry in `data` applies a partial patch to one instance; instances not mentioned are untouched. All entries must succeed or none — a single failure rolls back every other entry''s writes (422).
+
+
+        When the same `id` appears more than once in `data`, the last occurrence wins.'
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BatchPatchInstanceEntry'
+    ImageSummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/ImageId'
+        name:
+          $ref: '#/components/schemas/Name'
   securitySchemes:
     bearer_auth:
       type: http

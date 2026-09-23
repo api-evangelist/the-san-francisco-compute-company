@@ -1,0 +1,25 @@
+# Front Door AI Index — the-san-francisco-compute-company — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: the-san-francisco-compute-company
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.sfcompute.com
+  final_host: sfcompute.com
+  ownership: inherited
+  owner: the-san-francisco-compute-company
+  shares_host_with: null
+  inherited_from: sfcompute.com
+  verdict: scored
+  score: null
+  host_score: 1
+  density: null
+  words: 330
+  tiers:
+    agentic: 0
+    core: 1
+    model: 0
+  ambiguous: 0
+  top_terms:
+    AI: 1
