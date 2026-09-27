@@ -80,31 +80,6 @@ paths:
       - bearer_auth: []
 components:
   schemas:
-    SetEnrollmentRequest:
-      type: object
-      required:
-      - enrolled
-      properties:
-        enrolled:
-          type: boolean
-    ListUserFeatureFlagsResponse:
-      type: object
-      required:
-      - object
-      - data
-      - has_more
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserFeatureFlag'
-        has_more:
-          type: boolean
     SetEnrollmentResponse:
       type: object
       required:
@@ -119,6 +94,13 @@ components:
           readOnly: true
         feature_flag:
           type: string
+        enrolled:
+          type: boolean
+    SetEnrollmentRequest:
+      type: object
+      required:
+      - enrolled
+      properties:
         enrolled:
           type: boolean
     UserFeatureFlag:
@@ -142,6 +124,24 @@ components:
         user_enroll:
           type: boolean
         enrolled:
+          type: boolean
+    ListUserFeatureFlagsResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFeatureFlag'
+        has_more:
           type: boolean
   securitySchemes:
     bearer_auth:

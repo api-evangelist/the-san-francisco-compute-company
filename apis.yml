@@ -54,7 +54,7 @@ tags:
 - Compute
 - Cloud Infrastructure
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - Compute Marketplace
 - Reselling
 - Infrastructure
@@ -68,6 +68,7 @@ tags_raw:
 - Compute Marketplace
 - Reselling
 - Infrastructure
+- Machine-Learning
 apis:
 - aid: the-san-francisco-compute-company:the-san-francisco-compute-company-account-api
   name: The San Francisco Compute Company Account API

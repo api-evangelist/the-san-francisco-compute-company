@@ -78,23 +78,29 @@ paths:
       - bearer_auth: []
 components:
   schemas:
-    ErrorDetail:
+    UnprocessableEntityError:
       type: object
       required:
-      - code
-      - message
+      - error
       properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
     InstanceSkuEnumerationValue:
       type: object
       description: One allowed value for an enumeration-typed property key.
@@ -126,7 +132,12 @@ components:
           - string
           - 'null'
           description: Migration guidance shown when the value is deprecated.
-    InternalServerError:
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    UnauthorizedError:
       type: object
       required:
       - error
@@ -139,19 +150,12 @@ components:
           properties:
             type:
               type: string
-              const: api_error
-              default: api_error
+              const: authentication_error
+              default: authentication_error
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
     InstanceSkuPropertyKey:
       type: object
       description: A property key describing something about an instance SKU (e.g. `accelerator`).
@@ -184,53 +188,23 @@ components:
           - string
           - 'null'
           description: Migration guidance shown when the key is deprecated.
-    UnauthorizedError:
+    ErrorDetail:
       type: object
       required:
-      - error
+      - code
+      - message
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
     ListInstanceSkuPropertyCatalogResponse:
       type: object
       description: Paginated list of property-catalog entries returned by `GET /v2/instance_sku_property_catalog`.
@@ -275,6 +249,32 @@ components:
             default: enumeration
             readOnly: true
       description: A catalog entry describing a property key together with its allowed enumeration values.
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
   securitySchemes:
     bearer_auth:
       type: http

@@ -299,56 +299,31 @@ paths:
       - bearer_auth: []
 components:
   schemas:
-    ErrorDetail:
+    ListInstanceSkuAvailabilityResponse:
       type: object
+      description: Paginated per-SKU availability returned by `GET /v2/instance_skus/availability`.
       required:
-      - code
-      - message
+      - object
+      - has_more
+      - data
       properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
+        object:
           type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
-    Schedule:
-      type: array
-      items:
-        $ref: '#/components/schemas/ScheduleEntry'
-      description: 'Node count over time, as a list of `[start_at, end_at)` time ranges.
-
-
-        Example: 5 nodes from t=0 to t=3600 is `[{"start_at": 0, "end_at": 3600, "node_count": 5}]`.
-
-
-        `start_at` and `end_at` must be 60-second aligned, `node_count` must be non-negative. On non-final entries, `end_at` may be omitted (inferred from the next entry''s `start_at`); gaps fill with `node_count: 0`.'
-    InstanceSkusCursor:
-      type: string
-      examples:
-      - iskuc_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^iskuc_[A-Za-z0-9_-]+$
-    ScheduleEntry:
-      type: object
-      description: A `[start_at, end_at)` time range with a fixed `node_count`. `end_at` is `null` only on the final entry, marking an unbounded tail.
-      required:
-      - start_at
-      - node_count
-      properties:
-        start_at:
-          $ref: '#/components/schemas/UnixEpoch'
-        end_at:
+          const: list
+          default: list
+          readOnly: true
+        cursor:
           oneOf:
           - type: 'null'
-          - $ref: '#/components/schemas/UnixEpoch'
-        node_count:
-          type: integer
-          format: int32
-    InternalServerError:
+          - $ref: '#/components/schemas/InstanceSkusCursor'
+            description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceSkuAvailability'
+    UnprocessableEntityError:
       type: object
       required:
       - error
@@ -361,12 +336,16 @@ components:
           properties:
             type:
               type: string
-              const: api_error
-              default: api_error
+              const: unprocessable_entity
+              default: unprocessable_entity
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
     ListInstanceSkusResponse:
       type: object
       description: Paginated list of instance SKUs returned by `GET /v2/instance_skus`.
@@ -391,6 +370,56 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InstanceSku'
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
     InstanceSkuAvailability:
       type: object
       description: One instance SKU's purchasable-capacity schedule.
@@ -426,79 +455,23 @@ components:
           $ref: '#/components/schemas/InstanceSkuId'
         alias:
           $ref: '#/components/schemas/Name'
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    UnauthorizedError:
+    ErrorDetail:
       type: object
       required:
-      - error
+      - code
+      - message
       properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    NotFoundError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: not_found
-              default: not_found
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
     InstanceSku:
       type: object
       description: Instance SKU details. See [the instance SKUs guide](https://docs.sfcompute.com/preview/instance-skus).
@@ -663,6 +636,27 @@ components:
           - string
           - 'null'
           description: Set when this SKU is not generally available; absent means public. The value is a display string explaining the restriction (e.g. an early-access or internal designation). Treat it as free text, not a stable enum.
+    ScheduleEntry:
+      type: object
+      description: A `[start_at, end_at)` time range with a fixed `node_count`. `end_at` is `null` only on the final entry, marking an unbounded tail.
+      required:
+      - start_at
+      - node_count
+      properties:
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        end_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        node_count:
+          type: integer
+          format: int32
+    InstanceSkusCursor:
+      type: string
+      examples:
+      - iskuc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^iskuc_[A-Za-z0-9_-]+$
     InstanceSkuId:
       oneOf:
       - type: string
@@ -673,30 +667,36 @@ components:
         description: Legacy alias prefix; accepted on read, never emitted on write.
         pattern: clus_[0-9a-zA-Z_-]{1,21}
       description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    ListInstanceSkuAvailabilityResponse:
+    Schedule:
+      type: array
+      items:
+        $ref: '#/components/schemas/ScheduleEntry'
+      description: 'Node count over time, as a list of `[start_at, end_at)` time ranges.
+
+
+        Example: 5 nodes from t=0 to t=3600 is `[{"start_at": 0, "end_at": 3600, "node_count": 5}]`.
+
+
+        `start_at` and `end_at` must be 60-second aligned, `node_count` must be non-negative. On non-final entries, `end_at` may be omitted (inferred from the next entry''s `start_at`); gaps fill with `node_count: 0`.'
+    InternalServerError:
       type: object
-      description: Paginated per-SKU availability returned by `GET /v2/instance_skus/availability`.
       required:
-      - object
-      - has_more
-      - data
+      - error
       properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/InstanceSkusCursor'
-            description: Pass as `starting_after` or `ending_before` to paginate.
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceSkuAvailability'
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
   securitySchemes:
     bearer_auth:
       type: http

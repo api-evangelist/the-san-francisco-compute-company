@@ -149,6 +149,137 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ListUsersResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+        has_more:
+          type: boolean
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UsersCursor'
+    ResourcePathOrId_UserId:
+      type: string
+      description: A resource path like 'sfc:user:my-user' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - my-resource-name
+      pattern: ([a-zA-Z0-9][a-zA-Z0-9._-]{0,254})|(sfc:user:[a-zA-Z0-9._-]+)
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    userResourcePath_UserId:
+      type: string
+      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
+      examples:
+      - sfc:user:<name>
+      pattern: sfc:user:[a-zA-Z0-9._-]+
+    UserId:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UsersCursor:
+      type: string
+      examples:
+      - usrc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^usrc_[A-Za-z0-9_-]+$
     ErrorDetail:
       type: object
       required:
@@ -219,137 +350,6 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
-    ResourcePathOrId_UserId:
-      type: string
-      description: A resource path like 'sfc:user:my-user' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - my-resource-name
-      pattern: ([a-zA-Z0-9][a-zA-Z0-9._-]{0,254})|(sfc:user:[a-zA-Z0-9._-]+)
-    ListUsersResponse:
-      type: object
-      required:
-      - object
-      - data
-      - has_more
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserResponse'
-        has_more:
-          type: boolean
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/UsersCursor'
-    UsersCursor:
-      type: string
-      examples:
-      - usrc_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^usrc_[A-Za-z0-9_-]+$
-    InternalServerError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UserId:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    userResourcePath_UserId:
-      type: string
-      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
-      examples:
-      - sfc:user:<name>
-      pattern: sfc:user:[a-zA-Z0-9._-]+
-    NotFoundError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: not_found
-              default: not_found
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
   securitySchemes:
     bearer_auth:
       type: http

@@ -355,6 +355,12 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    ResourcePathOrId_ProcurementId:
+      type: string
+      description: A resource path like 'sfc:procurement:acme:prod:my-procurement' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - proc_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (proc_[0-9a-zA-Z_-]{1,21})|(sfc:procurement:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
     v2.OrderPreviewNotice:
       oneOf:
       - type: object
@@ -385,11 +391,365 @@ components:
             const: maintenance_window
             default: maintenance_window
             readOnly: true
-    OrderId:
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    DollarsPerNodeHour:
+      type: string
+      description: Price rate in dollars per node-hour.
+      examples:
+      - '2.500000'
+      pattern: ^\d+\.\d+$
+    OrderStatus:
+      type: string
+      description: 'The status of an order in the system.
+
+
+        `pending` = not resolved/processed yet.
+
+
+        `filled` = order executed.
+
+
+        `partially_filled` = the order matched part of its requested capacity and remains active for the remainder.
+
+
+        `standing` = the order is waiting for a match.
+
+
+        `cancelled` = the order was cancelled either automatically (not a standing order and didn''t immediately fill, or current time past `end_at`) or by explicit cancellation.
+
+
+        `rejected` = validation/system error occurred.'
+      enum:
+      - pending
+      - filled
+      - partially_filled
+      - rejected
+      - cancelled
+      - standing
+    CapacityId:
+      oneOf:
+      - type: string
+        examples:
+        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: cap_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: pool_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    Schedule:
+      type: array
+      items:
+        $ref: '#/components/schemas/ScheduleEntry'
+      description: 'Node count over time, as a list of `[start_at, end_at)` time ranges.
+
+
+        Example: 5 nodes from t=0 to t=3600 is `[{"start_at": 0, "end_at": 3600, "node_count": 5}]`.
+
+
+        `start_at` and `end_at` must be 60-second aligned, `node_count` must be non-negative. On non-final entries, `end_at` may be omitted (inferred from the next entry''s `start_at`); gaps fill with `node_count: 0`.'
+    InstanceSkuSummary:
+      type: object
+      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
+      required:
+      - object
+      - id
+      - alias
+      properties:
+        object:
+          type: string
+          const: instance_sku
+          default: instance_sku
+          readOnly: true
+        id:
+          $ref: '#/components/schemas/InstanceSkuId'
+        alias:
+          $ref: '#/components/schemas/Name'
+    Requirements:
+      type: object
+      description: 'Key/value filters on instance SKU properties.
+
+
+        Valid keys and values are published at `GET /v2/instance_sku_property_catalog`.
+
+
+        Empty map = no constraints.'
+      additionalProperties:
+        type: array
+        items:
+          $ref: '#/components/schemas/Name'
+      propertyNames:
+        type: string
+        examples:
+        - my-resource-name
+        maxLength: 255
+        minLength: 1
+        pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+      example:
+        accelerator:
+        - H100
+    v2.OrderSortBy:
+      type: string
+      enum:
+      - created_at
+      - -created_at
+      - start_at
+      - -start_at
+    PoolId:
       type: string
       examples:
-      - ordr_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: ordr_[0-9a-zA-Z_-]{1,21}
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: pool_[0-9a-zA-Z_-]{1,21}
+    OrdersCursor:
+      type: string
+      examples:
+      - ordrc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^ordrc_[A-Za-z0-9_-]+$
+    Side:
+      type: string
+      enum:
+      - sell
+      - buy
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    v2.OrderFill:
+      type: object
+      description: 'A single fill event: one contract that was produced when the order matched.'
+      required:
+      - filled_at
+      - allocation_schedule_delta
+      - price_dollars_per_node_hour
+      properties:
+        contract:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ContractId'
+        filled_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        allocation_schedule_delta:
+          $ref: '#/components/schemas/Schedule'
+          description: Capacity change this fill delivered. Quantities are always positive; `side` on the parent order determines whether this added or removed capacity.
+        price_dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+    ContractId:
+      type: string
+      examples:
+      - cont_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: cont_[0-9a-zA-Z_-]{1,21}
+    v2.OrderPrincipalKind:
+      type: string
+      description: Whether an order's `created_by` principal is a human user or an API token.
+      enum:
+      - user
+      - token
+    NotFoundError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: not_found
+              default: not_found
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    v2.OrderPrincipal:
+      type: object
+      description: 'The principal that placed an order. `type` distinguishes the two cases: a user carries `email` (when an email identity exists); a token carries `name`. The inapplicable field is omitted.'
+      required:
+      - id
+      - type
+      properties:
+        id:
+          type: string
+          description: '`users.id` for a user principal, `api_tokens.id` for a token principal.'
+        type:
+          $ref: '#/components/schemas/v2.OrderPrincipalKind'
+        email:
+          type:
+          - string
+          - 'null'
+          description: Email of the user, when the principal is a user with a recorded email.
+        name:
+          type:
+          - string
+          - 'null'
+          description: Name of the API token, when the principal is a token.
+    ServiceUnavailableError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: service_unavailable
+              default: service_unavailable
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    v2.SellOrderPreviewRequest:
+      type: object
+      required:
+      - start_at
+      - duration_seconds
+      - node_count
+      - requirements
+      properties:
+        pool:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+            description: Pool the order draws from. Omit to get an estimate without pinning to a pool. The response body then returns a placeholder you must replace before submitting to `/v2/orders`.
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Order start. Must align to a 60-second boundary.
+        duration_seconds:
+          type: integer
+          format: u-int64
+          description: Order duration in seconds. Must be a positive multiple of 60.
+          minimum: 0
+        node_count:
+          type: integer
+          format: int32
+          description: Number of nodes. Must be positive.
+        requirements:
+          $ref: '#/components/schemas/Requirements'
+    v2.CreateOrderRequest:
+      type: object
+      required:
+      - pool
+      - side
+      - instance_sku
+      - allocation_schedule_delta
+      - limit_price_dollars_per_node_hour
+      properties:
+        pool:
+          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+          description: Target pool that receives compute when filled.
+        side:
+          $ref: '#/components/schemas/Side'
+        allow_standing:
+          type: boolean
+          description: If true, the order rests on the order book until it fills, is cancelled, or its end time passes. If false, the order is cancelled immediately if it does not fill.
+        allow_partial:
+          type: boolean
+          description: If true, the order may fill partially — fewer nodes and/or a subset of the requested time window. The filled time may be disjoint.
+        instance_sku:
+          $ref: '#/components/schemas/InstanceSkuId'
+          description: Instance SKU this order will fill on. Rejected at submission if the SKU id is not registered.
+        allocation_schedule_delta:
+          $ref: '#/components/schemas/Schedule'
+          description: Change in capacity if the order fills (added on `buy`, subtracted on `sell`). Must be a single time range with both `start_at` and `end_at`.
+        limit_price_dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+          description: Limit price per node-hour. Decimal string (e.g. `"1.500000"`); rounded to per-minute precision on submission.
     v2.OrderPreviewResponse:
       oneOf:
       - type: object
@@ -436,567 +796,6 @@ components:
             const: unavailable
             default: unavailable
             readOnly: true
-    v2.BuyOrderPreviewRequest:
-      type: object
-      required:
-      - requirements
-      - start_at
-      - duration_seconds
-      - node_count
-      properties:
-        requirements:
-          $ref: '#/components/schemas/Requirements'
-        start_at:
-          $ref: '#/components/schemas/UnixEpoch'
-          description: Order start. Must align to a 60-second boundary.
-        duration_seconds:
-          type: integer
-          format: u-int64
-          description: Order duration in seconds. Must be a positive multiple of 60.
-          minimum: 0
-        node_count:
-          type: integer
-          format: int32
-          description: Number of nodes. Must be positive.
-        pool:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ResourcePathOrId_PoolId'
-            description: Pool that receives compute when the order fills. Omit to get an estimate without pinning to a pool. The response body then returns a placeholder you must replace before submitting to `/v2/orders`.
-    v2.CreateOrderRequest:
-      type: object
-      required:
-      - pool
-      - side
-      - instance_sku
-      - allocation_schedule_delta
-      - limit_price_dollars_per_node_hour
-      properties:
-        pool:
-          $ref: '#/components/schemas/ResourcePathOrId_PoolId'
-          description: Target pool that receives compute when filled.
-        side:
-          $ref: '#/components/schemas/Side'
-        allow_standing:
-          type: boolean
-          description: If true, the order rests on the order book until it fills, is cancelled, or its end time passes. If false, the order is cancelled immediately if it does not fill.
-        allow_partial:
-          type: boolean
-          description: If true, the order may fill partially — fewer nodes and/or a subset of the requested time window. The filled time may be disjoint.
-        instance_sku:
-          $ref: '#/components/schemas/InstanceSkuId'
-          description: Instance SKU this order will fill on. Rejected at submission if the SKU id is not registered.
-        allocation_schedule_delta:
-          $ref: '#/components/schemas/Schedule'
-          description: Change in capacity if the order fills (added on `buy`, subtracted on `sell`). Must be a single time range with both `start_at` and `end_at`.
-        limit_price_dollars_per_node_hour:
-          $ref: '#/components/schemas/DollarsPerNodeHour'
-          description: Limit price per node-hour. Decimal string (e.g. `"1.500000"`); rounded to per-minute precision on submission.
-    v2.OrderFill:
-      type: object
-      description: 'A single fill event: one contract that was produced when the order matched.'
-      required:
-      - filled_at
-      - allocation_schedule_delta
-      - price_dollars_per_node_hour
-      properties:
-        contract:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ContractId'
-        filled_at:
-          $ref: '#/components/schemas/UnixEpoch'
-        allocation_schedule_delta:
-          $ref: '#/components/schemas/Schedule'
-          description: Capacity change this fill delivered. Quantities are always positive; `side` on the parent order determines whether this added or removed capacity.
-        price_dollars_per_node_hour:
-          $ref: '#/components/schemas/DollarsPerNodeHour'
-    v2.OrderSortBy:
-      type: string
-      enum:
-      - created_at
-      - -created_at
-      - start_at
-      - -start_at
-    v2.ListOrdersResponse:
-      type: object
-      required:
-      - object
-      - has_more
-      - data
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/OrdersCursor'
-            description: Pass as `starting_after` or `ending_before` to paginate.
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2.OrderResponse'
-    PaymentRequiredError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: payment_required
-              default: payment_required
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    v2.OrderPreviewUnavailableReason:
-      type: string
-      enum:
-      - no_matching_instance_skus
-      - no_availability
-    v2.OrderPreviewFee:
-      type: object
-      description: 'Fee charged on fills for the targeted instance SKU.
-
-
-        Total fee = `flat_dollars_per_node_hour × node_count × duration_hours` + `percentage_bps / 10000 × execution_total_dollars`.
-
-
-        Recomputed against the realized price at fill time.'
-      required:
-      - flat_dollars_per_node_hour
-      - percentage_bps
-      properties:
-        flat_dollars_per_node_hour:
-          $ref: '#/components/schemas/DollarsPerNodeHour'
-          description: Flat fee per node-hour.
-        percentage_bps:
-          type: integer
-          format: int32
-          description: Percentage of execution total, in basis points (10000 = 100%).
-    OrderStatus:
-      type: string
-      description: 'The status of an order in the system.
-
-
-        `pending` = not resolved/processed yet.
-
-
-        `filled` = order executed.
-
-
-        `partially_filled` = the order matched part of its requested capacity and remains active for the remainder.
-
-
-        `standing` = the order is waiting for a match.
-
-
-        `cancelled` = the order was cancelled either automatically (not a standing order and didn''t immediately fill, or current time past `end_at`) or by explicit cancellation.
-
-
-        `rejected` = validation/system error occurred.'
-      enum:
-      - pending
-      - filled
-      - partially_filled
-      - rejected
-      - cancelled
-      - standing
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
-    Schedule:
-      type: array
-      items:
-        $ref: '#/components/schemas/ScheduleEntry'
-      description: 'Node count over time, as a list of `[start_at, end_at)` time ranges.
-
-
-        Example: 5 nodes from t=0 to t=3600 is `[{"start_at": 0, "end_at": 3600, "node_count": 5}]`.
-
-
-        `start_at` and `end_at` must be 60-second aligned, `node_count` must be non-negative. On non-final entries, `end_at` may be omitted (inferred from the next entry''s `start_at`); gaps fill with `node_count: 0`.'
-    ScheduleEntry:
-      type: object
-      description: A `[start_at, end_at)` time range with a fixed `node_count`. `end_at` is `null` only on the final entry, marking an unbounded tail.
-      required:
-      - start_at
-      - node_count
-      properties:
-        start_at:
-          $ref: '#/components/schemas/UnixEpoch'
-        end_at:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/UnixEpoch'
-        node_count:
-          type: integer
-          format: int32
-    ServiceUnavailableError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: service_unavailable
-              default: service_unavailable
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    v2.MaintenanceNoticeType:
-      type: string
-      enum:
-      - info
-      - degraded_performance
-      - marketplace_unavailable
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    ResourcePathOrId_WorkspaceId:
-      type: string
-      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
-    v2.OrderPrincipalKind:
-      type: string
-      description: Whether an order's `created_by` principal is a human user or an API token.
-      enum:
-      - user
-      - token
-    PoolId:
-      type: string
-      examples:
-      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: pool_[0-9a-zA-Z_-]{1,21}
-    CapacityId:
-      oneOf:
-      - type: string
-        examples:
-        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: cap_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: pool_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    CapacitySummary:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/CapacityId'
-        name:
-          $ref: '#/components/schemas/Name'
-    ContractId:
-      type: string
-      examples:
-      - cont_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: cont_[0-9a-zA-Z_-]{1,21}
-    InternalServerError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    InstanceSkuSummary:
-      type: object
-      description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
-      required:
-      - object
-      - id
-      - alias
-      properties:
-        object:
-          type: string
-          const: instance_sku
-          default: instance_sku
-          readOnly: true
-        id:
-          $ref: '#/components/schemas/InstanceSkuId'
-        alias:
-          $ref: '#/components/schemas/Name'
-    ResourcePathOrId_PoolId:
-      type: string
-      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    NotFoundError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: not_found
-              default: not_found
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    InstanceSkuId:
-      oneOf:
-      - type: string
-        examples:
-        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: isku_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: clus_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    Requirements:
-      type: object
-      description: 'Key/value filters on instance SKU properties.
-
-
-        Valid keys and values are published at `GET /v2/instance_sku_property_catalog`.
-
-
-        Empty map = no constraints.'
-      additionalProperties:
-        type: array
-        items:
-          $ref: '#/components/schemas/Name'
-      propertyNames:
-        type: string
-        examples:
-        - my-resource-name
-        maxLength: 255
-        minLength: 1
-        pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-      example:
-        accelerator:
-        - H100
-    Side:
-      type: string
-      enum:
-      - sell
-      - buy
-    v2.SellOrderPreviewRequest:
-      type: object
-      required:
-      - start_at
-      - duration_seconds
-      - node_count
-      - requirements
-      properties:
-        pool:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ResourcePathOrId_PoolId'
-            description: Pool the order draws from. Omit to get an estimate without pinning to a pool. The response body then returns a placeholder you must replace before submitting to `/v2/orders`.
-        start_at:
-          $ref: '#/components/schemas/UnixEpoch'
-          description: Order start. Must align to a 60-second boundary.
-        duration_seconds:
-          type: integer
-          format: u-int64
-          description: Order duration in seconds. Must be a positive multiple of 60.
-          minimum: 0
-        node_count:
-          type: integer
-          format: int32
-          description: Number of nodes. Must be positive.
-        requirements:
-          $ref: '#/components/schemas/Requirements'
-    ForbiddenError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: forbidden
-              default: forbidden
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    v2.OrderPreviewRequest:
-      oneOf:
-      - allOf:
-        - $ref: '#/components/schemas/v2.BuyOrderPreviewRequest'
-        - type: object
-          required:
-          - side
-          properties:
-            side:
-              type: string
-              const: buy
-              default: buy
-              readOnly: true
-      - allOf:
-        - $ref: '#/components/schemas/v2.SellOrderPreviewRequest'
-        - type: object
-          required:
-          - side
-          properties:
-            side:
-              type: string
-              const: sell
-              default: sell
-              readOnly: true
-    OrdersCursor:
-      type: string
-      examples:
-      - ordrc_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^ordrc_[A-Za-z0-9_-]+$
-    PoolSummary:
-      type: object
-      description: A pool referenced by id and name.
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/PoolId'
-        name:
-          $ref: '#/components/schemas/Name'
-    DollarsPerNodeHour:
-      type: string
-      description: Price rate in dollars per node-hour.
-      examples:
-      - '2.500000'
-      pattern: ^\d+\.\d+$
-    v2.OrderPrincipal:
-      type: object
-      description: 'The principal that placed an order. `type` distinguishes the two cases: a user carries `email` (when an email identity exists); a token carries `name`. The inapplicable field is omitted.'
-      required:
-      - id
-      - type
-      properties:
-        id:
-          type: string
-          description: '`users.id` for a user principal, `api_tokens.id` for a token principal.'
-        type:
-          $ref: '#/components/schemas/v2.OrderPrincipalKind'
-        email:
-          type:
-          - string
-          - 'null'
-          description: Email of the user, when the principal is a user with a recorded email.
-        name:
-          type:
-          - string
-          - 'null'
-          description: Name of the API token, when the principal is a token.
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    ResourcePathOrId_ProcurementId:
-      type: string
-      description: A resource path like 'sfc:procurement:acme:prod:my-procurement' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - proc_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (proc_[0-9a-zA-Z_-]{1,21})|(sfc:procurement:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
     v2.OrderResponse:
       type: object
       required:
@@ -1071,6 +870,207 @@ components:
           oneOf:
           - type: 'null'
           - $ref: '#/components/schemas/UnixEpoch'
+    CapacitySummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/CapacityId'
+        name:
+          $ref: '#/components/schemas/Name'
+    ResourcePathOrId_PoolId:
+      type: string
+      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    v2.OrderPreviewRequest:
+      oneOf:
+      - allOf:
+        - $ref: '#/components/schemas/v2.BuyOrderPreviewRequest'
+        - type: object
+          required:
+          - side
+          properties:
+            side:
+              type: string
+              const: buy
+              default: buy
+              readOnly: true
+      - allOf:
+        - $ref: '#/components/schemas/v2.SellOrderPreviewRequest'
+        - type: object
+          required:
+          - side
+          properties:
+            side:
+              type: string
+              const: sell
+              default: sell
+              readOnly: true
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    v2.OrderPreviewUnavailableReason:
+      type: string
+      enum:
+      - no_matching_instance_skus
+      - no_availability
+    v2.ListOrdersResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/OrdersCursor'
+            description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2.OrderResponse'
+    v2.BuyOrderPreviewRequest:
+      type: object
+      required:
+      - requirements
+      - start_at
+      - duration_seconds
+      - node_count
+      properties:
+        requirements:
+          $ref: '#/components/schemas/Requirements'
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: Order start. Must align to a 60-second boundary.
+        duration_seconds:
+          type: integer
+          format: u-int64
+          description: Order duration in seconds. Must be a positive multiple of 60.
+          minimum: 0
+        node_count:
+          type: integer
+          format: int32
+          description: Number of nodes. Must be positive.
+        pool:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ResourcePathOrId_PoolId'
+            description: Pool that receives compute when the order fills. Omit to get an estimate without pinning to a pool. The response body then returns a placeholder you must replace before submitting to `/v2/orders`.
+    OrderId:
+      type: string
+      examples:
+      - ordr_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: ordr_[0-9a-zA-Z_-]{1,21}
+    PaymentRequiredError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: payment_required
+              default: payment_required
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    v2.OrderPreviewFee:
+      type: object
+      description: 'Fee charged on fills for the targeted instance SKU.
+
+
+        Total fee = `flat_dollars_per_node_hour × node_count × duration_hours` + `percentage_bps / 10000 × execution_total_dollars`.
+
+
+        Recomputed against the realized price at fill time.'
+      required:
+      - flat_dollars_per_node_hour
+      - percentage_bps
+      properties:
+        flat_dollars_per_node_hour:
+          $ref: '#/components/schemas/DollarsPerNodeHour'
+          description: Flat fee per node-hour.
+        percentage_bps:
+          type: integer
+          format: int32
+          description: Percentage of execution total, in basis points (10000 = 100%).
+    PoolSummary:
+      type: object
+      description: A pool referenced by id and name.
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/PoolId'
+        name:
+          $ref: '#/components/schemas/Name'
+    ScheduleEntry:
+      type: object
+      description: A `[start_at, end_at)` time range with a fixed `node_count`. `end_at` is `null` only on the final entry, marking an unbounded tail.
+      required:
+      - start_at
+      - node_count
+      properties:
+        start_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        end_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        node_count:
+          type: integer
+          format: int32
+    v2.MaintenanceNoticeType:
+      type: string
+      enum:
+      - info
+      - degraded_performance
+      - marketplace_unavailable
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
   securitySchemes:
     bearer_auth:
       type: http
