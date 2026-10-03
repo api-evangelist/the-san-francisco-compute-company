@@ -56,49 +56,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    InternalServerError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    EntityType:
-      type: string
-      description: Whether the account is for personal use or a business. Captured once at onboarding and fixed thereafter (write-once).
-      enum:
-      - personal
-      - business
-    userResourcePath_UserId:
-      type: string
-      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
-      examples:
-      - sfc:user:<name>
-      pattern: sfc:user:[a-zA-Z0-9._-]+
-    UserId:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
     NotFoundError:
       type: object
       required:
@@ -118,6 +75,92 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    UserId:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    userResourcePath_UserId:
+      type: string
+      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
+      examples:
+      - sfc:user:<name>
+      pattern: sfc:user:[a-zA-Z0-9._-]+
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    MeResponse:
+      type: object
+      description: 'Response body for `GET /v2/me`: the authenticated account plus, when the caller is a human user, details about the logged-in user that issued the calling token.'
+      required:
+      - object
+      - account_id
+      - created_at
+      properties:
+        object:
+          type: string
+          const: account
+          default: account
+          readOnly: true
+        account_id:
+          type: string
+          description: The account identifier.
+          example: acme-corp
+        created_at:
+          $ref: '#/components/schemas/UnixEpoch'
+          description: When the account was created, as a Unix epoch timestamp in seconds.
+        entity_type:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/EntityType'
+            description: Whether the account is for personal use or a business, or `null` if it hasn't been set yet.
+        user:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UserResponse'
+            description: The logged-in user that issued the calling token. `null` when authenticated with a service token, which acts on behalf of the account rather than an individual user.
     UserResponse:
       type: object
       required:
@@ -152,55 +195,12 @@ components:
           - string
           - 'null'
           description: The member's last name, or `null` if not recorded.
-    MeResponse:
-      type: object
-      description: 'Response body for `GET /v2/me`: the authenticated account plus, when the caller is a human user, details about the logged-in user that issued the calling token.'
-      required:
-      - object
-      - account_id
-      - created_at
-      properties:
-        object:
-          type: string
-          const: account
-          default: account
-          readOnly: true
-        account_id:
-          type: string
-          description: The account identifier.
-          example: acme-corp
-        created_at:
-          $ref: '#/components/schemas/UnixEpoch'
-          description: When the account was created, as a Unix epoch timestamp in seconds.
-        entity_type:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/EntityType'
-            description: Whether the account is for personal use or a business, or `null` if it hasn't been set yet.
-        user:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/UserResponse'
-            description: The logged-in user that issued the calling token. `null` when authenticated with a service token, which acts on behalf of the account rather than an individual user.
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
+    EntityType:
+      type: string
+      description: Whether the account is for personal use or a business. Captured once at onboarding and fixed thereafter (write-once).
+      enum:
+      - personal
+      - business
   securitySchemes:
     bearer_auth:
       type: http

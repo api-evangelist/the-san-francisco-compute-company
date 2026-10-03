@@ -103,6 +103,24 @@ components:
       properties:
         enrolled:
           type: boolean
+    ListUserFeatureFlagsResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserFeatureFlag'
+        has_more:
+          type: boolean
     UserFeatureFlag:
       type: object
       required:
@@ -124,24 +142,6 @@ components:
         user_enroll:
           type: boolean
         enrolled:
-          type: boolean
-    ListUserFeatureFlagsResponse:
-      type: object
-      required:
-      - object
-      - data
-      - has_more
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserFeatureFlag'
-        has_more:
           type: boolean
   securitySchemes:
     bearer_auth:

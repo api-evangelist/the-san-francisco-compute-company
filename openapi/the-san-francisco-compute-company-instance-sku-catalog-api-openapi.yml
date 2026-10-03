@@ -78,6 +78,81 @@ paths:
       - bearer_auth: []
 components:
   schemas:
+    InstanceSkuPropertyDefinition:
+      oneOf:
+      - type: object
+        required:
+        - key
+        - values
+        - type
+        properties:
+          key:
+            $ref: '#/components/schemas/InstanceSkuPropertyKey'
+          values:
+            type: array
+            items:
+              $ref: '#/components/schemas/InstanceSkuEnumerationValue'
+          type:
+            type: string
+            const: enumeration
+            default: enumeration
+            readOnly: true
+      description: A catalog entry describing a property key together with its allowed enumeration values.
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    ListInstanceSkuPropertyCatalogResponse:
+      type: object
+      description: Paginated list of property-catalog entries returned by `GET /v2/instance_sku_property_catalog`.
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          type:
+          - string
+          - 'null'
+          description: Pass as `starting_after` or `ending_before` to paginate.
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InstanceSkuPropertyDefinition'
     UnprocessableEntityError:
       type: object
       required:
@@ -101,61 +176,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ErrorDetail'
-    InstanceSkuEnumerationValue:
-      type: object
-      description: One allowed value for an enumeration-typed property key.
-      required:
-      - name
-      - display_name
-      - description
-      - stable_at
-      properties:
-        name:
-          $ref: '#/components/schemas/Name'
-        display_name:
-          type: string
-          description: Human-readable display name.
-        description:
-          type: string
-        documentation_link:
-          type:
-          - string
-          - 'null'
-        stable_at:
-          $ref: '#/components/schemas/UnixEpoch'
-        deprecated_at:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/UnixEpoch'
-        deprecation_info:
-          type:
-          - string
-          - 'null'
-          description: Migration guidance shown when the value is deprecated.
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
     InstanceSkuPropertyKey:
       type: object
       description: A property key describing something about an instance SKU (e.g. `accelerator`).
@@ -188,74 +208,6 @@ components:
           - string
           - 'null'
           description: Migration guidance shown when the key is deprecated.
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
-    ListInstanceSkuPropertyCatalogResponse:
-      type: object
-      description: Paginated list of property-catalog entries returned by `GET /v2/instance_sku_property_catalog`.
-      required:
-      - object
-      - has_more
-      - data
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          type:
-          - string
-          - 'null'
-          description: Pass as `starting_after` or `ending_before` to paginate.
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/InstanceSkuPropertyDefinition'
-    InstanceSkuPropertyDefinition:
-      oneOf:
-      - type: object
-        required:
-        - key
-        - values
-        - type
-        properties:
-          key:
-            $ref: '#/components/schemas/InstanceSkuPropertyKey'
-          values:
-            type: array
-            items:
-              $ref: '#/components/schemas/InstanceSkuEnumerationValue'
-          type:
-            type: string
-            const: enumeration
-            default: enumeration
-            readOnly: true
-      description: A catalog entry describing a property key together with its allowed enumeration values.
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
     InternalServerError:
       type: object
       required:
@@ -275,6 +227,54 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
+    InstanceSkuEnumerationValue:
+      type: object
+      description: One allowed value for an enumeration-typed property key.
+      required:
+      - name
+      - display_name
+      - description
+      - stable_at
+      properties:
+        name:
+          $ref: '#/components/schemas/Name'
+        display_name:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+        documentation_link:
+          type:
+          - string
+          - 'null'
+        stable_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        deprecated_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        deprecation_info:
+          type:
+          - string
+          - 'null'
+          description: Migration guidance shown when the value is deprecated.
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
   securitySchemes:
     bearer_auth:
       type: http
