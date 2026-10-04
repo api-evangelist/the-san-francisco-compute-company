@@ -168,149 +168,6 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
-    UsersCursor:
-      type: string
-      examples:
-      - usrc_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^usrc_[A-Za-z0-9_-]+$
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    ListUsersResponse:
-      type: object
-      required:
-      - object
-      - data
-      - has_more
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserResponse'
-        has_more:
-          type: boolean
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/UsersCursor'
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    userResourcePath_UserId:
-      type: string
-      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
-      examples:
-      - sfc:user:<name>
-      pattern: sfc:user:[a-zA-Z0-9._-]+
-    ResourcePathOrId_UserId:
-      type: string
-      description: A resource path like 'sfc:user:my-user' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - my-resource-name
-      pattern: ([a-zA-Z0-9][a-zA-Z0-9._-]{0,254})|(sfc:user:[a-zA-Z0-9._-]+)
-    InternalServerError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    ForbiddenError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: forbidden
-              default: forbidden
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    UserId:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
     UserResponse:
       type: object
       required:
@@ -345,11 +202,154 @@ components:
           - string
           - 'null'
           description: The member's last name, or `null` if not recorded.
+    ListUsersResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+        has_more:
+          type: boolean
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UsersCursor'
+    ResourcePathOrId_UserId:
+      type: string
+      description: A resource path like 'sfc:user:my-user' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - my-resource-name
+      pattern: ([a-zA-Z0-9][a-zA-Z0-9._-]{0,254})|(sfc:user:[a-zA-Z0-9._-]+)
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    userResourcePath_UserId:
+      type: string
+      description: 'A resource path for a user resource. Format: sfc:user:<name>.'
+      examples:
+      - sfc:user:<name>
+      pattern: sfc:user:[a-zA-Z0-9._-]+
+    UnprocessableEntityError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: unprocessable_entity
+              default: unprocessable_entity
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    UserId:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    UnauthorizedError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
     UnixEpoch:
       type: integer
       format: int64
       description: Unix timestamp.
       example: 1738972800
+    UsersCursor:
+      type: string
+      examples:
+      - usrc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^usrc_[A-Za-z0-9_-]+$
   securitySchemes:
     bearer_auth:
       type: http

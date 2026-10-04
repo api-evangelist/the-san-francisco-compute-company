@@ -561,67 +561,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    CompleteUploadRequest:
-      type: object
-      description: Complete a multipart image upload.
-      required:
-      - sha256
-      properties:
-        sha256:
-          type: string
-          description: Not verified on upload; used during instance boot to verify integrity.
-          maxLength: 64
-          minLength: 64
-          pattern: ^[a-f0-9]{64}$
-    ConflictError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: conflict
-              default: conflict
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
-    UploadPartResponse:
-      type: object
-      required:
-      - url
-      - expires_at
-      properties:
-        url:
-          type: string
-          description: Presigned URL to upload the part.
-        expires_at:
-          $ref: '#/components/schemas/UnixEpoch'
-    ImageId:
-      oneOf:
-      - type: string
-        examples:
-        - image_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: image_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: vmi_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    ImagesCursor:
-      type: string
-      examples:
-      - imagec_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^imagec_[A-Za-z0-9_-]+$
     NotFoundError:
       type: object
       required:
@@ -647,90 +586,7 @@ components:
       examples:
       - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
       pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
-    DeleteImageResponse:
-      type: object
-      required:
-      - object
-      - deleted
-      - name
-      properties:
-        object:
-          type: string
-          const: image
-          default: image
-          readOnly: true
-        deleted:
-          type: boolean
-        name:
-          $ref: '#/components/schemas/Name'
-    ImageDownloadResponse:
-      type: object
-      required:
-      - url
-      - expires_at
-      - sha256
-      - size
-      properties:
-        url:
-          type: string
-          description: Presigned download URL.
-        expires_at:
-          $ref: '#/components/schemas/UnixEpoch'
-        sha256:
-          type: string
-          description: For integrity verification.
-          example: e3b0c44298fc1c149af...
-          maxLength: 64
-          minLength: 64
-          pattern: ^[a-f0-9]{64}$
-        size:
-          type: integer
-          format: u-int64
-          description: Image size in bytes.
-          minimum: 0
-    StartUploadRequest:
-      type: object
-      description: Start a multipart image upload. Max image size is 128 GiB.
-      required:
-      - workspace
-      properties:
-        name:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Name'
-        workspace:
-          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
-          description: Workspace to create this image in.
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    UnauthorizedError:
+    ConflictError:
       type: object
       required:
       - error
@@ -743,34 +599,21 @@ components:
           properties:
             type:
               type: string
-              const: authentication_error
-              default: authentication_error
+              const: conflict
+              default: conflict
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-    ListImagesResponse:
-      type: object
-      required:
-      - object
-      - has_more
-      - data
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/ImagesCursor'
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageListEntry'
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
     ImageScope:
       type: object
       required:
@@ -798,12 +641,6 @@ components:
         is_public:
           type: boolean
           description: Whether this is an sfc-provided public image.
-    imageResourcePath_ImageId:
-      type: string
-      description: 'A resource path for a image resource. Format: sfc:image:<account>:<workspace>:<name>.'
-      examples:
-      - sfc:image:<account_id>:<workspace>:<name>
-      pattern: sfc:image:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
     ImageUploadResponse:
       allOf:
       - $ref: '#/components/schemas/ImageScope'
@@ -829,16 +666,80 @@ components:
             pattern: ^[a-f0-9]{64}$
           created_at:
             $ref: '#/components/schemas/UnixEpoch'
-    UploadPartRequest:
+    ImagesCursor:
+      type: string
+      examples:
+      - imagec_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^imagec_[A-Za-z0-9_-]+$
+    CompleteUploadRequest:
+      type: object
+      description: Complete a multipart image upload.
+      required:
+      - sha256
+      properties:
+        sha256:
+          type: string
+          description: Not verified on upload; used during instance boot to verify integrity.
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-f0-9]{64}$
+    ErrorDetail:
       type: object
       required:
-      - part_id
+      - code
+      - message
       properties:
-        part_id:
-          type: integer
-          format: int32
-          description: Caller-assigned part number, starting at 1.
-          minimum: 1
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    DeleteImageResponse:
+      type: object
+      required:
+      - object
+      - deleted
+      - name
+      properties:
+        object:
+          type: string
+          const: image
+          default: image
+          readOnly: true
+        deleted:
+          type: boolean
+        name:
+          $ref: '#/components/schemas/Name'
+    StartUploadRequest:
+      type: object
+      description: Start a multipart image upload. Max image size is 128 GiB.
+      required:
+      - workspace
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/ResourcePathOrId_WorkspaceId'
+          description: Workspace to create this image in.
+    UploadPartResponse:
+      type: object
+      required:
+      - url
+      - expires_at
+      properties:
+        url:
+          type: string
+          description: Presigned URL to upload the part.
+        expires_at:
+          $ref: '#/components/schemas/UnixEpoch'
     ImageListEntry:
       allOf:
       - $ref: '#/components/schemas/ImageScope'
@@ -868,20 +769,32 @@ components:
             maxLength: 64
             minLength: 64
             pattern: ^[a-f0-9]{64}$
-    ImageUploadStatus:
-      type: string
-      enum:
-      - started
-      - uploading
-      - completed
-      - failed
-      - revoked
-    WorkspaceId:
-      type: string
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: wksp_[0-9a-zA-Z_-]{1,21}
-    InternalServerError:
+    ImageDownloadResponse:
+      type: object
+      required:
+      - url
+      - expires_at
+      - sha256
+      - size
+      properties:
+        url:
+          type: string
+          description: Presigned download URL.
+        expires_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        sha256:
+          type: string
+          description: For integrity verification.
+          example: e3b0c44298fc1c149af...
+          maxLength: 64
+          minLength: 64
+          pattern: ^[a-f0-9]{64}$
+        size:
+          type: integer
+          format: u-int64
+          description: Image size in bytes.
+          minimum: 0
+    UnauthorizedError:
       type: object
       required:
       - error
@@ -894,12 +807,22 @@ components:
           properties:
             type:
               type: string
-              const: api_error
-              default: api_error
+              const: authentication_error
+              default: authentication_error
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
+    UploadPartRequest:
+      type: object
+      required:
+      - part_id
+      properties:
+        part_id:
+          type: integer
+          format: int32
+          description: Caller-assigned part number, starting at 1.
+          minimum: 1
     ForbiddenError:
       type: object
       required:
@@ -942,6 +865,83 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ErrorDetail'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    ListImagesResponse:
+      type: object
+      required:
+      - object
+      - has_more
+      - data
+      properties:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/ImagesCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageListEntry'
+    imageResourcePath_ImageId:
+      type: string
+      description: 'A resource path for a image resource. Format: sfc:image:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:image:<account_id>:<workspace>:<name>
+      pattern: sfc:image:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ImageUploadStatus:
+      type: string
+      enum:
+      - started
+      - uploading
+      - completed
+      - failed
+      - revoked
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    ImageId:
+      oneOf:
+      - type: string
+        examples:
+        - image_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: image_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: vmi_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
   securitySchemes:
     bearer_auth:
       type: http

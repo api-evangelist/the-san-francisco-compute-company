@@ -284,6 +284,18 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    PatchWorkspaceRequest:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
     NotFoundError:
       type: object
       required:
@@ -303,99 +315,19 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    CreateWorkspaceRequest:
+      type: object
+      properties:
+        name:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/Name'
     ResourcePathOrId_WorkspaceId:
       type: string
       description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
       examples:
       - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
       pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
-    ListWorkspacesResponse:
-      type: object
-      required:
-      - object
-      - data
-      - has_more
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/WorkspaceResponse'
-        has_more:
-          type: boolean
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    WorkspaceResponse:
-      allOf:
-      - $ref: '#/components/schemas/WorkspaceScope'
-      - type: object
-        required:
-        - object
-        - created_at
-        properties:
-          object:
-            type: string
-            const: workspace
-            default: workspace
-            readOnly: true
-          created_at:
-            $ref: '#/components/schemas/UnixEpoch'
-    UnprocessableEntityError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: unprocessable_entity
-              default: unprocessable_entity
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
     InternalServerError:
       type: object
       required:
@@ -415,19 +347,24 @@ components:
             message:
               type: string
               x-speakeasy-error-message: true
-    PatchWorkspaceRequest:
+    ErrorDetail:
       type: object
+      required:
+      - code
+      - message
       properties:
-        name:
+        field:
           type:
           - string
           - 'null'
-    WorkspaceId:
-      type: string
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: wksp_[0-9a-zA-Z_-]{1,21}
-    ForbiddenError:
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    UnprocessableEntityError:
       type: object
       required:
       - error
@@ -440,27 +377,8 @@ components:
           properties:
             type:
               type: string
-              const: forbidden
-              default: forbidden
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    BadRequestError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: invalid_request_error
-              default: invalid_request_error
+              const: unprocessable_entity
+              default: unprocessable_entity
               readOnly: true
             message:
               type: string
@@ -491,30 +409,112 @@ components:
       examples:
       - sfc:workspace:<account_id>:<name>
       pattern: sfc:workspace:([a-zA-Z0-9._-]+:){1}[a-zA-Z0-9._-]+
-    CreateWorkspaceRequest:
-      type: object
-      properties:
-        name:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/Name'
-    ErrorDetail:
+    UnauthorizedError:
       type: object
       required:
-      - code
-      - message
+      - error
       properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: authentication_error
+              default: authentication_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ListWorkspacesResponse:
+      type: object
+      required:
+      - object
+      - data
+      - has_more
+      properties:
+        object:
           type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
+          const: list
+          default: list
+          readOnly: true
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkspaceResponse'
+        has_more:
+          type: boolean
+    WorkspaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/WorkspaceScope'
+      - type: object
+        required:
+        - object
+        - created_at
+        properties:
+          object:
+            type: string
+            const: workspace
+            default: workspace
+            readOnly: true
+          created_at:
+            $ref: '#/components/schemas/UnixEpoch'
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    BadRequestError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: invalid_request_error
+              default: invalid_request_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    WorkspaceId:
+      type: string
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: wksp_[0-9a-zA-Z_-]{1,21}
   securitySchemes:
     bearer_auth:
       type: http
