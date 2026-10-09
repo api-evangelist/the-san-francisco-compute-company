@@ -7,14 +7,17 @@ front_door_ai:
   probed_at: '2026-09-17'
   host: www.sfcompute.com
   final_host: sfcompute.com
-  ownership: inherited
+  ownership: own
   owner: the-san-francisco-compute-company
   shares_host_with: null
-  inherited_from: sfcompute.com
+  inherited_from: null
+  alias_of: sfcompute.com
   verdict: scored
-  score: null
+  score: 1
+  band: 2
+  band_label: trace
   host_score: 1
-  density: null
+  density: 3.03
   words: 330
   tiers:
     agentic: 0
