@@ -78,27 +78,12 @@ paths:
       - bearer_auth: []
 components:
   schemas:
-    InstanceSkuPropertyDefinition:
-      oneOf:
-      - type: object
-        required:
-        - key
-        - values
-        - type
-        properties:
-          key:
-            $ref: '#/components/schemas/InstanceSkuPropertyKey'
-          values:
-            type: array
-            items:
-              $ref: '#/components/schemas/InstanceSkuEnumerationValue'
-          type:
-            type: string
-            const: enumeration
-            default: enumeration
-            readOnly: true
-      description: A catalog entry describing a property key together with its allowed enumeration values.
-    InternalServerError:
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
+    UnauthorizedError:
       type: object
       required:
       - error
@@ -111,8 +96,8 @@ components:
           properties:
             type:
               type: string
-              const: api_error
-              default: api_error
+              const: authentication_error
+              default: authentication_error
               readOnly: true
             message:
               type: string
@@ -140,23 +125,26 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ErrorDetail'
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
+    InstanceSkuPropertyDefinition:
+      oneOf:
+      - type: object
+        required:
+        - key
+        - values
+        - type
+        properties:
+          key:
+            $ref: '#/components/schemas/InstanceSkuPropertyKey'
+          values:
+            type: array
+            items:
+              $ref: '#/components/schemas/InstanceSkuEnumerationValue'
           type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
+            type: string
+            const: enumeration
+            default: enumeration
+            readOnly: true
+      description: A catalog entry describing a property key together with its allowed enumeration values.
     ListInstanceSkuPropertyCatalogResponse:
       type: object
       description: Paginated list of property-catalog entries returned by `GET /v2/instance_sku_property_catalog`.
@@ -181,7 +169,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InstanceSkuPropertyDefinition'
-    UnauthorizedError:
+    InternalServerError:
       type: object
       required:
       - error
@@ -194,55 +182,12 @@ components:
           properties:
             type:
               type: string
-              const: authentication_error
-              default: authentication_error
+              const: api_error
+              default: api_error
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-    InstanceSkuEnumerationValue:
-      type: object
-      description: One allowed value for an enumeration-typed property key.
-      required:
-      - name
-      - display_name
-      - description
-      - stable_at
-      properties:
-        name:
-          $ref: '#/components/schemas/Name'
-        display_name:
-          type: string
-          description: Human-readable display name.
-        description:
-          type: string
-        documentation_link:
-          type:
-          - string
-          - 'null'
-        stable_at:
-          $ref: '#/components/schemas/UnixEpoch'
-        deprecated_at:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/UnixEpoch'
-        deprecation_info:
-          type:
-          - string
-          - 'null'
-          description: Migration guidance shown when the value is deprecated.
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
     InstanceSkuPropertyKey:
       type: object
       description: A property key describing something about an instance SKU (e.g. `accelerator`).
@@ -275,6 +220,61 @@ components:
           - string
           - 'null'
           description: Migration guidance shown when the key is deprecated.
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    InstanceSkuEnumerationValue:
+      type: object
+      description: One allowed value for an enumeration-typed property key.
+      required:
+      - name
+      - display_name
+      - description
+      - stable_at
+      properties:
+        name:
+          $ref: '#/components/schemas/Name'
+        display_name:
+          type: string
+          description: Human-readable display name.
+        description:
+          type: string
+        documentation_link:
+          type:
+          - string
+          - 'null'
+        stable_at:
+          $ref: '#/components/schemas/UnixEpoch'
+        deprecated_at:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/UnixEpoch'
+        deprecation_info:
+          type:
+          - string
+          - 'null'
+          description: Migration guidance shown when the value is deprecated.
   securitySchemes:
     bearer_auth:
       type: http

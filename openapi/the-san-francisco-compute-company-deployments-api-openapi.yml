@@ -308,7 +308,18 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    NotFoundError:
+    PoolSummary:
+      type: object
+      description: A pool referenced by id and name.
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/PoolId'
+        name:
+          $ref: '#/components/schemas/Name'
+    UnauthorizedError:
       type: object
       required:
       - error
@@ -321,62 +332,12 @@ components:
           properties:
             type:
               type: string
-              const: not_found
-              default: not_found
+              const: authentication_error
+              default: authentication_error
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-    spot_deploymentResourcePath_SpotDeploymentId:
-      type: string
-      description: 'A resource path for a spot_deployment resource. Format: sfc:spot_deployment:<account>:<workspace>:<name>.'
-      examples:
-      - sfc:spot_deployment:<account_id>:<workspace>:<name>
-      pattern: sfc:spot_deployment:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
-    DeploymentId:
-      type: string
-      examples:
-      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: depl_[0-9a-zA-Z_-]{1,21}
-    ResourcePathOrId_WorkspaceId:
-      type: string
-      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
-    PoolSummary:
-      type: object
-      description: A pool referenced by id and name.
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/PoolId'
-        name:
-          $ref: '#/components/schemas/Name'
-    ListDeploymentsResponse:
-      type: object
-      required:
-      - object
-      - has_more
-      - data
-      properties:
-        object:
-          type: string
-          const: list
-          default: list
-          readOnly: true
-        cursor:
-          oneOf:
-          - type: 'null'
-          - $ref: '#/components/schemas/DeploymentsCursor'
-        has_more:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentResource'
     InstanceTemplateId:
       oneOf:
       - type: string
@@ -387,85 +348,70 @@ components:
         description: Legacy alias prefix; accepted on read, never emitted on write.
         pattern: ntmpl_[0-9a-zA-Z_-]{1,21}
       description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    BadRequestError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: invalid_request_error
+              default: invalid_request_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+            details:
+              type: array
+              items:
+                $ref: '#/components/schemas/ErrorDetail'
+    spot_deploymentResourcePath_SpotDeploymentId:
+      type: string
+      description: 'A resource path for a spot_deployment resource. Format: sfc:spot_deployment:<account>:<workspace>:<name>.'
+      examples:
+      - sfc:spot_deployment:<account_id>:<workspace>:<name>
+      pattern: sfc:spot_deployment:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+    ForbiddenError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: forbidden
+              default: forbidden
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    ResourcePathOrId_InstanceTemplateId:
+      type: string
+      description: A resource path like 'sfc:instance_template:acme:prod:my-instance_template' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (itmpl_[0-9a-zA-Z_-]{1,21}|ntmpl_[0-9a-zA-Z_-]{1,21})|(sfc:instance_template:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    DeploymentId:
+      type: string
+      examples:
+      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: depl_[0-9a-zA-Z_-]{1,21}
     WorkspaceId:
       type: string
       examples:
       - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
       pattern: wksp_[0-9a-zA-Z_-]{1,21}
-    ReconciliationStatus:
-      type: object
-      required:
-      - state
-      - message
-      properties:
-        state:
-          $ref: '#/components/schemas/AutomationStatus'
-        message:
-          type: string
-    CapacityId:
-      oneOf:
-      - type: string
-        examples:
-        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: cap_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: pool_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    DeploymentResource:
-      oneOf:
-      - $ref: '#/components/schemas/DeploymentResponse'
-      - $ref: '#/components/schemas/SpotDeploymentResponse'
-      discriminator:
-        propertyName: object
-        mapping:
-          deployment: '#/components/schemas/sfc-api_DeploymentResponse'
-          spot_deployment: '#/components/schemas/sfc-api_SpotDeploymentResponse'
-    NameTemplate:
-      type: string
-      description: 'A name template using {{variable}} syntax. Available variables: {{adjective}} (~128 random adjectives), {{noun}} (~128 random nouns), {{nanoid(N)}} (N-character alphanumeric identifier, 1 ≤ N ≤ 21). The template must produce enough unique combinations to avoid collisions — equivalent to at least the default template {{adjective}}-{{noun}}-{{nanoid(6)}} (~1 quadrillion possibilities). Must start with an alphanumeric character. Resolved names are limited to 255 characters.'
-      examples:
-      - my-fleet-{{nanoid(9)}}
-      maxLength: 512
-    SpotDeploymentScope:
-      type: object
-      required:
-      - id
-      - resource_path
-      - owner
-      - workspace
-      - workspace_id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/SpotDeploymentId'
-        resource_path:
-          $ref: '#/components/schemas/spot_deploymentResourcePath_SpotDeploymentId'
-        owner:
-          $ref: '#/components/schemas/Name'
-        workspace:
-          $ref: '#/components/schemas/Name'
-        workspace_id:
-          $ref: '#/components/schemas/WorkspaceId'
-        name:
-          $ref: '#/components/schemas/Name'
-    ErrorDetail:
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        field:
-          type:
-          - string
-          - 'null'
-          description: The field that caused the error (for validation errors)
-        code:
-          type: string
-          description: Specific error code for this detail
-        message:
-          type: string
-          description: Human-readable error message
     CreateDeploymentRequest:
       type: object
       description: A generic deployment maintains a target number of instances using capacity already owned in a pool. It does not buy additional capacity.
@@ -490,44 +436,34 @@ components:
           format: int32
         instance_name_template:
           $ref: '#/components/schemas/NameTemplate'
-    DeploymentScope:
+    ListDeploymentsResponse:
       type: object
       required:
-      - id
-      - resource_path
-      - owner
-      - workspace
-      - workspace_id
-      - name
+      - object
+      - has_more
+      - data
       properties:
-        id:
-          $ref: '#/components/schemas/DeploymentId'
-        resource_path:
-          $ref: '#/components/schemas/deploymentResourcePath_DeploymentId'
-        owner:
-          $ref: '#/components/schemas/Name'
-        workspace:
-          $ref: '#/components/schemas/Name'
-        workspace_id:
-          $ref: '#/components/schemas/WorkspaceId'
-        name:
-          $ref: '#/components/schemas/Name'
-    InstanceTemplateSummary:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          $ref: '#/components/schemas/InstanceTemplateId'
-        name:
-          $ref: '#/components/schemas/Name'
-    deploymentResourcePath_DeploymentId:
+        object:
+          type: string
+          const: list
+          default: list
+          readOnly: true
+        cursor:
+          oneOf:
+          - type: 'null'
+          - $ref: '#/components/schemas/DeploymentsCursor'
+        has_more:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentResource'
+    ResourcePathOrId_DeploymentId:
       type: string
-      description: 'A resource path for a deployment resource. Format: sfc:deployment:<account>:<workspace>:<name>.'
+      description: A resource path like 'sfc:deployment:acme:prod:my-deployment' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
       examples:
-      - sfc:deployment:<account_id>:<workspace>:<name>
-      pattern: sfc:deployment:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
+      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (depl_[0-9a-zA-Z_-]{1,21})|(sfc:deployment:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
     PatchDeploymentRequest:
       type: object
       properties:
@@ -557,11 +493,108 @@ components:
           - type: 'null'
           - $ref: '#/components/schemas/DollarsPerNodeHour'
             description: Maximum price to buy compute ($/node-hour). Only valid for spot deployments.
+    ErrorDetail:
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        field:
+          type:
+          - string
+          - 'null'
+          description: The field that caused the error (for validation errors)
+        code:
+          type: string
+          description: Specific error code for this detail
+        message:
+          type: string
+          description: Human-readable error message
+    DeploymentsCursor:
+      type: string
+      examples:
+      - deplc_gqXR7s0Kj5mHvE2wNpLc4Q
+      pattern: ^deplc_[A-Za-z0-9_-]+$
+    CapacitySummary:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/CapacityId'
+        name:
+          $ref: '#/components/schemas/Name'
+    InstanceSkuId:
+      oneOf:
+      - type: string
+        examples:
+        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: isku_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: clus_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
     SpotDeploymentId:
       type: string
       examples:
       - spot_k3R-nX9vLm7Qp2Yw5Jd8F
       pattern: spot_[0-9a-zA-Z_-]{1,21}
+    ResourcePathOrId_WorkspaceId:
+      type: string
+      description: A resource path like 'sfc:workspace:acme:my-workspace' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - wksp_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (wksp_[0-9a-zA-Z_-]{1,21})|(sfc:workspace:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){1,1})
+    InternalServerError:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - type
+          - message
+          properties:
+            type:
+              type: string
+              const: api_error
+              default: api_error
+              readOnly: true
+            message:
+              type: string
+              x-speakeasy-error-message: true
+    DeploymentResource:
+      oneOf:
+      - $ref: '#/components/schemas/DeploymentResponse'
+      - $ref: '#/components/schemas/SpotDeploymentResponse'
+      discriminator:
+        propertyName: object
+        mapping:
+          deployment: '#/components/schemas/sfc-api_DeploymentResponse'
+          spot_deployment: '#/components/schemas/sfc-api_SpotDeploymentResponse'
+    CapacityId:
+      oneOf:
+      - type: string
+        examples:
+        - cap_k3R-nX9vLm7Qp2Yw5Jd8F
+        pattern: cap_[0-9a-zA-Z_-]{1,21}
+      - type: string
+        description: Legacy alias prefix; accepted on read, never emitted on write.
+        pattern: pool_[0-9a-zA-Z_-]{1,21}
+      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
+    AutomationStatus:
+      type: string
+      enum:
+      - info
+      - warning
+      - error
+    UnixEpoch:
+      type: integer
+      format: int64
+      description: Unix timestamp.
+      example: 1738972800
     CreateDeploymentResourceRequest:
       oneOf:
       - allOf:
@@ -590,12 +623,6 @@ components:
               default: spot
               readOnly: true
         description: Buy capacity for a specific instance SKU at or below the maximum rate, then maintain the target number of instances on that capacity.
-    ResourcePathOrId_PoolId:
-      type: string
-      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
     InstanceSkuSummary:
       type: object
       description: A summary of an instance SKU - its `id` and human-recognizable `alias` - embedded on resources that reference a SKU.
@@ -613,70 +640,16 @@ components:
           $ref: '#/components/schemas/InstanceSkuId'
         alias:
           $ref: '#/components/schemas/Name'
-    InstanceSkuId:
-      oneOf:
-      - type: string
-        examples:
-        - isku_k3R-nX9vLm7Qp2Yw5Jd8F
-        pattern: isku_[0-9a-zA-Z_-]{1,21}
-      - type: string
-        description: Legacy alias prefix; accepted on read, never emitted on write.
-        pattern: clus_[0-9a-zA-Z_-]{1,21}
-      description: Accepts the canonical prefix below; additional legacy prefixes are aliased for read compatibility. Writes always emit the canonical form.
-    CapacitySummary:
+    InstanceTemplateSummary:
       type: object
       required:
       - id
       - name
       properties:
         id:
-          $ref: '#/components/schemas/CapacityId'
+          $ref: '#/components/schemas/InstanceTemplateId'
         name:
           $ref: '#/components/schemas/Name'
-    UnauthorizedError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: authentication_error
-              default: authentication_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
-    ResourcePathOrId_InstanceTemplateId:
-      type: string
-      description: A resource path like 'sfc:instance_template:acme:prod:my-instance_template' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
-      examples:
-      - itmpl_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (itmpl_[0-9a-zA-Z_-]{1,21}|ntmpl_[0-9a-zA-Z_-]{1,21})|(sfc:instance_template:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    ForbiddenError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: forbidden
-              default: forbidden
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
     DeploymentResponse:
       allOf:
       - $ref: '#/components/schemas/DeploymentScope'
@@ -721,12 +694,12 @@ components:
             $ref: '#/components/schemas/UnixEpoch'
           updated_at:
             $ref: '#/components/schemas/UnixEpoch'
-    ResourcePathOrId_DeploymentId:
+    deploymentResourcePath_DeploymentId:
       type: string
-      description: A resource path like 'sfc:deployment:acme:prod:my-deployment' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      description: 'A resource path for a deployment resource. Format: sfc:deployment:<account>:<workspace>:<name>.'
       examples:
-      - depl_k3R-nX9vLm7Qp2Yw5Jd8F
-      pattern: (depl_[0-9a-zA-Z_-]{1,21})|(sfc:deployment:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+      - sfc:deployment:<account_id>:<workspace>:<name>
+      pattern: sfc:deployment:([a-zA-Z0-9._-]+:){2}[a-zA-Z0-9._-]+
     SpotDeploymentResponse:
       allOf:
       - $ref: '#/components/schemas/SpotDeploymentScope'
@@ -773,7 +746,7 @@ components:
           updated_at:
             $ref: '#/components/schemas/UnixEpoch'
       description: A spot deployment buys compute up to a maximum price and runs instances on the secured pool.
-    BadRequestError:
+    ConflictError:
       type: object
       required:
       - error
@@ -786,8 +759,8 @@ components:
           properties:
             type:
               type: string
-              const: invalid_request_error
-              default: invalid_request_error
+              const: conflict
+              default: conflict
               readOnly: true
             message:
               type: string
@@ -796,53 +769,40 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/ErrorDetail'
+    DeploymentScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/DeploymentId'
+        resource_path:
+          $ref: '#/components/schemas/deploymentResourcePath_DeploymentId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
+    NameTemplate:
+      type: string
+      description: 'A name template using {{variable}} syntax. Available variables: {{adjective}} (~128 random adjectives), {{noun}} (~128 random nouns), {{nanoid(N)}} (N-character alphanumeric identifier, 1 ≤ N ≤ 21). The template must produce enough unique combinations to avoid collisions — equivalent to at least the default template {{adjective}}-{{noun}}-{{nanoid(6)}} (~1 quadrillion possibilities). Must start with an alphanumeric character. Resolved names are limited to 255 characters.'
+      examples:
+      - my-fleet-{{nanoid(9)}}
+      maxLength: 512
     ResourcePathOrId_SpotDeploymentId:
       type: string
       description: A resource path like 'sfc:spot_deployment:acme:prod:my-spot_deployment' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
       examples:
       - spot_k3R-nX9vLm7Qp2Yw5Jd8F
       pattern: (spot_[0-9a-zA-Z_-]{1,21})|(sfc:spot_deployment:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
-    UnixEpoch:
-      type: integer
-      format: int64
-      description: Unix timestamp.
-      example: 1738972800
-    DeploymentsCursor:
-      type: string
-      examples:
-      - deplc_gqXR7s0Kj5mHvE2wNpLc4Q
-      pattern: ^deplc_[A-Za-z0-9_-]+$
-    DollarsPerNodeHour:
-      type: string
-      description: Price rate in dollars per node-hour.
-      examples:
-      - '2.500000'
-      pattern: ^\d+\.\d+$
-    AutomationStatus:
-      type: string
-      enum:
-      - info
-      - warning
-      - error
-    InternalServerError:
-      type: object
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - type
-          - message
-          properties:
-            type:
-              type: string
-              const: api_error
-              default: api_error
-              readOnly: true
-            message:
-              type: string
-              x-speakeasy-error-message: true
     UnprocessableEntityError:
       type: object
       required:
@@ -871,13 +831,6 @@ components:
       examples:
       - pool_k3R-nX9vLm7Qp2Yw5Jd8F
       pattern: pool_[0-9a-zA-Z_-]{1,21}
-    Name:
-      type: string
-      examples:
-      - my-resource-name
-      maxLength: 255
-      minLength: 1
-      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
     CreateSpotDeploymentRequest:
       type: object
       description: A spot deployment buys capacity for a specific instance SKU at or below a maximum rate, then maintains a target number of instances on that capacity.
@@ -907,7 +860,23 @@ components:
           description: Maximum price to buy compute ($/node-hour).
         instance_name_template:
           $ref: '#/components/schemas/NameTemplate'
-    ConflictError:
+    DollarsPerNodeHour:
+      type: string
+      description: Price rate in dollars per node-hour.
+      examples:
+      - '2.500000'
+      pattern: ^\d+\.\d+$
+    ReconciliationStatus:
+      type: object
+      required:
+      - state
+      - message
+      properties:
+        state:
+          $ref: '#/components/schemas/AutomationStatus'
+        message:
+          type: string
+    NotFoundError:
       type: object
       required:
       - error
@@ -920,16 +889,47 @@ components:
           properties:
             type:
               type: string
-              const: conflict
-              default: conflict
+              const: not_found
+              default: not_found
               readOnly: true
             message:
               type: string
               x-speakeasy-error-message: true
-            details:
-              type: array
-              items:
-                $ref: '#/components/schemas/ErrorDetail'
+    Name:
+      type: string
+      examples:
+      - my-resource-name
+      maxLength: 255
+      minLength: 1
+      pattern: '[a-zA-Z0-9][a-zA-Z0-9._-]{0,254}'
+    ResourcePathOrId_PoolId:
+      type: string
+      description: A resource path like 'sfc:pool:acme:prod:my-pool' _or_ an ID. Resource paths are human-readable but not stable - they change when resources are renamed or moved. IDs are stable and permanent.
+      examples:
+      - pool_k3R-nX9vLm7Qp2Yw5Jd8F
+      pattern: (pool_[0-9a-zA-Z_-]{1,21})|(sfc:pool:[a-zA-Z0-9._-]+(:[a-zA-Z0-9._-]+){2,2})
+    SpotDeploymentScope:
+      type: object
+      required:
+      - id
+      - resource_path
+      - owner
+      - workspace
+      - workspace_id
+      - name
+      properties:
+        id:
+          $ref: '#/components/schemas/SpotDeploymentId'
+        resource_path:
+          $ref: '#/components/schemas/spot_deploymentResourcePath_SpotDeploymentId'
+        owner:
+          $ref: '#/components/schemas/Name'
+        workspace:
+          $ref: '#/components/schemas/Name'
+        workspace_id:
+          $ref: '#/components/schemas/WorkspaceId'
+        name:
+          $ref: '#/components/schemas/Name'
   securitySchemes:
     bearer_auth:
       type: http
